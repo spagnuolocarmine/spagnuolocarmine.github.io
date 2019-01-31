@@ -2,10 +2,8 @@
 layout: single
 author_profile: true
 permalink: /about/
-title: "About Michael Rose"
-last_modified_at: 2018-03-22T10:19:56-04:00
-excerpt: "Michael Rose is just another boring, tattooed, time traveling designer from Buffalo New York."
-toc: true
+title: "About Me"
+last_modified_at: 2019-01-20T10:19:56-04:00
 ---
 
 Oh hey --- I'm Michael Rose, just another boring, tattooed, time traveling designer from Buffalo, New York.

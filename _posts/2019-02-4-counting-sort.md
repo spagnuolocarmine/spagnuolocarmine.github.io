@@ -38,4 +38,4 @@ Counting sort uses three lists:
 ### Counting Sort Parallel
 
 
-![Counting Sort](https://spagnuolocarmine.github.io/assets/img/countingpar.png)
+![Counting Sort](https://spagnuolocarmine.github.io/assets/img/coutingpar.png)

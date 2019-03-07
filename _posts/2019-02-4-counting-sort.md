@@ -5,4 +5,4 @@ category: news
 comments: true
 ---
 
-![Counting Sort](assets/img/count.gif)
+![Counting Sort](https://spagnuolocarmine.github.io/assets/img/count.gif)

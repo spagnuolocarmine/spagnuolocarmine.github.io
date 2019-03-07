@@ -35,3 +35,7 @@ Counting sort uses three lists:
 
 ![Counting Sort](https://spagnuolocarmine.github.io/assets/img/count.gif)
 
+### Counting Sort Parallel
+
+
+![Counting Sort](https://spagnuolocarmine.github.io/assets/img/countingpar.png)

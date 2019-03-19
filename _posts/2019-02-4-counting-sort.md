@@ -9,7 +9,7 @@ Counting sort is an efficient algorithm for sorting an array of elements that ea
 
 The complexity of the algorithm is `Theta(n)`.
 
-**An algorithm that maps the following input/output pair is called a sorting algorithm:**
+**An algorithm that maps the following input/output pair is called a sorting algorithm:* *
 
 - Input: An array, A, of size  of orderable elements. `A[0,1,...,n-1]`.
 - Output: A sorted permutation of A, called B, such that `B[0]<=B[1]..<=B[n-1]`.
@@ -37,5 +37,6 @@ Counting sort uses three lists:
 
 ### Counting Sort Parallel
 
+Bsed on the idea of sequential counting sort. Uses `n^2` processors on a mesh grid of `n x n`. Running time complexity `O(logn)`.
 
 ![Counting Sort](https://spagnuolocarmine.github.io/assets/img/coutingpar.png)

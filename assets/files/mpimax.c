@@ -1,17 +1,3 @@
----
-layout: posts
-title: MPI Find Max Example
-category: teaching
----
-
-# Parallel Max of Integer Array
-
-- ```mpicc mpimax.c```
-- ```mpirun -np 3 1 1000```
-- 1 flag sequential execution (0 for not execute sequential code)
-- 10000 is the number of element in the array
-
-```
 #include "mpi.h"              /* MPI header file */
 #include <stdio.h>
 #include <stdlib.h>
@@ -133,4 +119,3 @@ int main (int argc, char *argv[])
   MPI_Finalize();              /* And close up MPI  */
 	return 0;
 }
-```

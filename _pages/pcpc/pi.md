@@ -14,6 +14,7 @@ Professor: Vittorio Scarano
 This exercise presents tow simple program to determine the value of pi. 
 
 - Tapezoid rule. f(x)=4/(1+x^2), so PI is the integral of f(x) from 0 to 1. Then PI can be easily caculated using trapezoid rule.
+
  ```
 #include <stdio.h>
 

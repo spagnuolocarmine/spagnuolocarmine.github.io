@@ -1,13 +1,13 @@
 ---
 layout: single
 author_profile: true
-permalink: /pubblications/
-title: "Pubblications"
+permalink: /publications/
+title: "Publications"
 last_modified_at: 2019-01-20T10:19:56-04:00
 toc: true
 ---
 
-
+ 
 
 Visit also my [Google Scholar Profile](https://scholar.google.it/citations?user=Urf6lNEAAAAJ&hl=it).
 <style>
@@ -43,7 +43,7 @@ span.r {
 
 ## Journals
 <ul>
-	{% assign sorted = site.data.pubblications | sort: 'Year' | reverse %}
+	{% assign sorted = site.data.publications | sort: 'Year' | reverse %}
 	{% for article in sorted %}
 			{% if article.Source == 'Journal' %}
 				<li>
@@ -58,7 +58,7 @@ span.r {
 
 ## Conferences
 <ul>
-	{% assign sorted = site.data.pubblications | sort: 'Year' | reverse %}
+	{% assign sorted = site.data.publications | sort: 'Year' | reverse %}
 	{% for article in sorted %}
 			{% if article.Source == 'Conference' %}
 				<li>

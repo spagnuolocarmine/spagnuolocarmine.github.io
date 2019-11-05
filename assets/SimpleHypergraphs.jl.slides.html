@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
 
-<title>alessia_SimpleHypergraphs.jl slides</title>
+<title>SimpleHypergraphs.jl slides</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13214,11 +13214,12 @@ a.anchor-link {
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="SimpleHypergraph.jl">SimpleHypergraph.jl<a class="anchor-link" href="#SimpleHypergraph.jl">&#182;</a></h1><ul>
 <li>A Julia library for hypegraphs manipulation. </li>
-<li>Version 1.0, April 2019.</li>
+<li>Version v0.1.6, October 2019.</li>
 <li>Available on a GitHub public  repository: <a href="https://github.com/pszufe/SimpleHypergraphs.jl">https://github.com/pszufe/SimpleHypergrap
 hs.jl</a></li>
 <li>APIs are designed in similar fashion of the popular library for graph manipulation <code>LightGraphs.jl</code>.</li>
 <li>Documentation: <a href="https://pszufe.github.io/SimpleHypergraphs.jl/stable">https://pszufe.github.io/SimpleHypergraphs.jl/stable</a></li>
+<li><em>SimpleHypergraphs.jl --- Novel Software Framework for Modelling and Analysis of Hypergraphs</em>. A. Antelmi, G. Cordasco, B. Kaminski, P. Pralat, V. Scarano, C. Spagnuolo, and P. Szufel. Proceedings of the 16th Workshop on Algorithms and Models for the Web Graph (WAW 2019), Lecture Notes in Computer Science 11631, Springer, 2019.</li>
 </ul>
 
 </div>
@@ -13236,7 +13237,7 @@ hs.jl</a></li>
 </li>
 <li><p><em>Multihypergraph</em> is a Python package for graphs released under GPL license.</p>
 </li>
-<li><p><em>HyperNetX</em>  is a Python preliminary library released in 2018 under the Battelle Memorial Institute licence (last version include also visualization network analysis tools).</p>
+<li><p><em>HyperNetX</em>  is a Python preliminary library released in 2018 under the Battelle Memorial Institute licence.</p>
 </li>
 </ul>
 
@@ -13287,7 +13288,7 @@ hs.jl</a></li>
 </div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[47]:</div>
+<div class="prompt input_prompt">In&nbsp;[49]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="p">]</span> <span class="n">add</span> <span class="n">SimpleHypergraphs</span><span class="o">.</span><span class="n">jl</span><span class="c">#hg_visualization</span>
@@ -13310,9 +13311,9 @@ hs.jl</a></li>
 <pre><span class="ansi-green-intense-fg ansi-bold">  Updating</span> git-repo `https://github.com/pszufe/SimpleHypergraphs.jl.git`
 <span class="ansi-green-intense-fg ansi-bold"> Resolving</span> package versions...
 <span class="ansi-green-intense-fg ansi-bold">  Updating</span> `C:\Users\aless\.julia\environments\v1.0\Project.toml`
-<span class="ansi-black-intense-fg"> [no changes]</span>
+ <span class="ansi-black-intense-fg"> [aa4a32ff]</span><span class="ansi-green-intense-fg"> + SimpleHypergraphs v0.1.6 #hg_visualization (https://github.com/pszufe/SimpleHypergraphs.jl.git)</span>
 <span class="ansi-green-intense-fg ansi-bold">  Updating</span> `C:\Users\aless\.julia\environments\v1.0\Manifest.toml`
-<span class="ansi-black-intense-fg"> [no changes]</span>
+ <span class="ansi-black-intense-fg"> [aa4a32ff]</span><span class="ansi-green-intense-fg"> + SimpleHypergraphs v0.1.6 #hg_visualization (https://github.com/pszufe/SimpleHypergraphs.jl.git)</span>
 </pre>
 </div>
 </div>
@@ -13334,32 +13335,13 @@ hs.jl</a></li>
 </div></div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="k">using</span> <span class="n">SimpleHypergraphs</span>
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>┌ Info: Recompiling stale cache file C:\Users\aless\.julia\compiled\v1.0\SimpleHypergraphs\rB8ho.ji for SimpleHypergraphs [aa4a32ff-dd5d-5357-90e3-e7a9512f0501]
-└ @ Base loading.jl:1190
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -13370,7 +13352,7 @@ hs.jl</a></li>
 <h1 id="Hypergraph-representation">Hypergraph representation<a class="anchor-link" href="#Hypergraph-representation">&#182;</a></h1><ul>
 <li><code>H=(V,E)</code> as an <code>n x k</code> matrix, where <code>n</code> is the number of vertices and <code>k</code> is the number of hyperedges.</li>
 <li>Stores in-memory a hypergraph using its matrix representation.</li>
-<li>Vertices and hyperedges are uniquely identified by progressive integer ids, corresponding to rows <code>(1,..., n)</code> and columns <code>(1,...,k)</code>, respectively.</li>
+<li>Vertices and hyperedges are uniquely identified by progressive integer ids, corresponding to rows <code>(1,...,n)</code> and columns <code>(1,...,k)</code>, respectively.</li>
 <li>Each position <code>(i,j)</code> of the matrix denotes the weight of vertex <code>i</code> within the hyperedge <code>j</code>.</li>
 </ul>
 
@@ -13390,7 +13372,7 @@ hs.jl</a></li>
 </div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">#Hypergraph{T}(n,k) where {T&lt;:Real}</span>
@@ -13415,7 +13397,7 @@ hs.jl</a></li>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[4]:</div>
+    <div class="prompt output_prompt">Out[3]:</div>
 
 
 
@@ -13468,7 +13450,7 @@ hs.jl</a></li>
 <head>
 <link rel="stylesheet" type="text/css" href="https://isislab-unisa.github.io/hypergraphs-plot/css/color-edge-style.css">
 </head>
-<div class="hg-plot1"></div>
+<div class="hg-plot2"></div>
 <script src="https://isislab-unisa.github.io/hypergraphs-plot//bundle.v1.0.js"></script>
 <script>
 hgplot.drawing.hgColorEdgePlot({graph:{
@@ -13496,7 +13478,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
                     {"node":"5","link":"2","value":"6.5"},
                     {"node":"5","link":"4","value":"5.5"}
         ]
-    }},{preferences:{"colorEdges":"default","colorNodes":"default","sizeNodes":"default"}},{idColorEdge:"1"});
+    }},{preferences:{"colorEdges":"default","colorNodes":"default","sizeNodes":"default"}},{idColorEdge:"2"});
 </script>
 
 </div>
@@ -13833,7 +13815,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[60]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="p">]</span> <span class="n">add</span> <span class="n">LightGraphs</span>
@@ -13855,7 +13837,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 <div class="output_subarea output_stream output_stdout output_text">
 <pre><span class="ansi-green-intense-fg ansi-bold"> Resolving</span> package versions...
 <span class="ansi-green-intense-fg ansi-bold">  Updating</span> `C:\Users\aless\.julia\environments\v1.0\Project.toml`
- <span class="ansi-black-intense-fg"> [093fc24a]</span><span class="ansi-green-intense-fg"> + LightGraphs v1.3.0</span>
+<span class="ansi-black-intense-fg"> [no changes]</span>
 <span class="ansi-green-intense-fg ansi-bold">  Updating</span> `C:\Users\aless\.julia\environments\v1.0\Manifest.toml`
 <span class="ansi-black-intense-fg"> [no changes]</span>
 </pre>
@@ -13868,7 +13850,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="k">using</span> <span class="n">LightGraphs</span>
@@ -13881,7 +13863,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">SimpleGraph</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
@@ -13904,7 +13886,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[15]:</div>
+    <div class="prompt output_prompt">Out[14]:</div>
 
 
 
@@ -13934,7 +13916,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 </div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">getvertices</span><span class="p">(</span><span class="n">h</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
@@ -13950,7 +13932,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[16]:</div>
+    <div class="prompt output_prompt">Out[15]:</div>
 
 
 
@@ -13970,7 +13952,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 </div></div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">h</span>
@@ -13986,7 +13968,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[17]:</div>
+    <div class="prompt output_prompt">Out[16]:</div>
 
 
 
@@ -14018,7 +14000,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 </div></div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">gethyperedges</span><span class="p">(</span><span class="n">h</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
@@ -14034,7 +14016,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[18]:</div>
+    <div class="prompt output_prompt">Out[17]:</div>
 
 
 
@@ -14062,7 +14044,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 </div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">h</span>
@@ -14078,7 +14060,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[19]:</div>
+    <div class="prompt output_prompt">Out[18]:</div>
 
 
 
@@ -14100,7 +14082,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 </div></div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">remove_vertex!</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
@@ -14118,7 +14100,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[20]:</div>
+    <div class="prompt output_prompt">Out[19]:</div>
 
 
 
@@ -14157,7 +14139,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 </div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">size</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
@@ -14173,7 +14155,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[21]:</div>
+    <div class="prompt output_prompt">Out[20]:</div>
 
 
 
@@ -14200,7 +14182,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 </div></div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[22]:</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">nhv</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
@@ -14216,7 +14198,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[22]:</div>
+    <div class="prompt output_prompt">Out[21]:</div>
 
 
 
@@ -14233,7 +14215,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 </div></div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[23]:</div>
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">nhe</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
@@ -14249,7 +14231,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[23]:</div>
+    <div class="prompt output_prompt">Out[22]:</div>
 
 
 
@@ -14285,8 +14267,8 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="BipartiteView">BipartiteView<a class="anchor-link" href="#BipartiteView">&#182;</a></h2><ul>
-<li>Create a graph <code>G</code> from the  <code>BipartiteView</code> of <code>H</code>;</li>
-<li>We need to import the library <code>LightGraphs</code> for manipulating graph objects;</li>
+<li>Create a graph <code>G</code> from the  <code>BipartiteView</code> of <code>H</code>.</li>
+<li>We need to import the library <code>LightGraphs</code> for manipulating graph objects.</li>
 <li>Note this is a view - changes to the original hypergraph will be automatically reflected in the view.</li>
 </ul>
 
@@ -14295,7 +14277,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 </div></section></section><section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[24]:</div>
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="k">import</span> <span class="n">LightGraphs</span>
@@ -14329,7 +14311,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[24]:</div>
+    <div class="prompt output_prompt">Out[23]:</div>
 
 
 
@@ -14337,7 +14319,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 <head>
 <link rel="stylesheet" type="text/css" href="https://isislab-unisa.github.io/hypergraphs-plot/css/color-edge-style.css">
 </head>
-<div class="hg-plot2"></div>
+<div class="hg-plot3"></div>
 <script src="https://isislab-unisa.github.io/hypergraphs-plot//bundle.v1.0.js"></script>
 <script>
 hgplot.drawing.hgColorEdgePlot({graph:{
@@ -14369,7 +14351,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
                     {"node":"5","link":"5","value":"1.2"},
                     {"node":"6","link":"5","value":"1.3"}
         ]
-    }},{preferences:{"colorEdges":"default","colorNodes":"default","sizeNodes":"default"}},{idColorEdge:"2"});
+    }},{preferences:{"colorEdges":"default","colorNodes":"default","sizeNodes":"default"}},{idColorEdge:"3"});
 </script>
 
 </div>
@@ -14389,7 +14371,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 </div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[25]:</div>
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">b</span> <span class="o">=</span> <span class="n">LightGraphs</span><span class="o">.</span><span class="n">SimpleGraph</span><span class="p">(</span><span class="n">BipartiteView</span><span class="p">(</span><span class="n">h</span><span class="p">))</span>
@@ -14405,7 +14387,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[25]:</div>
+    <div class="prompt output_prompt">Out[24]:</div>
 
 
 
@@ -14432,7 +14414,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 </div></div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[26]:</div>
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="p">]</span> <span class="n">add</span> <span class="n">GraphPlot</span>
@@ -14452,11 +14434,18 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre><span class="ansi-green-intense-fg ansi-bold"> Resolving</span> package versions...
-<span class="ansi-green-intense-fg ansi-bold">  Updating</span> `C:\Users\aless\.julia\environments\v1.0\Project.toml`
- <span class="ansi-black-intense-fg"> [a2cc645c]</span><span class="ansi-green-intense-fg"> + GraphPlot v0.3.1</span>
-<span class="ansi-green-intense-fg ansi-bold">  Updating</span> `C:\Users\aless\.julia\environments\v1.0\Manifest.toml`
+<pre><span class="ansi-green-intense-fg ansi-bold">  Updating</span> registry at `~/.julia/registries/General`
+<span class="ansi-green-intense-fg ansi-bold">  Updating</span> git-repo `https://github.com/JuliaRegistries/General.git`
+[1mFetching: [========================================&gt;]  100.0 %.0 %          ]  72.7 %<span class="ansi-green-intense-fg ansi-bold"> Resolving</span> package versions...
+<span class="ansi-green-intense-fg ansi-bold"> Installed</span> Parsers ──────── v0.3.8
+<span class="ansi-green-intense-fg ansi-bold"> Installed</span> BinaryProvider ─ v0.5.8
+<span class="ansi-green-intense-fg ansi-bold"> Installed</span> JuliaFormatter ─ v0.1.25
+<span class="ansi-green-intense-fg ansi-bold">  Updating</span> `~/.julia/environments/v1.1/Project.toml`
 <span class="ansi-black-intense-fg"> [no changes]</span>
+<span class="ansi-green-intense-fg ansi-bold">  Updating</span> `~/.julia/environments/v1.1/Manifest.toml`
+ <span class="ansi-black-intense-fg"> [b99e7846]</span><span class="ansi-yellow-intense-fg"> ↑ BinaryProvider v0.5.7 ⇒ v0.5.8</span>
+ <span class="ansi-black-intense-fg"> [98e50ef6]</span><span class="ansi-yellow-intense-fg"> ↑ JuliaFormatter v0.1.22 ⇒ v0.1.25</span>
+ <span class="ansi-black-intense-fg"> [69de0a69]</span><span class="ansi-yellow-intense-fg"> ↑ Parsers v0.3.7 ⇒ v0.3.8</span>
 </pre>
 </div>
 </div>
@@ -14467,7 +14456,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 </div></div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[27]:</div>
+<div class="prompt input_prompt">In&nbsp;[26]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="k">using</span> <span class="n">GraphPlot</span>
@@ -14480,7 +14469,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 </div></div></section></section><section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[28]:</div>
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">#nodes membership</span>
@@ -14507,7 +14496,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[28]:</div>
+    <div class="prompt output_prompt">Out[27]:</div>
 
 
 
@@ -14522,13 +14511,13 @@ hgplot.drawing.hgColorEdgePlot({graph:{
      stroke-width="0.3"
      font-size="3.88"
 
-     id="img-bd2152b1">
+     id="img-928d74e9">
 <defs>
   <marker id="arrow" markerWidth="15" markerHeight="7" refX="5" refY="3.5" orient="auto" markerUnits="strokeWidth">
     <path d="M0,0 L15,3.5 L0,7 z" stroke="context-stroke" fill="context-stroke"/>
   </marker>
 </defs>
-<g stroke-width="0.9" fill="#000000" fill-opacity="0.000" stroke="#D3D3D3" id="img-bd2152b1-1">
+<g stroke-width="0.9" fill="#000000" fill-opacity="0.000" stroke="#D3D3D3" id="img-928d74e9-1">
   <g transform="translate(70.71,44.07)">
     <path fill="none" d="M54.53,5.49 L -54.53 -5.49" class="primitive"/>
   </g>
@@ -14563,11 +14552,11 @@ hgplot.drawing.hgColorEdgePlot({graph:{
     <path fill="none" d="M-50.1,16.02 L 50.1 -16.02" class="primitive"/>
   </g>
 </g>
-<g stroke-width="0.9" stroke="#D3D3D3" id="img-bd2152b1-2">
+<g stroke-width="0.9" stroke="#D3D3D3" id="img-928d74e9-2">
 </g>
-<g font-size="4" stroke="#000000" stroke-opacity="0.000" fill="#000000" id="img-bd2152b1-3">
+<g font-size="4" stroke="#000000" stroke-opacity="0.000" fill="#000000" id="img-928d74e9-3">
 </g>
-<g stroke-width="0" stroke="#000000" stroke-opacity="0.000" id="img-bd2152b1-4">
+<g stroke-width="0" stroke="#000000" stroke-opacity="0.000" id="img-928d74e9-4">
   <g transform="translate(129.64,50)" fill="#20B2AA">
     <circle cx="0" cy="0" r="4.26" class="primitive"/>
   </g>
@@ -14602,7 +14591,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
     <circle cx="0" cy="0" r="4.26" class="primitive"/>
   </g>
 </g>
-<g font-size="4" stroke="#000000" stroke-opacity="0.000" fill="#000000" id="img-bd2152b1-5">
+<g font-size="4" stroke="#000000" stroke-opacity="0.000" fill="#000000" id="img-928d74e9-5">
   <g transform="translate(129.64,50)">
     <g class="primitive">
       <text text-anchor="middle" dy="0.35em">1</text>
@@ -14829,19 +14818,9 @@ amount2:1-d})};a.filter.invert.toString=function(){return this()};a.filter.brigh
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="TwosectionView">TwosectionView<a class="anchor-link" href="#TwosectionView">&#182;</a></h2><ul>
 <li>Create a graph <code>G</code> from the  <code>TwosectionView</code> of <code>H</code>.</li>
-<li>We need to import the library <code>LightGraphs</code> for manipulating graph objects;</li>
-</ul>
-
-</div>
-</div>
-</div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Notes">Notes<a class="anchor-link" href="#Notes">&#182;</a></h3><ol>
+<li>We need to import the library <code>LightGraphs</code> for manipulating graph objects.</li>
 <li>This is a view - changes to the original hypergraph will be automatically reflected in the view.</li>
-<li>The view will only work correctly for hypergraphs not having overlapping hyperedges. To check whether a graph has overlapping edges try has_overlapping_hedges(h) - for such graph you need to fully materialize it rather than use a view. This can be achieved via the <code>get_twosection_adjacency_mx(h)</code> method.</li>
-</ol>
+</ul>
 
 </div>
 </div>
@@ -14855,7 +14834,7 @@ amount2:1-d})};a.filter.invert.toString=function(){return this()};a.filter.brigh
 </div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[29]:</div>
+<div class="prompt input_prompt">In&nbsp;[28]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">h</span>
@@ -14871,7 +14850,7 @@ amount2:1-d})};a.filter.invert.toString=function(){return this()};a.filter.brigh
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[29]:</div>
+    <div class="prompt output_prompt">Out[28]:</div>
 
 
 
@@ -14894,7 +14873,7 @@ amount2:1-d})};a.filter.invert.toString=function(){return this()};a.filter.brigh
 </div></div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[30]:</div>
+<div class="prompt input_prompt">In&nbsp;[29]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="n">LightGraphs</span><span class="o">.</span><span class="n">SimpleGraph</span><span class="p">(</span><span class="n">TwoSectionView</span><span class="p">(</span><span class="n">h</span><span class="p">));</span>
@@ -14907,7 +14886,7 @@ amount2:1-d})};a.filter.invert.toString=function(){return this()};a.filter.brigh
 </div></div></section></section><section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[31]:</div>
+<div class="prompt input_prompt">In&nbsp;[30]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">gplot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">nodelabel</span><span class="o">=</span><span class="mi">1</span><span class="o">:</span><span class="n">LightGraphs</span><span class="o">.</span><span class="n">nv</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
@@ -14923,7 +14902,7 @@ amount2:1-d})};a.filter.invert.toString=function(){return this()};a.filter.brigh
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[31]:</div>
+    <div class="prompt output_prompt">Out[30]:</div>
 
 
 
@@ -14938,89 +14917,89 @@ amount2:1-d})};a.filter.invert.toString=function(){return this()};a.filter.brigh
      stroke-width="0.3"
      font-size="3.88"
 
-     id="img-1fbe33a9">
+     id="img-5b8e6745">
 <defs>
   <marker id="arrow" markerWidth="15" markerHeight="7" refX="5" refY="3.5" orient="auto" markerUnits="strokeWidth">
     <path d="M0,0 L15,3.5 L0,7 z" stroke="context-stroke" fill="context-stroke"/>
   </marker>
 </defs>
-<g stroke-width="1.22" fill="#000000" fill-opacity="0.000" stroke="#D3D3D3" id="img-1fbe33a9-1">
-  <g transform="translate(15.78,23.74)">
-    <path fill="none" d="M2.91,-11.23 L -2.91 11.23" class="primitive"/>
+<g stroke-width="1.22" fill="#000000" fill-opacity="0.000" stroke="#D3D3D3" id="img-5b8e6745-1">
+  <g transform="translate(84.19,87.58)">
+    <path fill="none" d="M39.48,3.55 L -39.48 -3.55" class="primitive"/>
   </g>
-  <g transform="translate(34.8,23.33)">
-    <path fill="none" d="M-11.56,-11.53 L 11.56 11.53" class="primitive"/>
+  <g transform="translate(112.14,78.8)">
+    <path fill="none" d="M13.33,9.8 L -13.33 -9.8" class="primitive"/>
   </g>
-  <g transform="translate(30.81,38.74)">
-    <path fill="none" d="M-13.02,0.28 L 13.02 -0.28" class="primitive"/>
+  <g transform="translate(66.69,74.72)">
+    <path fill="none" d="M-22.45,7.05 L 22.45 -7.05" class="primitive"/>
   </g>
-  <g transform="translate(26.47,52.79)">
-    <path fill="none" d="M-11.05,-10.26 L 11.05 10.26" class="primitive"/>
+  <g transform="translate(25.26,71.28)">
+    <path fill="none" d="M9.78,8.86 L -9.78 -8.86" class="primitive"/>
   </g>
-  <g transform="translate(45.5,52.39)">
-    <path fill="none" d="M3.06,-9.9 L -3.06 9.9" class="primitive"/>
+  <g transform="translate(53.21,62.5)">
+    <path fill="none" d="M35.46,2.94 L -35.46 -2.94" class="primitive"/>
   </g>
-  <g transform="translate(68.04,54.2)">
-    <path fill="none" d="M-14.41,-12.56 L 14.41 12.56" class="primitive"/>
+  <g transform="translate(79.6,51.48)">
+    <path fill="none" d="M11.48,11.03 L -11.48 -11.03" class="primitive"/>
   </g>
-  <g transform="translate(63.7,68.25)">
-    <path fill="none" d="M-16.56,-1.33 L 16.56 1.33" class="primitive"/>
+  <g transform="translate(38.17,48.05)">
+    <path fill="none" d="M-21.21,8.86 L 21.21 -8.86" class="primitive"/>
   </g>
-  <g transform="translate(107.94,80.87)">
-    <path fill="none" d="M-16.78,-8.35 L 16.78 8.35" class="primitive"/>
+  <g transform="translate(66.83,22.68)">
+    <path fill="none" d="M-1.6,10.12 L 1.6 -10.12" class="primitive"/>
   </g>
 </g>
-<g stroke-width="1.22" stroke="#D3D3D3" id="img-1fbe33a9-2">
+<g stroke-width="1.22" stroke="#D3D3D3" id="img-5b8e6745-2">
 </g>
-<g font-size="4" stroke="#000000" stroke-opacity="0.000" fill="#000000" id="img-1fbe33a9-3">
+<g font-size="4" stroke="#000000" stroke-opacity="0.000" fill="#000000" id="img-5b8e6745-3">
 </g>
-<g stroke-width="0" stroke="#000000" stroke-opacity="0.000" fill="#40E0D0" id="img-1fbe33a9-4">
-  <g transform="translate(19.77,8.33)">
-    <circle cx="0" cy="0" r="5.77" class="primitive"/>
-  </g>
-  <g transform="translate(11.79,39.15)">
-    <circle cx="0" cy="0" r="5.77" class="primitive"/>
-  </g>
-  <g transform="translate(49.84,38.33)">
-    <circle cx="0" cy="0" r="5.77" class="primitive"/>
-  </g>
-  <g transform="translate(41.16,66.44)">
-    <circle cx="0" cy="0" r="5.77" class="primitive"/>
-  </g>
-  <g transform="translate(86.24,70.07)">
-    <circle cx="0" cy="0" r="5.77" class="primitive"/>
-  </g>
+<g stroke-width="0" stroke="#000000" stroke-opacity="0.000" fill="#40E0D0" id="img-5b8e6745-4">
   <g transform="translate(129.64,91.67)">
     <circle cx="0" cy="0" r="5.77" class="primitive"/>
   </g>
+  <g transform="translate(38.74,83.5)">
+    <circle cx="0" cy="0" r="5.77" class="primitive"/>
+  </g>
+  <g transform="translate(94.64,65.94)">
+    <circle cx="0" cy="0" r="5.77" class="primitive"/>
+  </g>
+  <g transform="translate(11.79,59.07)">
+    <circle cx="0" cy="0" r="5.77" class="primitive"/>
+  </g>
+  <g transform="translate(64.55,37.02)">
+    <circle cx="0" cy="0" r="5.77" class="primitive"/>
+  </g>
+  <g transform="translate(69.1,8.33)">
+    <circle cx="0" cy="0" r="5.77" class="primitive"/>
+  </g>
 </g>
-<g font-size="4" stroke="#000000" stroke-opacity="0.000" fill="#000000" id="img-1fbe33a9-5">
-  <g transform="translate(19.77,8.33)">
+<g font-size="4" stroke="#000000" stroke-opacity="0.000" fill="#000000" id="img-5b8e6745-5">
+  <g transform="translate(129.64,91.67)">
     <g class="primitive">
       <text text-anchor="middle" dy="0.35em">1</text>
     </g>
   </g>
-  <g transform="translate(11.79,39.15)">
+  <g transform="translate(38.74,83.5)">
     <g class="primitive">
       <text text-anchor="middle" dy="0.35em">2</text>
     </g>
   </g>
-  <g transform="translate(49.84,38.33)">
+  <g transform="translate(94.64,65.94)">
     <g class="primitive">
       <text text-anchor="middle" dy="0.35em">3</text>
     </g>
   </g>
-  <g transform="translate(41.16,66.44)">
+  <g transform="translate(11.79,59.07)">
     <g class="primitive">
       <text text-anchor="middle" dy="0.35em">4</text>
     </g>
   </g>
-  <g transform="translate(86.24,70.07)">
+  <g transform="translate(64.55,37.02)">
     <g class="primitive">
       <text text-anchor="middle" dy="0.35em">5</text>
     </g>
   </g>
-  <g transform="translate(129.64,91.67)">
+  <g transform="translate(69.1,8.33)">
     <g class="primitive">
       <text text-anchor="middle" dy="0.35em">6</text>
     </g>
@@ -15204,7 +15183,7 @@ amount2:1-d})};a.filter.invert.toString=function(){return this()};a.filter.brigh
 </div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[32]:</div>
+<div class="prompt input_prompt">In&nbsp;[31]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">h</span>
@@ -15220,7 +15199,7 @@ amount2:1-d})};a.filter.invert.toString=function(){return this()};a.filter.brigh
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[32]:</div>
+    <div class="prompt output_prompt">Out[31]:</div>
 
 
 
@@ -15243,7 +15222,7 @@ amount2:1-d})};a.filter.invert.toString=function(){return this()};a.filter.brigh
 </div></div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[33]:</div>
+<div class="prompt input_prompt">In&nbsp;[32]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">plot</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="k">type</span><span class="o">=</span><span class="s">&quot;color-edge&quot;</span><span class="p">)</span>
@@ -15259,7 +15238,7 @@ amount2:1-d})};a.filter.invert.toString=function(){return this()};a.filter.brigh
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[33]:</div>
+    <div class="prompt output_prompt">Out[32]:</div>
 
 
 
@@ -15267,7 +15246,7 @@ amount2:1-d})};a.filter.invert.toString=function(){return this()};a.filter.brigh
 <head>
 <link rel="stylesheet" type="text/css" href="https://isislab-unisa.github.io/hypergraphs-plot/css/color-edge-style.css">
 </head>
-<div class="hg-plot3"></div>
+<div class="hg-plot4"></div>
 <script src="https://isislab-unisa.github.io/hypergraphs-plot//bundle.v1.0.js"></script>
 <script>
 hgplot.drawing.hgColorEdgePlot({graph:{
@@ -15299,7 +15278,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
                     {"node":"5","link":"5","value":"1.2"},
                     {"node":"6","link":"5","value":"1.3"}
         ]
-    }},{preferences:{"colorEdges":"default","colorNodes":"default","sizeNodes":"default"}},{idColorEdge:"3"});
+    }},{preferences:{"colorEdges":"default","colorNodes":"default","sizeNodes":"default"}},{idColorEdge:"4"});
 </script>
 
 </div>
@@ -15335,12 +15314,48 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 </div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[34]:</div>
+<div class="prompt input_prompt">In&nbsp;[33]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">sets</span> <span class="o">=</span> <span class="n">randompartition</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 
 <span class="n">sets</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[33]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>3-element Array{Set{Int64},1}:
+ Set([4, 2, 3, 1])
+ Set([6])         
+ Set([5])         </pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div></div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[34]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span></span><span class="n">modularity</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">sets</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -15359,43 +15374,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>3-element Array{Set{Int64},1}:
- Set([4, 3])
- Set([5, 1])
- Set([2, 6])</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div></div><div class="fragment">
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[35]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="n">modularity</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">sets</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[35]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>-0.18211870773854244</pre>
+<pre>0.09346356123215634</pre>
 </div>
 
 </div>
@@ -15411,9 +15390,24 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 </div>
 </div>
 </div><div class="fragment">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li><code>CFModularityRandom</code><ul>
+<li>Represents a random search over the hypergraph <code>h</code> that finds a partition into <code>n</code> communities (subsets) having the maximum modularity value.</li>
+<li>During the search <code>reps</code> random <code>n</code>-partitions will be evaluated.</li>
+<li>If there are many partitions having the same value the first one that was randomly found will be returned.</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+</div></div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[36]:</div>
+<div class="prompt input_prompt">In&nbsp;[35]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">pmethod</span> <span class="o">=</span> <span class="n">CFModularityRandom</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
@@ -15433,7 +15427,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[36]:</div>
+    <div class="prompt output_prompt">Out[35]:</div>
 
 
 
@@ -15454,17 +15448,19 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 <h1 id="Hypergraph-IO">Hypergraph IO<a class="anchor-link" href="#Hypergraph-IO">&#182;</a></h1><p>You can save and load a hypergraph <code>h</code> to/from a file in <code>hgf</code> format.
 <br></p>
 <p><em>Example format</em></p>
-<p>4 4 <br>
-1=1 2=2 <br>
-2=3 <br>
-1=4 3=5 4=6 <br></p>
+<p>6 5 <br>
+1=1.5 2=1.5 3=1.5 <br>
+5=6.5 <br>
+2=3.5 4=4.5 <br>
+3=2.5 4=4.5 5=5.5 <br>
+5=1.2 6=1.3 <br></p>
 
 </div>
 </div>
 </div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[37]:</div>
+<div class="prompt input_prompt">In&nbsp;[36]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">h</span>
@@ -15480,7 +15476,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[37]:</div>
+    <div class="prompt output_prompt">Out[36]:</div>
 
 
 
@@ -15503,7 +15499,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 </div></div></section></section><section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[38]:</div>
+<div class="prompt input_prompt">In&nbsp;[37]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">hg_save</span><span class="p">(</span><span class="s">&quot;myhg.hgf&quot;</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
@@ -15516,7 +15512,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 </div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[39]:</div>
+<div class="prompt input_prompt">In&nbsp;[38]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">h</span> <span class="o">=</span> <span class="n">hg_load</span><span class="p">(</span><span class="s">&quot;myhg.hgf&quot;</span><span class="p">,</span> <span class="kt">Float64</span><span class="p">)</span>
@@ -15532,7 +15528,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[39]:</div>
+    <div class="prompt output_prompt">Out[38]:</div>
 
 
 
@@ -15560,60 +15556,47 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 
 </div>
 </div>
-</div></section></section><section><section>
+</div></section></section><section><section>`{
+   "hg":{
+      "nvertices":5,
+      "nhyperedges":4,
+      "vertices":{
+         "1":["a", "b"],
+         "2":{
+            "id":"id_b",
+            "stars":3.5,
+            "reviewcount":10,
+            "categories":["cat1","cat2"]
+         },
+         "3":null, "4":null, "5":null
+      },
+      "hyperedges":{
+         "1":{
+            "metadata":null,
+            "vertices":{
+               "2":1.5,
+               "3":1.5,
+               "1":1.5
+            }
+         },
+         "2":{
+            "metadata":null,
+            "vertices":{ "5":6.5 }
+         },
+         "3":{
+            "metadata":null,
+            "vertices":{ "4":4.5, "2":3.5 }
+         },
+         "4":{
+            "metadata":null,
+            "vertices":{ "4":4.5, "3":2.5, "5":5.5 }
+         }
+      }
+   }
+}`</section></section><section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="sb">`{</span>
-<span class="sb">   &quot;hg&quot;:{</span>
-<span class="sb">      &quot;nvertices&quot;:5,</span>
-<span class="sb">      &quot;nhyperedges&quot;:4,</span>
-<span class="sb">      &quot;vertices&quot;:{</span>
-<span class="sb">         &quot;1&quot;:[&quot;a&quot;, &quot;b&quot;],</span>
-<span class="sb">         &quot;2&quot;:{</span>
-<span class="sb">            &quot;id&quot;:&quot;id_b&quot;,</span>
-<span class="sb">            &quot;stars&quot;:3.5,</span>
-<span class="sb">            &quot;reviewcount&quot;:10,</span>
-<span class="sb">            &quot;categories&quot;:[&quot;cat1&quot;,&quot;cat2&quot;]</span>
-<span class="sb">         },</span>
-<span class="sb">         &quot;3&quot;:null, &quot;4&quot;:null, &quot;5&quot;:null</span>
-<span class="sb">      },</span>
-<span class="sb">      &quot;hyperedges&quot;:{</span>
-<span class="sb">         &quot;1&quot;:{</span>
-<span class="sb">            &quot;metadata&quot;:null,</span>
-<span class="sb">            &quot;vertices&quot;:{</span>
-<span class="sb">               &quot;2&quot;:1.5,</span>
-<span class="sb">               &quot;3&quot;:1.5,</span>
-<span class="sb">               &quot;1&quot;:1.5</span>
-<span class="sb">            }</span>
-<span class="sb">         },</span>
-<span class="sb">         &quot;2&quot;:{</span>
-<span class="sb">            &quot;metadata&quot;:null,</span>
-<span class="sb">            &quot;vertices&quot;:{ &quot;5&quot;:6.5 }</span>
-<span class="sb">         },</span>
-<span class="sb">         &quot;3&quot;:{</span>
-<span class="sb">            &quot;metadata&quot;:null,</span>
-<span class="sb">            &quot;vertices&quot;:{ &quot;4&quot;:4.5, &quot;2&quot;:3.5 }</span>
-<span class="sb">         },</span>
-<span class="sb">         &quot;4&quot;:{</span>
-<span class="sb">            &quot;metadata&quot;:null,</span>
-<span class="sb">            &quot;vertices&quot;:{ &quot;4&quot;:4.5, &quot;3&quot;:2.5, &quot;5&quot;:5.5 }</span>
-<span class="sb">         }</span>
-<span class="sb">      }</span>
-<span class="sb">   }</span>
-<span class="sb">}`</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div></section></section><section><section>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[40]:</div>
+<div class="prompt input_prompt">In&nbsp;[41]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">export_json</span><span class="p">(</span><span class="s">&quot;myhgs.json&quot;</span><span class="p">,</span> <span class="n">h2</span><span class="p">)</span>
@@ -15626,7 +15609,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 </div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[41]:</div>
+<div class="prompt input_prompt">In&nbsp;[42]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">h2</span> <span class="o">=</span> <span class="n">load_json</span><span class="p">(</span><span class="s">&quot;myhgs.json&quot;</span><span class="p">,</span> <span class="kt">Int</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="kt">Float64</span><span class="p">)</span>
@@ -15642,7 +15625,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[41]:</div>
+    <div class="prompt output_prompt">Out[42]:</div>
 
 
 
@@ -15663,7 +15646,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 </div></div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[42]:</div>
+<div class="prompt input_prompt">In&nbsp;[43]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">get_hyperedge_meta</span><span class="p">(</span><span class="n">h2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
@@ -15679,7 +15662,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[42]:</div>
+    <div class="prompt output_prompt">Out[43]:</div>
 
 
 
@@ -15704,19 +15687,33 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>In this example:</p>
-<ul>
-<li>We have used real world data. In particular we considered some Facebook friend circles to construct a hypergraph <code>h</code>, where each circle represents a hyperedge. Example graphs - Facebook circles.</li>
-<li>We generated the TwoSectionView of the hypergraph <code>h</code></li>
-<li>We evaluated the number of communities found and the number of users per community</li>
-</ul>
+<p>In this example, we will:</p>
+<ol>
+<li>Use real world data - in particular - some Facebook friend circles to construct a hypergraph <code>h</code>, where each circle represents a hyperedge. <a href="https://snap.stanford.edu/data/ego-Facebook.html">Example graphs - Facebook circles</a>;</li>
+<li>Visualize the hypergraph;</li>
+<li>Evaluate the best partition;</li>
+<li>Visualize the hyperedges size distribution;</li>
+<li>Visualize the degree distribution.</li>
+</ol>
 
 </div>
 </div>
 </div></div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Our-dataset-(fragment)">Our dataset (fragment)<a class="anchor-link" href="#Our-dataset-(fragment)">&#182;</a></h3><p>circle0 71  215 54  61  298 229 81  253 193 97  264 29  132 110 163 259 183 334 245 222 <br>
+circle1 173 <br>
+circle2 155 99  327 140 116 147 144 150 270 <br>
+circle3 51  83  237 <br>
+circle6 337 289 93  17  111 52  137 343 192 35  326 310 214 32  115 321 209 312 41  20</p>
+
+</div>
+</div>
+</div></section></section><section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[43]:</div>
+<div class="prompt input_prompt">In&nbsp;[47]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="k">function</span> <span class="n">load_example</span><span class="p">(</span><span class="n">fname</span><span class="o">::</span><span class="kt">AbstractString</span><span class="p">,</span> <span class="n">T</span><span class="o">::</span><span class="kt">Type</span><span class="p">{</span><span class="o">&lt;:</span><span class="kt">Real</span><span class="p">},</span> <span class="n">sep</span><span class="o">::</span><span class="n">AbstractChar</span><span class="p">)</span>
@@ -15762,7 +15759,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[43]:</div>
+    <div class="prompt output_prompt">Out[47]:</div>
 
 
 
@@ -15779,7 +15776,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 </div></section></section><section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[45]:</div>
+<div class="prompt input_prompt">In&nbsp;[48]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">fbh</span> <span class="o">=</span> <span class="n">load_example</span><span class="p">(</span><span class="s">&quot;0.circles&quot;</span><span class="p">,</span> <span class="kt">Int</span><span class="p">,</span> <span class="sc">&#39;\t&#39;</span><span class="p">);</span>
@@ -15792,7 +15789,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 </div></section></section><section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[46]:</div>
+<div class="prompt input_prompt">In&nbsp;[49]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">plot</span><span class="p">(</span><span class="n">fbh</span><span class="p">)</span>
@@ -15808,7 +15805,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[46]:</div>
+    <div class="prompt output_prompt">Out[49]:</div>
 
 
 
@@ -15816,7 +15813,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 <head>
 <link rel="stylesheet" type="text/css" href="https://isislab-unisa.github.io/hypergraphs-plot/css/color-edge-style.css">
 </head>
-<div class="hg-plot4"></div>
+<div class="hg-plot5"></div>
 <script src="https://isislab-unisa.github.io/hypergraphs-plot//bundle.v1.0.js"></script>
 <script>
 hgplot.drawing.hgColorEdgePlot({graph:{
@@ -16461,7 +16458,7 @@ hgplot.drawing.hgColorEdgePlot({graph:{
                     {"node":"285","link":"24","value":"1"},
                     {"node":"286","link":"24","value":"1"}
         ]
-    }},{preferences:{"colorEdges":"default","colorNodes":"default","sizeNodes":"default"}},{idColorEdge:"4"});
+    }},{preferences:{"colorEdges":"default","colorNodes":"default","sizeNodes":"default"}},{idColorEdge:"5"});
 </script>
 
 </div>
@@ -16472,6 +16469,301 @@ hgplot.drawing.hgColorEdgePlot({graph:{
 </div>
 
 </div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Find-Facebook-communities">Find Facebook communities<a class="anchor-link" href="#Find-Facebook-communities">&#182;</a></h3>
+</div>
+</div>
+</div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[51]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span></span><span class="n">bestp</span> <span class="o">=</span> <span class="n">findcommunities</span><span class="p">(</span><span class="n">fbh</span><span class="p">,</span> <span class="n">CFModularityRandom</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">100</span><span class="p">))</span>
+<span class="n">bestm</span> <span class="o">=</span> <span class="n">bestp</span><span class="o">.</span><span class="n">bm</span>
+<span class="n">bestn</span> <span class="o">=</span> <span class="n">length</span><span class="p">(</span><span class="n">bestp</span><span class="o">.</span><span class="n">bp</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="o">=</span><span class="mi">3</span><span class="o">:</span><span class="mi">20</span>
+    <span class="n">pmethod</span> <span class="o">=</span> <span class="n">CFModularityRandom</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">communities</span> <span class="o">=</span> <span class="n">findcommunities</span><span class="p">(</span><span class="n">fbh</span><span class="p">,</span> <span class="n">pmethod</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">communities</span><span class="o">.</span><span class="n">bm</span> <span class="o">&gt;</span> <span class="n">bestm</span>
+        <span class="n">bestm</span> <span class="o">=</span> <span class="n">communities</span><span class="o">.</span><span class="n">bm</span>
+        <span class="n">bestn</span> <span class="o">=</span> <span class="n">i</span>
+        <span class="n">bestp</span> <span class="o">=</span> <span class="n">communities</span><span class="o">.</span><span class="n">bp</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">println</span><span class="p">(</span><span class="s">&quot;bestnum: </span><span class="si">$</span><span class="p">(</span><span class="n">bestn</span><span class="p">)</span><span class="s"> -- maxm: </span><span class="si">$</span><span class="p">(</span><span class="n">bestm</span><span class="p">)</span><span class="s">&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>bestnum: 5 -- maxm: 0.10404165061911756
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></div></section></section><section><section>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[52]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span></span><span class="n">bestp</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[52]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>5-element Array{Set{Int64},1}:
+ Set([124, 89, 210, 11, 39, 46, 151, 95, 111, 285  …  153, 217, 76, 98, 107, 21, 208, 281, 129, 22, 243])   
+ Set([68, 148, 241, 267, 134, 170, 58, 239, 8, 173  …  180, 274, 24, 92, 156, 271, 261, 5, 23, 163, 56])    
+ Set([2, 158, 215, 66, 181, 59, 207, 247, 139, 90  …  191, 177, 251, 116, 277, 149, 63, 218, 276, 164, 245])
+ Set([275, 85, 42, 193, 131, 155, 142, 201, 20, 14  …  19, 162, 186, 51, 88, 240, 53, 123, 97, 108, 15])    
+ Set([197, 136, 25, 55, 160, 29, 144, 249, 150, 209  …  161, 268, 6, 73, 260, 222, 255, 72, 28, 27, 41])    </pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Hyperedges-Size-Distribution">Hyperedges Size Distribution<a class="anchor-link" href="#Hyperedges-Size-Distribution">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[61]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span></span><span class="p">]</span> <span class="n">add</span> <span class="n">PyPlot</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre><span class="ansi-green-intense-fg ansi-bold"> Resolving</span> package versions...
+<span class="ansi-green-intense-fg ansi-bold">  Updating</span> `~/.julia/environments/v1.1/Project.toml`
+ <span class="ansi-black-intense-fg"> [d330b81b]</span><span class="ansi-green-intense-fg"> + PyPlot v2.8.2</span>
+<span class="ansi-green-intense-fg ansi-bold">  Updating</span> `~/.julia/environments/v1.1/Manifest.toml`
+<span class="ansi-black-intense-fg"> [no changes]</span>
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[62]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span></span><span class="k">using</span> <span class="n">StatsBase</span>
+
+<span class="n">he_data</span> <span class="o">=</span> <span class="kt">Dict</span><span class="p">{</span><span class="kt">Int</span><span class="p">,</span> <span class="kt">Int</span><span class="p">}()</span>
+
+<span class="k">for</span> <span class="n">he</span><span class="o">=</span><span class="mi">1</span><span class="o">:</span><span class="n">nhe</span><span class="p">(</span><span class="n">fbh</span><span class="p">)</span>
+    <span class="n">push!</span><span class="p">(</span>
+        <span class="n">he_data</span><span class="p">,</span>
+        <span class="n">he</span> <span class="o">=&gt;</span> <span class="n">length</span><span class="p">(</span><span class="n">getvertices</span><span class="p">(</span><span class="n">fbh</span><span class="p">,</span> <span class="n">he</span><span class="p">)))</span>
+<span class="k">end</span>
+
+<span class="n">he_data</span><span class="p">;</span>
+<span class="n">he_distribution</span> <span class="o">=</span> <span class="n">countmap</span><span class="p">(</span><span class="n">collect</span><span class="p">(</span><span class="n">values</span><span class="p">(</span><span class="n">he_data</span><span class="p">)))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[62]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>Dict{Int64,Int64} with 14 entries:
+  30  =&gt; 1
+  32  =&gt; 1
+  2   =&gt; 2
+  9   =&gt; 2
+  133 =&gt; 1
+  10  =&gt; 1
+  17  =&gt; 1
+  6   =&gt; 1
+  4   =&gt; 1
+  3   =&gt; 2
+  5   =&gt; 1
+  20  =&gt; 2
+  13  =&gt; 1
+  1   =&gt; 7</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div></div></section></section><section><section>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[64]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span></span><span class="k">using</span> <span class="n">PyPlot</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[65]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span></span><span class="n">PyPlot</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">&quot;Hyperedges Size Distribution&quot;</span><span class="p">)</span>
+<span class="n">PyPlot</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">&quot;Hyperedges Size&quot;</span><span class="p">)</span>
+<span class="n">PyPlot</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">&quot;Number of hyperedges&quot;</span><span class="p">)</span>
+
+<span class="n">scatter</span><span class="p">(</span><span class="n">collect</span><span class="p">(</span><span class="n">keys</span><span class="p">(</span><span class="n">he_distribution</span><span class="p">)),</span> <span class="n">collect</span><span class="p">(</span><span class="n">values</span><span class="p">(</span><span class="n">he_distribution</span><span class="p">)));</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAioAAAHHCAYAAACRAnNyAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAPYQAAD2EBqD+naQAAADh0RVh0U29mdHdhcmUAbWF0cGxvdGxpYiB2ZXJzaW9uMy4xLjEsIGh0dHA6Ly9tYXRwbG90bGliLm9yZy8QZhcZAAAgAElEQVR4nOzdeZyNdf/H8feZGbMwi7GMIWNMUsIoS7onioxIpVCUZCnhjrJ0V9qEtqG6JSVLuVG0oBD3jZClZGdkIltjuRk7s1hmzJzv749+c27HzDBnnHGumXk9H4/zyPle3/M9n/Od4Xp3Xd/rOjZjjBEAAIAFeXm6AAAAgLwQVAAAgGURVAAAgGURVAAAgGURVAAAgGURVAAAgGURVAAAgGURVAAAgGURVAAAgGURVIBiYPny5bLZbFq+fLmnS7kqU6ZMkc1m0969ez1dymX16NFD1atXvybvVb16dfXo0cPxPHuONmzYcE3ev3nz5mrevPk1eS8gNwQVFGlX+ke7efPmqlu37jWuCpfKyMjQRx99pPr16ys4OFhly5ZVnTp11Lt3b/3xxx8erW3YsGGy2WyOR+nSpVWtWjW1bdtWkydPVnp6ulveZ9u2bRo2bJglQ5iVawN8PF0AgOLv4Ycf1oIFC9S5c2f16tVLFy5c0B9//KH58+frjjvuUK1atSRJXbt21WOPPSY/P79rXuO4ceMUGBio9PR0HTx4UIsWLdJTTz2l0aNHa/78+YqIiHD0/eyzz2S3210af9u2bRo+fLiaN2/u0tGYHTt2yMurcP+f8nK1/fjjj4X63sCVEFQADzpz5ozKlCnj6TIK1fr16zV//ny98847evXVV522ffLJJzp9+rTjube3t7y9va91iZKkRx55RBUqVHA8f+ONNzR9+nR169ZNHTt21Jo1axzbSpUqVai1GGN0/vx5BQQEeCS0XczX19ej7w9w6gclSrNmzXTLLbfkuu2mm25S69atJUl79+6VzWbTBx98oA8//FCRkZEKCAhQs2bNlJCQkOO1f/zxhx555BGVK1dO/v7+atSokX744QenPtmnqVasWKG+ffsqLCxMVatWdWw/ePCgnnrqKVWqVEl+fn6qU6eO/vWvf+V4r//+979q166dypQpo7CwMA0aNCjP0xNjx47V9ddfr4CAADVu3Fg///xzrmsO0tPTNXToUN1www3y8/NTRESEXnrppRzjLl68WE2bNlXZsmUVGBiom266KUf4uNSePXskSU2aNMmxzdvbW+XLl88xR9mnIC49LXPx4+J1G3a7XaNHj1adOnXk7++vSpUqqU+fPjp16tRla7uSLl266Omnn9batWu1ePFiR3tua1S++eYbNWzYUEFBQQoODlZ0dLQ++ugjx+fq2LGjJOnuu+92fIbsNUXVq1fXAw88oEWLFqlRo0YKCAjQhAkTHNsu/qzZzp49qz59+qh8+fIKDg5Wt27dcnxem82mYcOG5XjtxWNeqbbcfl+OHj2qnj17qlKlSvL399ctt9yiqVOnOvW5+O/QxIkTVaNGDfn5+em2227T+vXrc51vIDccUUGxkJycrOPHj+dov3DhgtPzrl27qlevXkpISHBau7J+/Xrt3LlTr7/+ulP/L774QqmpqerXr5/Onz+vjz76SC1atNDWrVtVqVIlSdLvv/+uJk2a6LrrrtPLL7+sMmXKaMaMGWrXrp2+++47tW/f3mnMvn37qmLFinrjjTd05swZSdKRI0f0t7/9TTabTc8++6wqVqyoBQsWqGfPnkpJSdHAgQMlSefOnVNsbKz279+v/v37q0qVKvryyy/1008/5fjs48aN07PPPqs777xTgwYN0t69e9WuXTuFhoY6BSS73a4HH3xQv/zyi3r37q2bb75ZW7du1YcffqidO3dqzpw5js/5wAMPqF69enrzzTfl5+en3bt3a9WqVZf92URGRkqSpk+friZNmsjHJ///7HTo0EE33HCDU9vGjRs1evRohYWFOdr69OmjKVOm6Mknn1T//v2VmJioTz75RJs3b9aqVauu6ghI165dNXHiRP3444+65557cu2zePFide7cWbGxsRo5cqQkafv27Vq1apUGDBigu+66S/3799eYMWP06quv6uabb5Ykx3+lv07xdO7cWX369FGvXr100003XbauZ599VmXLltWwYcO0Y8cOjRs3Tvv27XMsrM6v/NR2sXPnzql58+bavXu3nn32WUVFRWnmzJnq0aOHTp8+rQEDBjj1/+qrr5Samqo+ffrIZrPpvffeU4cOHfTnn38W+pEpFBMGKMImT55sJF32UadOHUf/06dPG39/fzN48GCncfr372/KlClj0tLSjDHGJCYmGkkmICDA/Pe//3X0W7t2rZFkBg0a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Ynx9fU2VKlVM586dzc6dO3P9PBd/rhEjRphmzZqZypUrGx8fHxMaGmpatGjhND8Xz1H25cndu3fP87Lziy+vNcaYiRMnmoYNG5qAgAATFBRkoqOjzUsvvWQOHTp02fqyL0/Ofvj7+5uqVauaBx54wPzrX/9yuuw826WXJ8+aNcu0atXKhIWFGV9fX1OtWjXTp08fk5SU5PS6zz77zFx//fXG29vb6ecVGRlp7r///lzry+vy5BUrVpjevXub0NBQExgYaLp06WJOnDjh9NqsrCwzePBgU6FCBVO6dGnTunVrs3v37hxjXq62Sy9PNuavn+mTTz5pKlSoYHx9fU10dLSZPHmyU5+L/w5dSnlcNg3kxmYMK5pQMn300UeOG6FdemXC3r17FRUVpffff18vvPCChyp0P7vdrooVK6pDhw65nuoBAKthjQpKJGOMJk2apGbNmuUIKcXF+fPnc1xZ8cUXX+jkyZM5bokOAFbFGhWUKGfOnNEPP/ygZcuWaevWrTnWPRQna9as0aBBg9SxY0eVL19emzZt0qRJk1S3bl3Hd7sAgNURVFCiHDt2TI8//rjKli2rV1991WnhYXFTvXp1RUREaMyYMTp58qTKlSunbt26acSIEXwjLoAigzUqAADAslijAgAALIugAgAALKtIr1Gx2+06dOiQgoKC3H57agAAUDiMMUpNTVWVKlWu+KWmRTqoHDp0yPGFaQAAoGg5cOCAqlatetk+RTqoZN+q+cCBAwoODvZwNQAAID9SUlIUERGRr69cKNJBJft0T3BwMEEFAIAiJj/LNlhMCwAALIugAgAALIugAgAALIugAgAALIugAgAALIugAgAALIugAgAALIugAgAALIugAgAALKtI35m2sGTZjdYlntTR1PMKC/JX46hy8vbiSw8BALjWPBpUqlevrn379uVo79u3r8aOHeuBiqSFCUkaPm+bkpLPO9oqh/hraNvaurduZY/UBABASeXRUz/r169XUlKS47F48WJJUseOHT1Sz8KEJD0zbZNTSJGkw8nn9cy0TVqYkOSRugAAKKk8GlQqVqyo8PBwx2P+/PmqUaOGmjVrds1rybIbDZ+3TSaXbdltw+dtU5Y9tx4AAKAwWGYxbUZGhqZNm6annnoqz29TTE9PV0pKitPDXdYlnsxxJOViRlJS8nmtSzzptvcEAACXZ5mgMmfOHJ0+fVo9evTIs09cXJxCQkIcj4iICLe9/9HUvENKQfoBAICrZ5mgMmnSJLVp00ZVqlTJs88rr7yi5ORkx+PAgQNue/+wIH+39gMAAFfPEpcn79u3T0uWLNH3339/2X5+fn7y8/MrlBoaR5VT5RB/HU4+n+s6FZuk8JC/LlUGAADXhiWOqEyePFlhYWG6//77PVaDt5dNQ9vWlvRXKLlY9vOhbWtzPxUAAK4hjwcVu92uyZMnq3v37vLx8ewBnnvrVta4JxooPMT59E54iL/GPdGA+6gAAHCNefzUz5IlS7R//3499dRTni5F0l9h5Z7a4dyZFgAAC/B4UGnVqpWMsda9Sby9bIqpUd7TZQAAUOJ5/NQPAABAXggqAADAsggqAADAsggqAADAsggqAADAsggqAADAsggqAADAsggqAADAsggqAADAsggqAADAsggqAADAsggqAADAsggqAADAsggqAADAsggqAADAsggqAADAsggqAADAsggqAADAsggqAADAsggqAADAsggqAADAsggqAADAsggqAADAsggqAADAsggqAADAsggqAADAsggqAADAsggqAADAsggqAADAsggqAADAsggqAADAsggqAADAsggqAADAsggqAADAsggqAADAsggqAADAsggqAADAsggqAADAsggqAADAsggqAADAsggqAADAsggqAADAsggqAADAsggqAADAsggqAADAsjweVA4ePKgnnnhC5cuXV0BAgKKjo7VhwwZPlwUAACzAx5NvfurUKTVp0kR33323FixYoIoVK2rXrl0KDQ31ZFkAAMAiPBpURo4cqYiICE2ePNnRFhUV5cGKAACAlXj01M8PP/ygRo0aqWPHjgoLC1P9+vX12Wef5dk/PT1dKSkpTg8AAFB8eTSo/Pnnnxo3bpxq1qypRYsW6ZlnnlH//v01derUXPvHxcUpJCTE8YiIiLjGFQMAgGvJZowxnnpzX19fNWrUSL/++qujrX///lq/fr1Wr16do396errS09Mdz1NSUhQREaHk5GQFBwdfk5oBAMDVSUlJUUhISL723x49olK5cmXVrl3bqe3mm2/W/v37c+3v5+en4OBgpwcAACi+PBpUmjRpoh07dji17dy5U5GRkR6qCAAAWIlHg8qgQYO0Zs0avfvuu9q9e7e++uorTZw4Uf369fNkWQAAwCI8GlRu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FStWVHx8fI72+Ph4S1wJBAAAig+XF9P26tVLvXv31p9//qk77rhDkrRq1SqNHDlSzz//vNsLBAAAJZfLa1SMMRo9erT++c9/6tChQ5KkKlWq6MUXX1T//v1ls9kKpdDcsEYFAICip1Bv+Hax1NRUSVJQUFBBh7gqBBUAAIqeQr3h28U8FVAAAEDJ4PJiWgAAgGuFoAIAACyLoAIAACzLpaBy4cIFxcbGateuXYVVDwAAgINLQaVUqVL67bffCqsWAAAAJy6f+nniiSc0adKkwqgFAADAicuXJ2dmZupf//qXlixZooYNG6pMmTJO20eNGuW24gAAQMnmclBJSEhQgwYNJEk7d+502nYt70oLAACKP5eDyrJlywqjDgAAgBwKfHny7t27tWjRIp07d07SX98BBAAA4E4uB5UTJ04oNjZWN954o+677z4lJSVJknr27Kl//OMfbi8QAACUXC4HlUGDBqlUqVLav3+/Spcu7Wh/9NFHtXDhQrcWBwAASjaX16j8+OOPWrRokapWrerUXrNmTe3bt89thQEAALh8ROXMmTNOR1KynTx5Un5+fm4pCgAAQCpAULnzzjv1xRdfOJ7bbDbZ7Xa99957uvvuu91aHAAAKNlcPvXz3nvvKTY2Vhs2bFBGRoZeeukl/f777zp58qRWrVpVGDUCAIASyuUjKnXr1tXOnTvVtGlTPfTQQzpz5ow6dOigzZs3q0aNGoVRIwAAKKFspgjfACUlJUUhISFKTk5WcHCwp8sBAAD54Mr+2+VTP5J06tQpTZo0Sdu3b5ck1a5dW08++aTKlStXkOEAAABy5fKpn5UrV6p69eoaM2aMTp06pVOnTmnMmDGKiorSypUrC6NGAABQQrl86ic6OloxMTEaN26cvL29JUlZWVnq27evfv31V23durVQCs0Np34AACh6XNl/u3xEZffu3frHP/7hCCmS5O3treeff167d+92vVoAAIA8uBxUGjRo4FibcrHt27frlltucUtRAAAAUj4X0/7222+OP/fv318DBgzQ7t279be//U2StGbNGo0dO1YjRowonCoBAECJlK81Kl5eXrLZbLpSV5vNpqysLLcVdyWsUQEAoOhx++XJiYmJbikMAADAFfkKKpGRkYVdBwAAQA4FuuHboUOH9Msvv+jo0aOy2+1O2/r37++WwgAAAFwOKlOmTFGfPn3k6+ur8uXLy2azObbZbDaCCgAAcBuXL08eMmSI3njjDSUnJ2vv3r1KTEx0PP7880+Xxho3bpzq1aun4OBgBQcHKyYmRgsWLHC1JAAAUEy5HFTOnj2rxx57TF5eLr80h6pVq2rEiBHauHGjNmzYoBYtWuihhx7S77//ftVjAwCAos/ltNGzZ0/NnDnTLW/etm1b3XfffapZs6ZuvPFGvfPOOwoMDNSaNWvcMj4AACjaXF6jEhcXpwceeEALFy5UdHS0SpUq5bR91KhRBSokKytLM2fO1JkzZxQTE1OgMQAAQPFSoKCyaNEi3XTTTZKUYzGtq7Zu3aqYmBidP39egYGBmj17tmrXrp1r3/T0dKWnpzuep6SkuPx+AACg6HD525NDQ0P14YcfqkePHm4pICMjQ/v371dycrJmzZqlzz//XCtWrMg1rAwbNkzDhw/P0c6daQEAKDpcuTOty0ElPDxcP//8s2rWrHlVRealZcuWqlGjhiZMmJBjW25HVCIiIggqAAAUIa4EFZcX0w4YMEAff/xxgYu7Ervd7hRGLubn5+e4lDn7AQAAii+X16isW7dOP/30k+bPn686derkWEz7/fff53usV155RW3atFG1atWUmpqqr776SsuXL9eiRYtcLQsAABRDLgeVsmXLqkOHDm5586NHj6pbt25KSkpSSEiI6tWrp0WLFumee+5xy/gAAKBoc3mNipW4co4LAABYQ6GuUQEAALhWXD71ExUVddn7pbj6fT8AAAB5cTmoDBw40On5hQsXtHnzZi1cuFAvvvii2woDAABwOagMGDAg1/axY8dqw4YNV10QAABANretUWnTpo2+++47dw0HAADgvqAya9YslStXzl3DAQAAuH7qp379+k6LaY0xOnz4sI4dO6ZPP/3UrcUBAICSzeWg0q5dO6fnXl5eqlixopo3b65atWq5rTAAAABu+AYAAK4pbvgGAACKhXyf+vHy8rrsjd4kyWazKTMz86qLAgAAkFwIKrNnz85z2+rVqzVmzBjZ7Xa3FAUAACC5EFQeeuihHG07duzQyy+/rHnz5qlLly5688033VocAAAo2Qq0RuXQoUPq1auXoqOjlZmZqfj4eE2dOlWRkZHurg8AAJRgLgWV5ORkDR48WDfccIN+//13LV26VPPmzVPdunULqz4AAFCC5fvUz3vvvaeRI0cqPDxcX3/9da6nggAAANwp3/dR8fLyUkBAgFq2bClvb+88+33//fduK+5KuI8KAABFjyv773wfUenWrdsVL08GAABwp3wHlSlTphRiGQAAADlxZ1oAAGBZBBUAAGBZBBUAAGBZBBUAAGBZBBUAAGBZBBUAAGBZBBUAAGBZBBUAAGBZBBUAAGBZBBUAAGBZBBUAAGBZBBUAAGBZBBUAAGBZBBUAAGBZBBUAAGBZBBUAAGBZBBUAAGBZBBUAAGBZBBUAAGBZBBUAAGBZBBUAAGBZBBUAAGBZBBUAAGBZBBUAAGBZBBUAAGBZBBUAAGBZHg0qcXFxuu222xQUFKSwsDC1a9dOO3bs8GRJOWTZjVbvOaG58Qe1es8JZWTanZ5n2Y1bx7/a8dzFqnUBAEoWH0+++YoVK9SvXz/ddtttyszM1KuvvqpWrVpp27ZtKlOmjCdLkyQtTEjS8HnblJR83tHmZZMu3mdXDvHX0La1dW/dym4Z/2rGcxer1gUAKHlsxhjL/K/ysWPHFBYWphUrVuiuu+66Yv+UlBSFhIQoOTlZwcHBbq1lYUKSnpm2SVeaHNv//3fcEw1c2onnNX5Bx3MXq9YFACg+XNl/W2qNSnJysiSpXLlyHq0jy240fN62K4YUSY4+w+dty/fpkcuNX5Dx3MWqdQEASi7LBBW73a6BAweqSZMmqlu3bq590tPTlZKS4vQoDOsSTzqd9rgSIykp+bzWJZ50y/iujucuVq0LAFByWSao9OvXTwkJCfrmm2/y7BMXF6eQkBDHIyIiolBqOZqa/5BSkNe5u5+7WLUuAEDJZYmg8uyzz2r+/PlatmyZqlatmme/V155RcnJyY7HgQMHCqWesCD/Qn2du/u5i1XrAgCUXB696scYo+eee06zZ8/W8uXLFRUVddn+fn5+8vPzK/S6GkeVU+UQfx1OPp+vdSo2SeEh/moclb+1NVca39Xx3MWqdQEASi6PHlHp16+fpk2bpq+++kpBQUE6fPiwDh8+rHPnznmyLHl72TS0bW1J/7vaJS/Z24e2rS1vryv1vvL4BRnPXaxaFwCg5PLo5ck2W+47vMmTJ6tHjx5XfH1hXp4scR8Vq9UFACgeXNl/W+o+Kq4q7KAi/XXJ7rrEkzqael5hQf5qGBmqjftOOZ43jip3VUcYLh3/asdzF6vWBQAo+ggqAADAsorsDd8AAAAuRlABAACWRVABAACWRVABAACWRVABAACWRVABAACWRVABAACWRVABAACWRVABAACWRVABAACWRVABAACWRVABAACWRVABAACWRVABAACWRVABAACWRVABAACWRVABAACWRVABAACWRVABAACWRVABAACWRVABAACWRVABAACWRVABAACWRVABAACWRVABAACWRVABAACWRVABAACWRVABAACWRVABAACWRVABAACWRVABAACWRVABAACWRVABAACWRVABAACWRVABAACWRVABAACWRVABAACWRVABAACWRVABAACWRVABAACWRVABAACWRVABAACWRVABAACW5ePpAoqyLLvRusSTOpp6XhXK+Ek26XhausKC/NUwMlQb953S0dTzCgvyV+OocvL2suV7vCu9xpW+V/MaT7tczUXx8wBAUWGVf2M9GlRWrlyp999/Xxs3blRSUpJmz56tdu3aebKkfFuYkKTh87YpKfl8rtu9bJLd/O955RB/DW1bW/fWrZzv8fJ6jSt9r+Y1nna5miUVuc8DAEWFlfYZNmOMuXK3wrFgwQKtWrVKDRs2VIcOHVwOKikpKQoJCVFycrKCg4MLsVJnCxOS9My0TXJl4rIz6LgnGuQaPHIbL7fXuNK3IONbxeVqzmverfx5AKCouBb7DFf23x5do9KmTRu9/fbbat++vSfLcEmW3Wj4vG0uhRTpfzvX4fO2KeuiQy2XG+/S17jStyDjW0V+as6NVT8PABQVVtxnFKnFtOnp6UpJSXF6XGvrEk/mebrnSoykpOTzWpd4Mt/jXfwaV/oWZHyrcPccAwDyx4r7jCIVVOLi4hQSEuJ4REREXPMajqYWbAea1xj5He9o6nmX+hZkfKtw9xwDAPLHivuMIhVUXnnlFSUnJzseBw4cuOY1hAX5u3WM/I4XFuTvUt+CjG8V7p5jAED+WHGfUaSCip+fn4KDg50e11rjqHKqHOKvglygZdNfq6YbR5XL93gXv8aVvgUZ3yrcPccAgPyx4j6jSAUVK/D2sjkuj3VlR5rdd2jb2k7XoV9uvEtf40rfgoxvFfmp+XLbrPZ5AKCosOI+w6NBJS0tTfHx8YqPj5ckJSYmKj4+Xvv37/dkWVd0b93KGvdEA4WH5H3o69KfYXiIf56XdOU1Xm6vcaXv1bzG0y5X8/gnGmh8Efs8AFBUWG2f4dH7qCxfvlx33313jvbu3btrypQpV3y9p+6jko070xY+7kwLAJ5RmP/GurL/9mhQuVqeDioAAMB1ReaGbwAAAJdDUAEAAJZFUAEAAJZFUAEAAJZFUAEAAJZFUAEAAJZFUAEAAJZFUAEAAJZFUAEAAJZFUAEAAJbl4+kCrkb23f9TUlI8XAkAAMiv7P12fr7Fp0gHldTUVElSRESEhysBAACuSk1NVUhIyGX7FOkvJbTb7Tp06JCCgoJks13dNzqmpKQoIiJCBw4c4AsO/x9z4oz5cMZ85MScOGM+nDEf/2OMUWpqqqpUqSIvr8uvQinSR1S8vLxUtWpVt44ZHBxc4n+BLsWcOGM+nDEfOTEnzpgPZ8zHX650JCUbi2kBAIBlEVQAAIBleQ8bNmyYp4uwCm9vbzVv3lw+PkX6jJhbMSfOmA9nzEdOzIkz5sMZ8+G6Ir2YFgAAFG+c+gEAAJZFUAEAAJZFUAEAAJZFUAEAAJZFUPl/Y8eOVfXq1eXv76/bb79d69at83RJ10RcXJxuu+02BQUFKSwsTO3atdOOHTuc+pw/f179+vVT+fLlFRgYqIcfflhHjhzxUMXX1ogRI2Sz2TRw4EBHW0mbj4MHD+qJJ55Q+fLlFRAQoOjoaG3YsMGx3RijN954Q5UrV1ZAQIBatmypXbt2ebDiwpWVlaUhQ4YoKipKAQEBqlGjht566y2n7ywpznOycuVKtW3bVlWqVJHNZtOcOXOctufns588eVJdunRRcHCwypYtq549eyotLe1afgy3utycXLhwQYMHD1Z0dLTKlCmjKlWqqFu3bjp06JDTGMVtTtyJoCLp22+/1fPPP6+hQ4dq06ZNuuWWW9S6dWsdPXrU06UVuhUrVqhfv35as2aNFi9erAsXLqhVq1Y6c+aMo8+gQYM0b948zZw5UytWrNChQ4fUoUMHD1Z9baxfv14TJkxQvXr1nNpL0nycOnVKTZo0UalSpbRgwQJt27ZN//znPxUaGuro895772nMmDEaP3681q5dqzJlyqh169Y6f/68BysvPCNHjtS4ceP0ySefaPv27Ro5cqTee+89ffzxx44+xXlOzpw5o1tuuUVjx47NdXt+PnuXLl30+++/a/HixZo/f75Wrlyp3r17X6uP4HaXm5OzZ89q06ZNGjJkiDZt2qTvv/9eO3bs0IMPPujUr7jNiVsZmMaNG5t+/fo5nmdlZZkqVaqYuLg4D1blGUePHjWSzIoVK4wxxpw+fdqUKlXKzJw509Fn+/btRpJZvXq1p8osdKmpqaZmzZpm8eLFplmzZmbAgAHGmJI3H4MHDzZNmzbNc7vdbjfh4eHm/fffd7SdPn3a+Pn5ma+//vpalHjN3X///eapp55yauvQoYPp0qWLMaZkzYkkM3v2bMfz/Hz2bdu2GUlm/fr1jj4LFiwwNpvNHDx48NoVX0gunZPcrFu3zkgy+/btM8YU/zm5WiX+iEpGRoY2btyoli1bOtq8vLzUsmVLrV692oOVeUZycrIkqVy5cpKkjRs36sKFC07zU6tWLVWrVq1Yz0+/fv10//33O31uqeTNxw8//KBGjRqpY8eOCgsLU/369fXZZ585ticmJurw4cNO8xESEqLbb7+9WM6HJN1xxx1aunSpdu7cKUnasmWLfvnlF7Vp00ZSyZyTbPn57KtXr1bZsmXVqFEjR5+WLVvKy8tLa9euveY1e0JycrJsNpvKli0riTm5khJ/a7zjx48rKytLlSpVcmqvVKmS/vjjDw9V5Rl2u10DBw5UkyZNVLduXUnS4cOH5evr6/gLla1SpUo6fPiwJ8osdN988402bdqk9evX59hW0ubjzz//1Lhx4/T888/r1Vdf1fr169W/f3/5+vqqe/fujs+c29+f4jgfkvTyyy8rJSVFtWrVkre3t7KysvTOO++oS5cuklQi5yRbfj774cOHFRYW5rTdx8dH5cqVK/bzI/21xm3w4MHq3Lmz44sJS/qcXEmJDyr4n379+ikhIUG//PKLp0vxmAMHDmjAgAFavHix/P39PV2Ox9ntdjVq1EjvvvuuJKl+/fpKSEjQ+PHj1b17dw9X5xkzZszQ9OnT9dVXX6lOnTqKj4/XwIEDVaVKlRI7J8ifCxcuqFOnTjLGaNy4cZ4up8go8ad+KlSoIG9v7xxXbRw5ckTh4eEequrae/bZZzV//nwtW7ZMVatWdbSHh4crIyNDp0+fdupfXOdn48aNOnr0qBo0aCAfHx/5+PhoxYoVGjNmjHx8fFSpUqUSNR+VK1dW7dq1ndpuvvlm7d+/X5Icn7kk/f158cUX9fLLL+uxxx5TdHS0unbtqkGDBikuLk5SyZyTbPn57OHh4TkuVMjMzNTJkyeL9fxkh5R9+/Zp8eLFjqMpUsmdk/wq8UHF19dXDRs21NKlSx1tdrtdS5cuVUxMjAcruzaMMXr22Wc1e/Zs/fTTT4qKinLa3rBhQ5UqVcppfnbs2KH9+/cXy/mJjY3V1q1bFR8f73g0atRIXbp0cfy5JM1HkyZNclyuvnPnTkVGRkqSoqKiFB4e7jQfKSkpWrt2bbGcD+mvqzi8vJz/6fT29pbdbpdUMuckW34+e0xMjE6fPq2NGzc6+vz000+y2+26/fbbr3nN10J2SNm1a5eWLFmi8uXLO20viXPiEk+v5rWCb775xvj5+ZkpU6aYbdu2md69e5uyZcuaw4cPe7q0QvfMM8+YkJAQs3z5cpOUlOR4nD171tHn73//u6lWrZr56aefzIYNG0xMTIyJiYnxYNXX1sVX/RhTsuZj3bp1xsfHx7zzzjtm165dZvr06aZ06dJm2rRpjj4jRowwZcuWNXPnzjW//fabeeihh0xUVJQ5d+6cBysvPN27dzfXXXedmT9/vklMTDTff/+9qVChgnnppZccfYrznKSmpprNmzebzZs3G0lm1KhRZvPmzY4rWPLz2e+9915Tv359s3btWvPLL7+YmjVrms6dO3vqI121y81JRkaGefDBB03VqlVNfHy807+z6enpjjGK25y4E0Hl/3388cemWrVqxtfX1zRu3NisWbPG0yVdE5JyfUyePNnR59y5c6Zv374mNDTUlC5d2rRv394kJSV5ruhr7NKgUtLmY968eaZu3brGz8/P1KpVy0ycONFpu91uN0OGDDGVKlUyfn5+JjY21uzYscND1Ra+lJQUM2DAAFOtWjXj7+9vrr/+evPaa6857XSK85wsW7Ys138zunfvbozJ32c/ceKE6dy5swkMDDTBwcHmySefNKmpqR74NO5xuTlJTEzM89/ZZcuWOcYobnPiTjZjLrqdIgAAgIWU+DUqAADAuggqAADAsggqAADAsggqAADAsggqAADAsggqAADAsggqAADAsggqACxn2LBhuvXWWz1dxhXZbDbNmTPH02UAxRpBBSiievTooXbt2uVoX758uWw2W44vToRrjh07pmeeeUbVqlWTn5+fwsPD1bp1a61atcrRJykpSW3atPFglUDx5+PpAgAUTxkZGfL19fV0GQX28MMPKyMjQ1OnTtX111+vI0eOaOnSpTpx4oSjD99sCxQ+jqgAxdiZM2cUHBysWbNmObXPmTNHZcqUUWpqqvbu3SubzaZv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"
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div></div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Degree-Distribution">Degree Distribution<a class="anchor-link" href="#Degree-Distribution">&#182;</a></h3>
+</div>
+</div>
+</div><div class="fragment">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[66]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span></span><span class="k">using</span> <span class="n">StatsBase</span>
+
+<span class="n">v_data</span> <span class="o">=</span> <span class="kt">Dict</span><span class="p">{</span><span class="kt">Int</span><span class="p">,</span> <span class="kt">Int</span><span class="p">}()</span>
+
+<span class="k">for</span> <span class="n">v</span><span class="o">=</span><span class="mi">1</span><span class="o">:</span><span class="n">nhv</span><span class="p">(</span><span class="n">fbh</span><span class="p">)</span>
+    <span class="n">push!</span><span class="p">(</span>
+        <span class="n">v_data</span><span class="p">,</span>
+        <span class="n">v</span> <span class="o">=&gt;</span> <span class="n">length</span><span class="p">(</span><span class="n">gethyperedges</span><span class="p">(</span><span class="n">fbh</span><span class="p">,</span> <span class="n">v</span><span class="p">)))</span>
+<span class="k">end</span>
+
+<span class="n">v_data</span><span class="p">;</span>
+<span class="n">v_distribution</span> <span class="o">=</span> <span class="n">countmap</span><span class="p">(</span><span class="n">collect</span><span class="p">(</span><span class="n">values</span><span class="p">(</span><span class="n">v_data</span><span class="p">)))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[66]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>Dict{Int64,Int64} with 2 entries:
+  2 =&gt; 39
+  1 =&gt; 247</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div></div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">

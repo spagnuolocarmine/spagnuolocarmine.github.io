@@ -1,0 +1,39 @@
+# For documentation on this file, see:
+# https://github.com/riggraz/no-style-please#customize-the-menu
+
+entries:
+  - title: ℹ️ info
+    url: false
+    entries:
+      - title: <span style="font-weight:800">Postdoc</span> @ Dept. of Computer Science University of Salerno, Italy
+        url: https://www.di.unisa.it
+      - title: 📧 cspagnuolo [@] unisa.it
+        url: mailto:cspagnuolo@unisa.it
+      - title: <span style="font-weight:800">where we can meet 🤝 ? </span> ISISLab Laboratory 🐁 (Room 2), Stecca 7, Dipartimento di Informatica, Via Giovanni Paolo II, 132, 84084 Fisciano (Salerno), Italy
+        url: false
+      - title: 💁 about me
+        url: _pages/about
+      - title: 📄 research profile (🇮🇹)
+        url: _pages/cv
+      - title: 🗄️ publications
+        url: _pages/pub
+  - title: 👀 what are you looking for ?
+    post_list: true
+    url: false
+    entries: false
+
+# - title: another list
+#    url: false
+#    entries:
+#      - title: with subitems
+#        url: false
+#        entries:
+#          - title: with subsubitems
+#            url: false
+#          - title: example page
+#            url: about
+#  - title: PRO TIP
+#    url: false
+#    entries:
+#      - title: to edit this menu, edit _data/menu.yml file
+#        url: false

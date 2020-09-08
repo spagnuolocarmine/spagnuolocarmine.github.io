@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: "en" }}">
+        {%- include head.html -%}
+    <body>
+    <main class="page-content" aria-label="Content">
+
+        <div class="wrapper">
+       
+          {{ content }}
+          <a href="mailto:cspagnuolo@unisa.it" title="mail me"><img src="https://img.shields.io/badge/gmail-%23D14836.svg?&style=for-the-badge&logo=gmail&logoColor=white"></a> 
+          <a href="https://www.linkedin.com/in/carmine-spagnuolo-62785b75/" title="linkedin"><img src="https://img.shields.io/badge/linkedin-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white"></a> 
+          <a href="https://www.instagram.com/spagnuolocarmine/" title="instagram"><img src="https://img.shields.io/badge/instagram-%23E4405F.svg?&style=for-the-badge&logo=instagram&logoColor=white"></a> 
+            <a href="https://discord.gg/BTt5fUp" title="instagram"><img src="https://img.shields.io/badge/discord-%237289DA.svg?&style=for-the-badge&logo=discord&logoColor=white"></a> 
+          <a href="feed.xml" title="feed"><img src="https://img.shields.io/badge/rss-%23FFA500.svg?&style=for-the-badge&logo=rss&logoColor=white "></a> 
+            
+        
+        </div>
+    </main>
+
+    {% if site.goat_counter and jekyll.environment == "production" %}
+        {% include goat_counter.html %}
+    {% endif %}
+    </body>
+</html>

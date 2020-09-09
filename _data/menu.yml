@@ -13,7 +13,7 @@ entries:
         url: false
       - title: 💁 about me
         url: _pages/about
-      - title: 🎓 Ph.D. students that works with me
+      - title: 🎓 Ph.D. students I have worked with
         url: _pages/thesis_phd
      # - title: 📄 research profile (🇮🇹)
      #   url: _pages/cv

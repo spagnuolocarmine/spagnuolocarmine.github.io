@@ -3,7 +3,6 @@ layout: post
 title: Research profile
 ---
 
-
 ## Table of contents
 - [Attività di ricerca](#attività-di-ricerca)
   - [Partecipazione come relatore a convegni](#partecipazione-come-relatore-a-convegni)

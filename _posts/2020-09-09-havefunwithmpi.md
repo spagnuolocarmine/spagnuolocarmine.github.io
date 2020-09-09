@@ -1,6 +1,6 @@
 ---
 layout: post
-title: HAVE FUN WITH MPI (in C language) a new interactive bool available on Tech.io
+title: HAVE FUN WITH MPI (in C language) a new interactive book available on Tech.io
 ---
 
 

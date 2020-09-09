@@ -13,7 +13,7 @@ entries:
         url: false
       - title: 💁 about me,  <a href="assets/img/me_sail.jpg">🤳</a>
         url: _pages/about
-      - title: 🎓 Ph.D. students I have worked with
+      - title: 🎓 Ph.D. students, I have worked with
         url: _pages/thesis_phd
      # - title: 📄 research profile (🇮🇹)
      #   url: _pages/cv

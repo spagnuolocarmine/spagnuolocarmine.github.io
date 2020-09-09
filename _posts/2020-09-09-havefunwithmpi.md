@@ -4,11 +4,10 @@ title: HAVE FUN WITH MPI (in C language) a new interactive book available on Tec
 ---
 
 
-<a href="http://bit.ly/have-fun-with-mpi-in-c" ><img src="assets/img/cover.png" alt="logo" height="120" align="right"/></a>
+<a href="http://bit.ly/have-fun-with-mpi-in-c" ><img src="assets/img/cover.png" alt="logo" height="120" align="center"/></a>
 
-# Have fun with MPI in C
 
-*An interactive tutorial playground available on [Tech.io](http://bit.ly/have-fun-with-mpi-in-c).*
+### An interactive tutorial playground available on [Tech.io](http://bit.ly/have-fun-with-mpi-in-c).
 
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/) 
 [![Open Source Love svg3](https://badges.frapsoft.com/os/v3/open-source.svg?v=103)](http://bit.ly/have-fun-with-mpi-in-c)

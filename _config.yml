@@ -24,3 +24,6 @@ plugins:
 
 include:
  - _pages
+
+# Google Analytics
+google_analytics: UA-177780415-1

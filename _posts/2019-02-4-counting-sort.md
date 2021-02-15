@@ -33,10 +33,10 @@ Counting sort uses three lists:
 - Sort _A_ in _B_ according to `C[A[i]], 1<=i<=k` and decrement the value of `C[A[i]]` after each update.
  
 
-![Counting Sort](https://github.com/spagnuolocarmine/spagnuolocarmine.github.io/blob/master/assets/img/count.gif)
+![Counting Sort](https://raw.githubusercontent.com/spagnuolocarmine/spagnuolocarmine.github.io/master/assets/img/count.gif)
 
 ### Counting Sort Parallel
 
 Bsed on the idea of sequential counting sort. Uses `n^2` processors on a mesh grid of `n x n`. Running time complexity `O(logn)`.
 
-![Counting Sort](https://github.com/spagnuolocarmine/spagnuolocarmine.github.io/blob/2019/assets/img/coutingpar.png)
+![Counting Sort](https://raw.githubusercontent.com/spagnuolocarmine/spagnuolocarmine.github.io/2019/assets/img/coutingpar.png)

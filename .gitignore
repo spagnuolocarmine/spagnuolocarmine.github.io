@@ -6,3 +6,4 @@ _site/
 assets/.DS_Store
 assets/files/.DS_Store
 assets/files/pcpc2020/.DS_Store
+.vscode/settings.json

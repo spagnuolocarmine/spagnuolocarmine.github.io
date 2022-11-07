@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Italiana|WindSong|Petit Formal Script">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/add-to-calendar-button@1/assets/css/atcb.min.css">
+<script src="http://w.soundcloud.com/player/api.js" type="text/javascript"></script>
 <style>
 body,h1 {font-family: "Italiana", sans-serif}
 body, html {height: 100%; background-color: #f5f5dc;}
@@ -37,28 +38,34 @@ body, html {height: 100%; background-color: #f5f5dc;}
 <!-- <audio id ="music" autoplay>
     <source src="https://github.com/spagnuolocarmine/spagnuolocarmine.github.io/blob/master/assets/img/wedding/Across-the-Park.mp3?raw=true" autostart="true" type="audio/mpeg" />
 </audio> -->
-
-<iframe src="./assets/img/wedding/Across-the-Park.mp3" allow="autoplay" id="audio" style="display:none"></iframe>
+<!-- <iframe style="display:none" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/482221002%3Fsecret_token%3Ds-ahwqc&color=%23577c5d&inverse=false&auto_play=true&show_user=true"></iframe> -->
+<!-- <iframe src="./assets/img/wedding/Across-the-Park.mp3" allow="autoplay" id="music" style="display:none"></iframe> -->
 <script>
     // var music = document.getElementById("music");
     // music.volume = 0;
     var mcheck = true;
+    let audio_iframe = document.querySelector('iframe');
+
+    // widget = SC.Widget(audio_iframe);
+  
     $(document).ready(function(){
-        var music = document.getElementById("music");
-        $('#mico').click(
-            function(){
-                if(mcheck){
-                    music.volume = 0;
-                    mcheck = false;
-                    $("#mico").attr("src", "./assets/img/wedding/mute.png");
-                }else{
-                    music.volume = 1.0;
-                    mcheck = true;
-                    $("#mico").attr("src", "./assets/img/wedding/volume.png");
-                }
+        // var music = document.getElementById("music");
+        // $('#mico').click(
+        //     function(){
+        //         if(mcheck){
+        //             music.volume = 0;
+        //             widget.setVolume(0);
+        //             mcheck = false;
+        //             $("#mico").attr("src", "./assets/img/wedding/mute.png");
+        //         }else{
+        //             music.volume = 1.0;
+        //             widget.setVolume(1.0);
+        //             mcheck = true;
+        //             $("#mico").attr("src", "./assets/img/wedding/volume.png");
+        //         }
                 
-            }
-        );
+        //     }
+        // );
 
         var images = Array(
                "./assets/img/wedding/background1.jpeg",
@@ -100,9 +107,9 @@ body, html {height: 100%; background-color: #f5f5dc;}
 
 <div style="height: 100%; width:100%" class="content w3-display-container">
     <div id ="bg" class="bgimg"></div>
-    <div class="w3-display-topleft w3-padding-large">
+    <!-- <div class="w3-display-topleft w3-padding-large">
       <img id="mico" style="width: 1.5em" src="./assets/img/wedding/volume.png"/>
-    </div>
+    </div> -->
  
   <div class="w3-display-middle">
     <p style="font-family: WindSong; font-weight: bolder;margin: 0px;" class="w3-jumbo w3-center">Carmine</p>

@@ -1,8 +1,13 @@
 ---
-layout: post
+layout: page
 title: Programmazione concorrente, parallela e su cloud
-category: teaching
+description: Laurea Magistrale in Informatica 
+img: assets/img/parallelProblem.gif
+importance: 2
+category: work
+giscus_comments: false
 ---
+
 
 #### Master Degree Course of prof. Vittorio Scarano and Carmine Spagnuolo, Ph.D.
 ##### Università degli Studi di Salerno

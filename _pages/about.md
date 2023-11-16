@@ -6,7 +6,7 @@ subtitle:  Researcher (RTD-B) @ <a href='https://www.isislab.it'>ISISLab</a>, <a
 
 profile:
   align: right
-  image: prof_pic.jpg
+  image: me.gif
   image_circular: false # crops the image to make it circular
   more_info: >
     <p>ISISLab 2</p>

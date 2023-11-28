@@ -2,96 +2,73 @@
   type: map
   contents:
     - name: Full Name
-      value: Albert Einstein
-    - name: Date of Birth
-      value: 14th March 1879
-    - name: Languages
-      value: English, German
-
+      value: Carmine Spagnuolo
+    - name: 📧
+      value: cspagnuolo@unisa.it
+    - name: 🏆 2022
+      value: <a href="https://asn21.cineca.it/pubblico/miur/esito-abilitato/01\%252FB1/2/2">Italian Scientific Qualification as Associate Professor, 01/B1 - Informatica</a>
+    - name: 🏆 2021
+      value: <a href="https://asn18.cineca.it/pubblico/miur/esito-abilitato/09\%252FH1/2/6">Italian Scientific Qualification as Associate Professor, 09/H1 - Sistemi di elaborazione delle informazioni</a>
+- title: Experience 
+  type: time_table
+  contents:
+    - title: Assistant Professor - Tenure track researcher (RTD-B)
+      institution: Università degli Studi di Salerno, Italy
+      year: 2023 - current
+    - title:  Research Associate (RTD-A)
+      institution: Università degli Studi di Salerno, Italy
+      year: 2021 - 2023
+    - title: Visiting researcher
+      institution:  <a href="https://cs.gmu.edu/~eclab/"> ECLab Evolutionary Computation Laboratory</a>, George MASON University Fairfax, Virginia, USA
+      year: Nov-Dec 2019
+    - title: Research fellow
+      institution: Università degli Studi di Salerno, Italy
+      year: 2017-2021 
+      description:
+        - 2018-2021 - Italian classification Assegno di ricerca di tipo A settore SSD INF/01 
+        - 2017-2018 - Italian classification Assegno di ricerca di tipo B settore SSD INF/01
+    - title: Visiting Ph.D student
+      institution:  Argonne National Laboratory (ANL) and the University of Chicago (Chicago, USA)
+      year: 2016
+      description: May, Oct-Dec 2016
+    - title: Visiting Master student
+      institution: <a href=" https://mars.gmu.edu/handle/1920/8382George "> Center for social complexity</a>,MASON University Fairfax, Virginia, USA
+      year: Mar 2012
 - title: Education
   type: time_table
   contents:
-    - title: PhD
-      institution: University of Zurich, Zurich, Switzerland
-      year: 1905
+    - title: Ph.D in Computer Science
+      institution: Università degli Studi di Salerno, Italy
+      year: 2017
       description:
-        - Description 1.
-        - Description 2.
-        - title: Description 3.
-          contents:
-            - Sub-description 1.
-            - Sub-description 2.
-    - title: Federal teaching diploma
-      institution: Eidgenössische Technische Hochschule, Zurich, Switzerland
-      year: 1900
-      description:
-        - Description 1.
-        - Description 2.
-
-- title: Experience
-  type: time_table
-  contents:
-    - title: Professor of Theoretical Physics
-      institution: Institute for Advanced Study, Princeton University
-      year: 1933 - 1955
-      description:
-        - Description 1.
-        - Description 2.
-        - title: Description 3.
-          contents:
-            - Sub-description 1.
-            - Sub-description 2.
-    - title: Visiting Professor
-      institution: California Institute of Technology, Pasadena, California, US
-      year: 1933
-      description:
-        - Description 1.
-        - Description 2.
-
-    - title: Director
-      institution: Kaiser Wilhelm Institute for Physics, Berlin, Germany.
-      year: 1917-1933
-
-    - title: Professor of Theoretical Physics
-      institution: Karl-Ferdinand University, Prague, Czechoslovakia
-      year: 1911 - 1917
-      description:
-
-    - title: Associate Professor of Theoretical Physics
-      institution: University of Zurich, Zurich, Switzerland
-      year: 1909 - 1911
-
-- title: Open Source Projects
-  type: time_table
-  contents:
-    - title: <a href="https://github.com/alshedivat/al-folio">al-folio</a>
-      year: 2015-now
-      description: A beautiful, simple, clean, and responsive Jekyll theme for academics.
-
-- title: Honors and Awards
-  type: time_table
-  contents:
-    - year: 1921
-      items: 
-        - Nobel Prize in Physics 
-        - Matteucci Medal
-    - year: 2029
-      items: 
-        - Max Planck Medal
+        - Computer Science and Computer Engineering
+    - title: Master Degree in Computer Science
+      institution: Università degli Studi di Salerno, Italy
+      year: 2014
 
 - title: Academic Interests
   type: nested_list
   contents:
-    - title: Topic 1.
+    - title: Network Science
       items: 
-        - Description 1.
-        - Description 2.
-    - title: Topic 2.
+        - Graph Theory
+        - Social Network Analysis
+        - Complex Networks
+        - Hypergraphs
+    - title: Agent-based Modeling 
       items:
-        - Description 1.
-        - Description 2.
+        - Simulation Frameworks and Tools
+        - Applications
+        - Parallel and Distributed Simulation
+    - title: Parallel and distributed computing
+      items:
+        - Algorithms
+        - Applications
+        - Cloud Computing
+        - Edge Computing
+        - Multi-cloud systems
 
 - title: Other Interests
   type: list
   contents:
-    - <u>Hobbies:</u> Hobby 1, Hobby 2, etc.
+    - Sailing ⛵

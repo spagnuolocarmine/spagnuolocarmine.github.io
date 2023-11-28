@@ -45,7 +45,35 @@
     - title: Master Degree in Computer Science
       institution: Università degli Studi di Salerno, Italy
       year: 2014
-
+- title: International schools
+  type: time_table
+  contents:
+    - title: Graph Theory, Algorithms and Applications - 4th Edition
+      institution: Centre "Ettore Majorana" for Scientific Culture Erice, International school on mathematics "Guido Stampacchia"
+      year: 2017
+    - title: 15th International School on Formal Methods for the Design of Computer, Communication and Software Systems, Multicore Programming
+      institution: University Residential Center of Bertinoro, Italy
+      year: 2015
+    - title: 23rd Summer School on Parallel Computing.
+      institution: CINECA, Milan, Italy
+      year: 2014
+- title: Scientific collaborations
+  type: nested_list
+  contents:
+    - title: ISISLab, Research affiliate
+      items: 
+        -  Parallel and Distributed Computing, Cloud Computing, Massive Simulations, Scalable Visualization, Social Network Analysis, and Graph Theory
+    - title: Argonne National Laboratory and University of Chicago
+      items: 
+        - Parallel and Distributed Parameters Sweeping for ABM simulations
+        - <a href="http://swift-lang.org/Swift-T/"> Swift/T - High Performance Dataflow Computing</a>
+        - <a href="https://emews.github.io/"> EMEWS Extreme-scale Model Exploration with Swift</a>
+    - title: George Mason University
+      items: 
+        - <a href="https://cs.gmu.edu/~eclab/projects/mason/extensions/distributed/"> Distributed MASON</a>
+    - title: Warsaw School of Economics and Ryerson University
+      items: 
+        - <a href="https://github.com/pszufe/SimpleHypergraphs.jl"> SimpleHypergraphs.jl</a>
 - title: Academic Interests
   type: nested_list
   contents:

@@ -2,14 +2,14 @@
 layout: about
 title: about
 permalink: /
-subtitle:  Researcher (RTD-B) @ <a href='https://www.isislab.it'>ISISLab</a>, <a href='https://docenti.unisa.it/028012/home'>Department of Computer Science</a>. Università degli Studi di Salerno (UNISA) · 🇮🇹
+subtitle:  Assistant Professor (RTD-B) @ <a href='https://www.isislab.it'>ISISLab</a>, <a href='https://docenti.unisa.it/028012/home'>Department of Computer Science</a>. Università degli Studi di Salerno (UNISA) · 🇮🇹
 
 profile:
   align: right
   image: me.gif
   image_circular: false # crops the image to make it circular
   more_info: >
-    <p>ISISLab 2</p>
+    <p>ISISLab</p>
     <p>+39089969307</p>
     <p><a href=" http://www.isislab.it"> www.isislab.it</a></p>
     <p>Università degli Studi di Salerno, Fisciano (SA) -- 84084 🇮🇹</p>
@@ -30,3 +30,4 @@ He is interested in `parallel algorithms`, `distributed systems`, `graph theory`
 In 2012, he got a grant from the Office of Naval Research ([ONR](https://www.nre.navy.mil/)) to visit George Mason University ([GMU](https://www.gmu.edu/)). In May 2017 and from October to December 2017, he was a visiting student at the [University of Chicago](https://www.uchicago.edu/) and Argonne National Laboratory ([ANL](https://www.anl.gov/)) under the supervision of [Jonathan Ozik](https://www.anl.gov/profile/jonathan-ozik) and exploiting a grant from ANL. 
 In December 2019, he was a visiting researcher at GMU under the supervision of Prof. [Sean Luke](https://cs.gmu.edu/~sean/). 
 
+<img style="float:right;width:100px;" src="../assets/img/isislab.png"/>

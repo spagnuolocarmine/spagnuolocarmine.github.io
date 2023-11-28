@@ -10,10 +10,14 @@
           <abbr class="badge">{{entry.abbr}}</abbr>
           {%- endif -%}
         {%- endif -%}
+
+        {%- if entry.id -%}
+          <abbr class="badge idx">{{entry.id}}</abbr>
+        {%- endif -%}
         </div>
 
         <!-- Entry bib key -->
-        <div id="{{entry.key}}" class="col-sm-8">
+        <div id="{{entry.id}}" class="col-sm-8">
         {% if entry.type == "thesis" -%}
           {{reference}}
         {%- else %}
@@ -71,10 +75,12 @@
           </div>
 
           <!-- Journal/Book title and date -->
-          {% if entry.type == "article" -%}
+          {% if entry.type == "Article" -%}
             {%- capture entrytype -%}<em>{{entry.journal}}</em>{%- endcapture -%}
-          {%- elsif entry.type == "inproceedings" -%}
-            {%- capture entrytype -%}<em>In {{entry.booktitle}}</em> {%- endcapture -%}
+          {%- elsif entry.type == "INPROCEEDINGS paper" -%}
+            {%- capture entrytype -%}<em>In {{entry.journal}}</em> {%- endcapture -%}
+          {%- else -%}
+            {%- capture entrytype -%}{%- endcapture -%}
           {%- endif -%}
           {%- if entry.month -%}
             {%- capture entrymonth -%}{{ " " }}{{ entry.month | capitalize }}{%- endcapture -%}
@@ -83,18 +89,18 @@
             {%- capture entryyear -%}{{ " " }}{{entry.year}}{%- endcapture -%}
           {%- endif -%}
           {%- capture periodical -%}{{ entrytype }}{{ entrymonth }}{{ entryyear }}{%- endcapture -%}
-          <div class="periodical venue-title">
-           <!-- {{ periodical | strip }} -->
-            {{ entrytype }}.
+          <div class="periodical">
+            {{ periodical | strip }}
           </div>
-          <div class="periodical date">
-            <!-- {{ periodical | strip }} -->
-             {{ entrymonth }}{{ entryyear }}
-           </div>
         {%- endif %}
         
+
           <!-- Links/Buttons -->
           <div class="links">
+         
+          {%- if entry.doi %}
+            <a href="https://www.doi.org/{{ entry.doi }}" class="btn btn-sm z-depth-0" role="button">DOI</a>
+          {%- endif %}
           {%- if entry.abstract %}
             <a class="abstract btn btn-sm z-depth-0" role="button">Abs</a>
           {%- endif %}
@@ -103,6 +109,9 @@
           {%- endif %}
           {%- if entry.bibtex_show %}
             <a class="bibtex btn btn-sm z-depth-0" role="button">Bib</a>
+          {%- endif %}
+          {%- if entry.sjr %}
+            {{entry.sjr}}
           {%- endif %}
           {%- if entry.html %}
             <a href="{{ entry.html }}" class="btn btn-sm z-depth-0" role="button">HTML</a>
@@ -156,7 +165,7 @@
           {% if entry.bibtex_show -%}
           <!-- Hidden bibtex block -->
           <div class="bibtex hidden">
-            {% highlight bibtex %}{{ entry.bibtex }}{% endhighlight %}
+            {% highlight bibtex %}{{ entry.bibtex | regex_replace: '\s+id = .*,*', '' | regex_replace: '\s+bibtex_show = .*,*', '' | regex_replace: '\s+selected = .*,*', '' | regex_replace: '\s+abbr = .*,*', '' }}{% endhighlight %}
           </div>
           {%- endif %}
         </div>

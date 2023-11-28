@@ -1,6 +1,7 @@
 ---
 layout: post
 title: HAVE FUN WITH MPI (in C language) a new interactive book available on Tech.io
+date: 2020-09-09
 ---
 
 

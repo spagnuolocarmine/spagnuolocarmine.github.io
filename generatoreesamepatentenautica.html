@@ -1,0 +1,111 @@
+<html>
+<body>
+
+<h1>Generatore prove di carteggio oltre le 12 miglia</h1>
+<h2>DD n.131. del 31/05/2022</h2>
+<p> <span style="font-weight: bold; ">Disclaimer:</span> <br>Questa pagina può contenere errori nelle risposte o nel testo delle domande dato che la base dati è stata automaticamente convertita dal PDF originale del ministero.<br>
+    Si prega di far riferimento al testo ufficiale.<br> 
+    Inoltre le due modalità di generazione delle prove di esame NON utilizzano lo stesso algoritmo di generazione ministeriale.</p>
+<ul>
+    <li><a href="https://www.mit.gov.it/normativa/decreto-dirigenziale-numero-106-del-12052022">Link Ministero delle infrastrutture e della mobilità sostenibili</a></li>
+    <li><a href="https://www.mit.gov.it/nfsmitgov/files/media/normativa/2022-05/ALLEGATO%20A%20DD%20106%20DEL%20120522.pdf">PDF base dati di riferimento per il generatore</a></li>
+    <li>Categorie di problemi:</li>
+        <ul>
+            <li>Correnti</li>
+            <li>Carburante</li>
+            <li>Navigazione Costiera</li>
+            <li>Scarroccio</li>
+        </ul>
+    <li>La modalità "Pratica" seleziona da tutte le domande con probabilità uniforme. La modalità "Esame" seleziona una domanda per problema con una probabilità uniforme secondo ogni categoria.</li>
+    </li>
+</ul>
+<button id="casual" style="font-size: 1.5em;">Pratica!</button> <button id="exam" style="font-size: 1.5em">Esame!</button>
+<table border="1" style="visibility: hidden;">
+    <thead class="thead-dark">
+        <tr>
+         <th scope="col">Domanda</th>
+         <th scope="col">Risposta</th>
+         <th scope="col">Problema</th>
+         <th scope="col">Carta</th>
+       </tr>
+    </thead>
+  <tbody id="tableBody">
+                            
+</tbody>
+</table>
+<script>
+function shuffleArray(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+}
+                      
+var json = []
+var co = []
+var ca = []
+var nc = []
+var sc = []
+const myRequest = new Request('https://raw.githubusercontent.com/spagnuolocarmine/spagnuolocarmine.github.io/master/assets/files/quiz_data.json');
+fetch(myRequest)
+  .then((response) => response.json())
+  .then((data) => {
+    json = data
+    json.forEach(function (item, index) {
+        switch(item.problema.trim()) {
+            case "correnti":
+                co.push(item)
+                break;
+            case "navigazione costiera":
+                nc.push(item)
+                break;
+            case "carburante":
+                ca.push(item)
+                break;
+            case "scarroccio":
+                sc.push(item)
+                break;
+        }
+    });
+  })
+  .catch(console.error);
+
+function printQuestions(questions){
+    const tableData = questions.map(function(value){
+    return (
+            `<tr>
+                <td>${value.domanda}</td>
+                <td>${value.risposta}</td>
+                <td>${value.problema.trim()}</td>
+                <td>${value.carta}</td>
+            </tr>`
+            );
+    }).join('');  
+    const tabelBody = document.querySelector("#tableBody");
+    tabelBody.style.visibility = "visible";
+    tableBody.innerHTML = tableData;
+}
+
+var casual = function()
+{
+    shuffleArray(json)
+    printQuestions([json[0],json[1],json[2],json[3]])
+}
+
+var exam = function()
+{
+   shuffleArray(co)
+   shuffleArray(ca)
+   shuffleArray(nc)
+   shuffleArray(sc)
+   printQuestions([co[0],ca[0],nc[2],sc[3]])
+}
+
+
+document.getElementById('casual').onclick = casual;
+document.getElementById('exam').onclick = exam;  
+</script>
+</body>
+</html>

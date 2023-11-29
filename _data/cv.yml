@@ -74,7 +74,7 @@
     - title: Warsaw School of Economics and Ryerson University
       items: 
         - <a href="https://github.com/pszufe/SimpleHypergraphs.jl"> SimpleHypergraphs.jl</a>
-- title: Academic Interests
+- title: Research interests
   type: nested_list
   contents:
     - title: Network Science
@@ -94,9 +94,53 @@
         - Applications
         - Cloud Computing
         - Edge Computing
-        - Multi-cloud systems
-
-- title: Other Interests
+        - Multi cloud systems
+- title: Professional activities
+  type: nested_list
+  contents:
+    - title: Committee participation
+      items:
+        - Co chair, Workshop on Sustainability, Smart, Secure Collaboration co located with CHItaly, 2023, https://sustainablesecuresmartcollaborationws.github.io
+        - Program areas chair, 35th International Conference on Tools with Artificial Intelligence, ICTAI, 2023, https://ictai.computer.org/2023/committees/committee
+        - Co chair, Hypergraphs theory, applications and challenges workshop 2019, hytac.isislab.it
+        - Co chair, Parallel and Distributed Agent Based Simulations workshop of EuroPar 2017 conference
+        - Co chair, Parallel and Distributed Agent Based Simulations workshop of EuroPar 2016 conference
+        - Co chair, Parallel and Distributed Agent Based Simulations workshop of EuroPar 2015 conference
+        - Member of technical committee, International Conference on Advances in Databases, Knowledge, and Data Applications
+        - Member of technical committee, IEEE Inter. Conference on Cognitive Info Communications
+    - title: Invited talks
+      items: 
+        - WAW’20, Workshop on Hypergraphs modeling of 17th Workshop on Algorithms and Models for the Web Graph, 2020
+        - DSF’19, Decision Science Forum 2019, Milan, Italy
+        - KAIST’18, School of Computing, Korea Advanced Institute of Science & Technology by Professor Sue Moon, Daejeon, South Korea
+        - ACTOR’18, ACT Operations Research Annual Meeting on innovation and research, Rome, Italy
+    - title: Conference participation
+      items:
+        - BDH19, Big Data in Health, 2019, Rome, Italy
+        - WAW'19, Workshop on Algo. and Models for the Web Graph, 2019, Brisbane, Australia
+        - AsiaSim'18, Asia Simulation Conference, 2018, Kyoto, Japan
+        - PDP'17, Euromicro International Conference on Parallel, Distributed and Network Based Processing, 2017, St. Petersburg, Russia
+        - PDP'16, Euromicro International Conference on Parallel, Distributed and Network Based Processing, 2016, Heraklion Crete, Greece
+        - ParSocial'16, IEEE Workshop on  Parallel and Distributed Processing for Computational Social Systems. IEEE International Parallel & Distributed Processing Symposium, 2016, Chicago, USA
+        - SHAREPSI'15, Maximising interoperability  core vocabularies, location aware data and more, 2015, Berlin, Germany
+        - PADABS'16, Parallel and Distributed Agent Based Simulations  of EuroPar 2016 conference, Grenoble, France
+        - PADABS'15, Parallel and Distributed Agent Based Simulations  of EuroPar 2015 conference, Wien, Austria
+        - PADABS'14, Parallel and Distributed Agent Based Simulations of EuroPar 2014 conference, Porto, Portugal
+    - title: Referee activities
+      items:
+      - Expert Systems with Applications, SJR Q1
+      - Journal Engineering Applications of Artificial Intelligence, SJR Q1
+      - Journal of Future Generation Computer Systems, SJR Q1
+      - Journal of Simulation Modelling Practice and Theory, SJR Q1
+      - Journal of Tunnelling and Underground Space Technology, SJR Q1
+      - Journal of Transportation Research Part E - Logistics and Transportation, SJR Q1
+      - International Conference on Advances in Databases, Knowledge, and Data Applications (DBKDA)
+      - IEEE International Conference on Tools with Artificial Intelligence (ICTAI)
+      - IEEE International Conference on Cognitive Infocommunications
+      - IEEE International Conference on Human Machine Systems
+      - Euro-Par Conference and Workshops, since 2014
+      - Member of technical committee, The Eleventh Inter. Conference on Advances in System Simulation
+- title: Additional activities
   type: list
   contents:
-    - Sailing ⛵
+    - Sailing ⛵ (please write me if you want to start a thesis about computer science techniques applied to sailing)

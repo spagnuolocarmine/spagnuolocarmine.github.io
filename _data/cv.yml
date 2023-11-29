@@ -1,0 +1,146 @@
+- title: General Information
+  type: map
+  contents:
+    - name: Full Name
+      value: Carmine Spagnuolo
+    - name: 📧
+      value: cspagnuolo@unisa.it
+    - name: 🏆 2022
+      value: <a href="https://asn21.cineca.it/pubblico/miur/esito-abilitato/01\%252FB1/2/2">Italian Scientific Qualification as Associate Professor, 01/B1 - Informatica</a>
+    - name: 🏆 2021
+      value: <a href="https://asn18.cineca.it/pubblico/miur/esito-abilitato/09\%252FH1/2/6">Italian Scientific Qualification as Associate Professor, 09/H1 - Sistemi di elaborazione delle informazioni</a>
+- title: Experience 
+  type: time_table
+  contents:
+    - title: Assistant Professor - Tenure track researcher (RTD-B)
+      institution: Università degli Studi di Salerno, Italy
+      year: 2023 - current
+    - title:  Research Associate (RTD-A)
+      institution: Università degli Studi di Salerno, Italy
+      year: 2021 - 2023
+    - title: Visiting researcher
+      institution:  <a href="https://cs.gmu.edu/~eclab/"> ECLab Evolutionary Computation Laboratory</a>, George MASON University Fairfax, Virginia, USA
+      year: Nov-Dec 2019
+    - title: Research fellow
+      institution: Università degli Studi di Salerno, Italy
+      year: 2017-2021 
+      description:
+        - 2018-2021 - Italian classification Assegno di ricerca di tipo A settore SSD INF/01 
+        - 2017-2018 - Italian classification Assegno di ricerca di tipo B settore SSD INF/01
+    - title: Visiting Ph.D student
+      institution:  Argonne National Laboratory (ANL) and the University of Chicago (Chicago, USA)
+      year: 2016
+      description: May, Oct-Dec 2016
+    - title: Visiting Master student
+      institution: <a href=" https://mars.gmu.edu/handle/1920/8382George "> Center for social complexity</a>,MASON University Fairfax, Virginia, USA
+      year: Mar 2012
+- title: Education
+  type: time_table
+  contents:
+    - title: Ph.D in Computer Science
+      institution: Università degli Studi di Salerno, Italy
+      year: 2017
+      description:
+        - Computer Science and Computer Engineering
+    - title: Master Degree in Computer Science
+      institution: Università degli Studi di Salerno, Italy
+      year: 2014
+- title: International schools
+  type: time_table
+  contents:
+    - title: Graph Theory, Algorithms and Applications - 4th Edition
+      institution: Centre "Ettore Majorana" for Scientific Culture Erice, International school on mathematics "Guido Stampacchia"
+      year: 2017
+    - title: 15th International School on Formal Methods for the Design of Computer, Communication and Software Systems, Multicore Programming
+      institution: University Residential Center of Bertinoro, Italy
+      year: 2015
+    - title: 23rd Summer School on Parallel Computing.
+      institution: CINECA, Milan, Italy
+      year: 2014
+- title: Scientific collaborations
+  type: nested_list
+  contents:
+    - title: ISISLab, Research affiliate
+      items: 
+        -  Parallel and Distributed Computing, Cloud Computing, Massive Simulations, Scalable Visualization, Social Network Analysis, and Graph Theory
+    - title: Argonne National Laboratory and University of Chicago
+      items: 
+        - Parallel and Distributed Parameters Sweeping for ABM simulations
+        - <a href="http://swift-lang.org/Swift-T/"> Swift/T - High Performance Dataflow Computing</a>
+        - <a href="https://emews.github.io/"> EMEWS Extreme-scale Model Exploration with Swift</a>
+    - title: George Mason University
+      items: 
+        - <a href="https://cs.gmu.edu/~eclab/projects/mason/extensions/distributed/"> Distributed MASON</a>
+    - title: Warsaw School of Economics and Ryerson University
+      items: 
+        - <a href="https://github.com/pszufe/SimpleHypergraphs.jl"> SimpleHypergraphs.jl</a>
+- title: Research interests
+  type: nested_list
+  contents:
+    - title: Network Science
+      items: 
+        - Graph Theory
+        - Social Network Analysis
+        - Complex Networks
+        - Hypergraphs
+    - title: Agent-based Modeling 
+      items:
+        - Simulation Frameworks and Tools
+        - Applications
+        - Parallel and Distributed Simulation
+    - title: Parallel and distributed computing
+      items:
+        - Algorithms
+        - Applications
+        - Cloud Computing
+        - Edge Computing
+        - Multi cloud systems
+- title: Professional activities
+  type: nested_list
+  contents:
+    - title: Committee participation
+      items:
+        - Co chair, Workshop on Sustainability, Smart, Secure Collaboration co located with CHItaly, 2023, https://sustainablesecuresmartcollaborationws.github.io
+        - Program areas chair, 35th International Conference on Tools with Artificial Intelligence, ICTAI, 2023, https://ictai.computer.org/2023/committees/committee
+        - Co chair, Hypergraphs theory, applications and challenges workshop 2019, hytac.isislab.it
+        - Co chair, Parallel and Distributed Agent Based Simulations workshop of EuroPar 2017 conference
+        - Co chair, Parallel and Distributed Agent Based Simulations workshop of EuroPar 2016 conference
+        - Co chair, Parallel and Distributed Agent Based Simulations workshop of EuroPar 2015 conference
+        - Member of technical committee, International Conference on Advances in Databases, Knowledge, and Data Applications
+        - Member of technical committee, IEEE Inter. Conference on Cognitive Info Communications
+    - title: Invited talks
+      items: 
+        - WAW’20, Workshop on Hypergraphs modeling of 17th Workshop on Algorithms and Models for the Web Graph, 2020
+        - DSF’19, Decision Science Forum 2019, Milan, Italy
+        - KAIST’18, School of Computing, Korea Advanced Institute of Science & Technology by Professor Sue Moon, Daejeon, South Korea
+        - ACTOR’18, ACT Operations Research Annual Meeting on innovation and research, Rome, Italy
+    - title: Conference participation
+      items:
+        - BDH19, Big Data in Health, 2019, Rome, Italy
+        - WAW'19, Workshop on Algo. and Models for the Web Graph, 2019, Brisbane, Australia
+        - AsiaSim'18, Asia Simulation Conference, 2018, Kyoto, Japan
+        - PDP'17, Euromicro International Conference on Parallel, Distributed and Network Based Processing, 2017, St. Petersburg, Russia
+        - PDP'16, Euromicro International Conference on Parallel, Distributed and Network Based Processing, 2016, Heraklion Crete, Greece
+        - ParSocial'16, IEEE Workshop on  Parallel and Distributed Processing for Computational Social Systems. IEEE International Parallel & Distributed Processing Symposium, 2016, Chicago, USA
+        - SHAREPSI'15, Maximising interoperability  core vocabularies, location aware data and more, 2015, Berlin, Germany
+        - PADABS'16, Parallel and Distributed Agent Based Simulations  of EuroPar 2016 conference, Grenoble, France
+        - PADABS'15, Parallel and Distributed Agent Based Simulations  of EuroPar 2015 conference, Wien, Austria
+        - PADABS'14, Parallel and Distributed Agent Based Simulations of EuroPar 2014 conference, Porto, Portugal
+    - title: Referee activities
+      items:
+      - Expert Systems with Applications, SJR Q1
+      - Journal Engineering Applications of Artificial Intelligence, SJR Q1
+      - Journal of Future Generation Computer Systems, SJR Q1
+      - Journal of Simulation Modelling Practice and Theory, SJR Q1
+      - Journal of Tunnelling and Underground Space Technology, SJR Q1
+      - Journal of Transportation Research Part E - Logistics and Transportation, SJR Q1
+      - International Conference on Advances in Databases, Knowledge, and Data Applications (DBKDA)
+      - IEEE International Conference on Tools with Artificial Intelligence (ICTAI)
+      - IEEE International Conference on Cognitive Infocommunications
+      - IEEE International Conference on Human Machine Systems
+      - Euro-Par Conference and Workshops, since 2014
+      - Member of technical committee, The Eleventh Inter. Conference on Advances in System Simulation
+- title: Additional activities
+  type: list
+  contents:
+    - Sailing ⛵ (please write me if you want to start a thesis about computer science techniques applied to sailing)

@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://spagnuolocarmine.github.iospagnuolocarmine.github.io/sitemap.xml
+Sitemap: https://spagnuolocarmine.github.io/sitemap.xml

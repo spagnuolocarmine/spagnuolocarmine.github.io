@@ -6,6 +6,7 @@ img: assets/img/parallelProblem.gif
 importance: 2
 category: work
 giscus_comments: false
+redirect: https://spagnuolocarmine.github.io/programmazione-concorrente-parallela-cloud
 ---
 
 

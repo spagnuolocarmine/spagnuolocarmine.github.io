@@ -34,18 +34,18 @@
     - title: Visiting Master student
       institution: <a href=" https://mars.gmu.edu/handle/1920/8382George "> Center for social complexity</a>,MASON University Fairfax, Virginia, USA
       year: Mar 2012
-- title: Research Projects
-  type: time_table
-  contents:
-    - title: Scientific responsibility of the local unit for the <a href="https://www.cs-aware-next.eu/">CS-AWARE NEXT</a> EU project. Addressing cybersecurity and collaboration within local and regional intra-organisational and supply chain networks, in concert with the European cybersecurity framework defined by the European cybersecurity strategy.
-      institution: Università degli Studi di Salerno, Italy and CeRICT scrl
-      year: 2022 - current (2025)
-    - title: Principal investigator of the 3Dify project, Automatically Turning 2D Human Images into Animated Customizable Avatars with Emotions, a Sub-Grant of the Open Call <a href="https://sermasproject.eu/open-call-1-develop/">SERMAS-1-DEVELOP</a> of the EU <a href="https://sermasproject.eu">SERMAS</a> project.
-      institution: Università degli Studi di Salerno, Italy and CeRICT scrl
-      year: 2024
-    - title: Scientific responsibility, for a research fellowship for the project "StartUPP - Modelli, sistemi e competenze per l’implementazione dell’ufficio per il processo", CUP H29J22000390006, financed by "PON Governance e Capacità Istituzionale" 2014-2020"
-      institution: Università degli Studi di Salerno, Italy 
-      year: 2022 
+# - title: Research Projects
+#   type: time_table
+#   contents:
+#     # - title: Scientific responsibility of the local unit for the <a href="https://www.cs-aware-next.eu/">CS-AWARE NEXT</a> EU project. Addressing cybersecurity and collaboration within local and regional intra-organisational and supply chain networks, in concert with the European cybersecurity framework defined by the European cybersecurity strategy.
+#     #   institution: Università degli Studi di Salerno, Italy and CeRICT scrl
+#     #   year: 2022 - current (2025)
+#     - title: Principal investigator of the 3Dify project, Automatically Turning 2D Human Images into Animated Customizable Avatars with Emotions, a Sub-Grant of the Open Call <a href="https://sermasproject.eu/open-call-1-develop/">SERMAS-1-DEVELOP</a> of the EU <a href="https://sermasproject.eu">SERMAS</a> project.
+#       institution: Università degli Studi di Salerno, Italy and CeRICT scrl
+#       year: 2024
+#     - title: Scientific responsibility, for a research fellowship for the project "StartUPP - Modelli, sistemi e competenze per l’implementazione dell’ufficio per il processo", CUP H29J22000390006, financed by "PON Governance e Capacità Istituzionale" 2014-2020"
+#       institution: Università degli Studi di Salerno, Italy 
+#       year: 2022 
 - title: Education
   type: time_table
   contents:

@@ -2,7 +2,7 @@
 layout: profiles
 permalink: /people/
 title: people
-description: current and former Ph.D. students
+description: Ph.D. students who have collaborated with me
 nav: true
 nav_order: 6
 

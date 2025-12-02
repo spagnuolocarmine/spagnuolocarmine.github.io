@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computer Scientists NAVIGATOR</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⛵</text></svg>">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Al-Folio Theme */
+            --bg: #1b1e24;
+            --surface: #242830;
+            --surface-highlight: #2f343e;
+            --primary: #cba6f7;
+            --text-main: #eceff4;
+            --text-muted: #949bb1;
+            --border: #353b45;
+            --danger: #bf616a;
+            
+            /* Rank Colors */
+            --color-tier-1: #ebcb8b; /* Gold */
+            --color-tier-2: #d08770; /* Orange */
+            --color-tier-3: #88c0d0; /* Blue */
+            --color-tier-4: #a3be8c; /* Green */
+            
+            --color-none-conf:   #607d8b; 
+            --color-none-jrnl:   #90a4ae;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Roboto', sans-serif; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* --- Top Bar --- */
+        .top-bar {
+            padding: 15px 25px;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+            z-index: 10;
+        }
+
+        .left-group { display: flex; align-items: center; gap: 15px; }
+        
+        /* Sidebar Toggle Button */
+        .btn-toggle-sidebar {
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn-toggle-sidebar:hover { background: var(--surface-highlight); color: var(--primary); }
+
+        .app-title h1 { margin: 0; font-size: 1.5rem; font-weight: 700; color: var(--text-main); }
+        .app-title span { color: var(--primary); font-weight: 300; }
+
+        .search-box { display: flex; gap: 10px; width: 400px; }
+        input[type="text"] {
+            background: var(--bg); border: 1px solid var(--border); color: var(--text-main);
+            padding: 10px 15px; border-radius: 6px; font-size: 0.9rem; outline: none; flex-grow: 1;
+            min-width: 0; /* Important for flex shrinking */
+        }
+        input[type="text"]:focus { border-color: var(--primary); }
+
+        .btn-primary {
+            background: var(--primary); color: #1b1e24; font-weight: 600; border: none;
+            padding: 0 20px; border-radius: 6px; cursor: pointer; transition: 0.2s; height: 38px;
+            white-space: nowrap;
+        }
+        .btn-primary:hover { opacity: 0.9; }
+        .btn-primary:disabled { background: var(--surface-highlight); color: var(--text-muted); cursor: not-allowed; }
+
+        /* --- Layout Grid --- */
+        .main-layout { display: flex; flex: 1; overflow: hidden; position: relative; }
+
+        /* --- Sidebar (Controls) --- */
+        .sidebar {
+            width: 340px; 
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            overflow-y: auto;
+            flex-shrink: 0;
+            gap: 25px;
+            
+            /* Animation for collapsing */
+            transition: width 0.3s ease, padding 0.3s ease, opacity 0.2s ease;
+            white-space: nowrap; /* Prevent text wrapping during anim */
+        }
+
+        /* Collapsed State */
+        .sidebar.collapsed {
+            width: 0;
+            padding: 20px 0; /* Keep vertical padding reference or remove */
+            padding: 0;
+            overflow: hidden;
+            border-right: none;
+            opacity: 0;
+        }
+
+        .control-group h4 { margin: 0 0 10px 0; font-size: 0.85rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px; }
+        
+        .action-row { display: flex; gap: 10px; margin-bottom: 15px; }
+        .btn-small { background: var(--surface-highlight); color: var(--text-main); border: 1px solid var(--border); padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; flex: 1; }
+        .btn-small:hover { border-color: var(--primary); color: var(--primary); }
+        .btn-danger { color: var(--danger); border-color: var(--border); }
+        .btn-danger:hover { background: rgba(191, 97, 106, 0.1); border-color: var(--danger); }
+
+        /* Toggle Buttons */
+        .type-toggle { display: flex; background: var(--bg); border-radius: 6px; padding: 4px; gap: 2px; }
+        .type-btn { flex: 1; padding: 8px; border-radius: 4px; border: none; background: transparent; color: var(--text-muted); cursor: pointer; font-size: 0.85rem; font-weight: 500; }
+        .type-btn.active { background: var(--surface-highlight); color: var(--primary); }
+
+        /* Checkboxes */
+        .rank-list { display: flex; flex-direction: column; gap: 6px; }
+        .chk-label { display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 0.9rem; padding: 6px 10px; border-radius: 4px; background: var(--bg); transition: 0.2s; }
+        .chk-label:hover { background: var(--surface-highlight); }
+        .chk-label input { display: none; }
+        .chk-box { width: 14px; height: 14px; border-radius: 2px; border: 2px solid #555; display: inline-block; flex-shrink: 0; }
+        
+        /* Checkbox Colors */
+        .c-t1 input:checked + .chk-box { background: var(--color-tier-1); border-color: var(--color-tier-1); box-shadow: 0 0 6px var(--color-tier-1); }
+        .c-t2 input:checked + .chk-box { background: var(--color-tier-2); border-color: var(--color-tier-2); }
+        .c-t3 input:checked + .chk-box { background: var(--color-tier-3); border-color: var(--color-tier-3); }
+        .c-t4 input:checked + .chk-box { background: var(--color-tier-4); border-color: var(--color-tier-4); }
+        .c-tn input:checked + .chk-box { background: var(--color-none-conf); border-color: var(--color-none-conf); }
+        .c-tnj input:checked + .chk-box { background: var(--color-none-jrnl); border-color: var(--color-none-jrnl); }
+        .c-all input:checked + .chk-box { background: var(--text-main); border-color: var(--text-main); }
+
+        /* Slider */
+        .slider-wrapper { padding: 10px 0; }
+        .slider-vals { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--primary); font-weight: bold; margin-bottom: 5px; }
+        .range-container { position: relative; height: 30px; }
+        .range-track { width: 100%; height: 4px; background: #424242; border-radius: 2px; position: absolute; top: 12px; }
+        .range-highlight { position: absolute; top: 12px; height: 4px; background: var(--primary); z-index: 1; }
+        input[type="range"] { position: absolute; top: 12px; left: 0; width: 100%; pointer-events: none; -webkit-appearance: none; background: none; height: 0; z-index: 2; }
+        input[type="range"]::-webkit-slider-thumb { pointer-events: auto; -webkit-appearance: none; width: 16px; height: 16px; background: var(--primary); border-radius: 50%; cursor: pointer; margin-top: -6px; box-shadow: 0 0 5px rgba(0,0,0,0.5); border: 2px solid #fff; }
+
+        /* --- Main Content Area --- */
+        .content-area { flex: 1; display: flex; flex-direction: column; overflow: hidden; background: var(--bg); transition: width 0.3s ease; }
+
+        .chart-section { height: 220px; background: var(--surface); border-bottom: 1px solid var(--border); padding: 15px; flex-shrink: 0; display: none; position: relative; }
+        .close-chart { position: absolute; top: 10px; right: 10px; background: transparent; border: none; color: var(--text-muted); cursor: pointer; font-size: 1.2rem; }
+
+        /* Comparison Columns */
+        .comparison-container { flex: 1; overflow-x: auto; overflow-y: hidden; display: flex; padding: 0; }
+
+        .author-column { width: 400px; min-width: 400px; border-right: 1px solid var(--border); display: flex; flex-direction: column; background: var(--bg); }
+
+        .col-header { padding: 15px; background: var(--surface); border-bottom: 1px solid var(--border); position: relative; border-top: 3px solid transparent; }
+        .col-header h2 { margin: 0 0 5px 0; font-size: 1.1rem; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .col-aff { font-size: 0.8rem; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 8px; }
+        
+        .col-stats { display: flex; gap: 10px; font-size: 0.75rem; color: var(--primary); background: rgba(0,0,0,0.2); padding: 6px; border-radius: 4px; }
+        .stat-item { flex: 1; text-align: center; }
+        .stat-val { font-weight: 700; font-size: 0.9rem; display: block; }
+        .stat-lbl { opacity: 0.7; }
+
+        .btn-remove-col { position: absolute; top: 10px; right: 10px; background: transparent; border: none; color: var(--text-muted); cursor: pointer; font-size: 1.2rem; }
+        .btn-remove-col:hover { color: var(--danger); }
+        
+        .col-actions { margin-top: 10px; display: flex; gap: 5px; }
+        .btn-xs { font-size: 0.7rem; padding: 6px 10px; background: var(--surface-highlight); border: 1px solid var(--border); color: var(--text-muted); border-radius: 4px; cursor: pointer; flex:1; text-align: center;}
+        .btn-xs:hover { color: var(--text-main); border-color: var(--primary); }
+        .btn-dl-filter { color: #a3be8c; border-color: #a3be8c; opacity: 0.8; }
+        .btn-dl-filter:hover { color: #a3be8c; border-color: #a3be8c; opacity: 1; background: rgba(163, 190, 140, 0.1); }
+
+        /* Paper List */
+        .col-scroll { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 10px; }
+
+        .paper-card { background: var(--surface); border-radius: 6px; border-left: 4px solid var(--color-none-conf); padding: 12px; transition: 0.2s; cursor: pointer; }
+        .paper-card:hover { background: var(--surface-highlight); }
+        
+        .p-title { font-size: 0.9rem; line-height: 1.3; color: var(--text-main); margin-bottom: 5px; font-weight: 500; }
+        .p-meta { font-size: 0.75rem; color: var(--text-muted); display: flex; justify-content: space-between; align-items: center; }
+        .p-venue { color: var(--primary); font-style: italic; }
+        .p-rank { font-weight: 700; padding: 2px 6px; border-radius: 3px; background: rgba(0,0,0,0.3); font-size: 0.7rem; }
+
+        /* Expanded Info */
+        .p-details { display: none; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); font-size: 0.75rem; color: #aaa; animation: slideDown 0.2s ease; }
+        .paper-card.expanded .p-details { display: block; }
+        .p-details code { display: block; background: #000; padding: 10px; border-radius: 4px; margin: 8px 0; overflow-x: auto; font-family: monospace; white-space: pre-wrap; border: 1px solid #444; }
+        
+        .p-actions { display: flex; gap: 10px; justify-content: flex-end; }
+        .btn-mini { padding: 4px 8px; font-size: 0.7rem; border-radius: 3px; border: 1px solid var(--border); background: var(--bg); color: var(--text-muted); cursor: pointer; }
+        .btn-mini:hover { border-color: var(--primary); color: var(--primary); }
+
+        /* Loading & Modals */
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 100; display: none; align-items: center; justify-content: center; }
+        .modal { background: var(--surface); width: 500px; max-height: 80vh; border-radius: 8px; padding: 20px; display: flex; flex-direction: column; border: 1px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .modal h3 { margin-top: 0; color: var(--text-main); }
+        .candidate-list { overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
+        .candidate-item { padding: 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; cursor: pointer; }
+        .candidate-item:hover { border-color: var(--primary); }
+        .c-name { font-weight: bold; color: var(--text-main); }
+        .c-info { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
+
+        /* Tier Styles */
+        .t1 { border-left-color: var(--color-tier-1); } .t1 .p-rank { color: var(--color-tier-1); }
+        .t2 { border-left-color: var(--color-tier-2); } .t2 .p-rank { color: var(--color-tier-2); }
+        .t3 { border-left-color: var(--color-tier-3); } .t3 .p-rank { color: var(--color-tier-3); }
+        .t4 { border-left-color: var(--color-tier-4); } .t4 .p-rank { color: var(--color-tier-4); }
+        .tn-conf { border-left-color: var(--color-none-conf); } .tn-conf .p-rank { color: var(--color-none-conf); }
+        .tn-jrnl { border-left-color: var(--color-none-jrnl); } .tn-jrnl .p-rank { color: var(--color-none-jrnl); }
+        
+        /* Empty State */
+        .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: var(--text-muted); flex: 1; width: 100%; }
+        .empty-icon { font-size: 4rem; margin-bottom: 20px; opacity: 0.2; }
+
+        /* --- Responsive Queries --- */
+        @media (max-width: 800px) {
+            .app-title span { display: none; }
+            .app-title h1 { font-size: 1.2rem; }
+            .search-box { width: auto; flex: 1; margin: 0 10px; }
+            #dbStatus { display: none; }
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+    <div class="left-group">
+        <button class="btn-toggle-sidebar" id="sidebarToggle" onclick="toggleSidebar()" title="Toggle Filters">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+        <div class="app-title">
+            <h1>Computer Scientists <span>NAVIGATOR</span></h1>
+        </div>
+    </div>
+    
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Find author..." onkeydown="if(event.key==='Enter') initiateSearch()">
+        <button class="btn-primary" id="btnSearch" onclick="initiateSearch()" disabled>Search</button>
+    </div>
+
+    <div id="dbStatus" style="font-size:0.8rem; color: var(--text-muted);">Loading DB...</div>
+</div>
+
+<div class="main-layout">
+
+    <!-- SIDEBAR CONTROLS -->
+    <aside class="sidebar" id="mainSidebar">
+        
+        <!-- Global Actions -->
+        <div class="control-group">
+            <div class="action-row">
+                <button class="btn-small" onclick="toggleChart()">📊 Toggle Chart</button>
+                <button class="btn-small btn-danger" onclick="resetAll()">🗑 Clear All</button>
+            </div>
+            <div class="action-row">
+                <button class="btn-small" id="sortBtn" onclick="toggleSort()">↓ Newest First</button>
+            </div>
+        </div>
+
+        <!-- Type Filter -->
+        <div class="control-group">
+            <h4>Publication Type</h4>
+            <div class="type-toggle">
+                <button class="type-btn active" onclick="setTypeFilter('ALL', this)">All</button>
+                <button class="type-btn" onclick="setTypeFilter('CONF', this)">Conf</button>
+                <button class="type-btn" onclick="setTypeFilter('JOURNAL', this)">Journal</button>
+            </div>
+        </div>
+
+        <!-- Years Slider -->
+        <div class="control-group">
+            <h4>Time Range</h4>
+            <div class="slider-wrapper">
+                <div class="slider-vals">
+                    <span id="lblMinYear">2000</span>
+                    <span id="lblMaxYear">2024</span>
+                </div>
+                <div class="range-container">
+                    <div class="range-track"></div>
+                    <div class="range-highlight" id="rangeHighlight"></div>
+                    <input type="range" id="inputMinYear" oninput="userTouchSlider(); updateSliderUI(); refreshAllViews()" onchange="userTouchSlider()">
+                    <input type="range" id="inputMaxYear" oninput="userTouchSlider(); updateSliderUI(); refreshAllViews()" onchange="userTouchSlider()">
+                </div>
+            </div>
+        </div>
+
+        <!-- CORE Ranks -->
+        <div class="control-group" id="grpConf">
+            <h4>CORE Ranks (Conf)</h4>
+            <div class="rank-list">
+                <label class="chk-label c-all"><input type="checkbox" id="chkConfAll" onchange="toggleAll('conf', this)" checked><span class="chk-box"></span> All</label>
+                <label class="chk-label c-t1"><input type="checkbox" class="filter-chk conf-chk" value="A*" checked><span class="chk-box"></span> A*</label>
+                <label class="chk-label c-t2"><input type="checkbox" class="filter-chk conf-chk" value="A" checked><span class="chk-box"></span> A</label>
+                <label class="chk-label c-t3"><input type="checkbox" class="filter-chk conf-chk" value="B" checked><span class="chk-box"></span> B</label>
+                <label class="chk-label c-t4"><input type="checkbox" class="filter-chk conf-chk" value="C" checked><span class="chk-box"></span> C</label>
+                <label class="chk-label c-tn"><input type="checkbox" class="filter-chk conf-chk" value="No Matching Conf" checked><span class="chk-box"></span> No Match Conf</label>
+            </div>
+        </div>
+
+        <!-- SCIMAGO Ranks -->
+        <div class="control-group" id="grpJrnl">
+            <h4>Scimago Ranks (Journal)</h4>
+            <div class="rank-list">
+                <label class="chk-label c-all"><input type="checkbox" id="chkJrnlAll" onchange="toggleAll('jrnl', this)" checked><span class="chk-box"></span> All</label>
+                <label class="chk-label c-t1"><input type="checkbox" class="filter-chk jrnl-chk" value="Q1" checked><span class="chk-box"></span> Q1</label>
+                <label class="chk-label c-t2"><input type="checkbox" class="filter-chk jrnl-chk" value="Q2" checked><span class="chk-box"></span> Q2</label>
+                <label class="chk-label c-t3"><input type="checkbox" class="filter-chk jrnl-chk" value="Q3" checked><span class="chk-box"></span> Q3</label>
+                <label class="chk-label c-t4"><input type="checkbox" class="filter-chk jrnl-chk" value="Q4" checked><span class="chk-box"></span> Q4</label>
+                <label class="chk-label c-tnj"><input type="checkbox" class="filter-chk jrnl-chk" value="No Matching Journal" checked><span class="chk-box"></span> No Match Jrnl</label>
+            </div>
+        </div>
+
+        <!-- Text Filter -->
+        <div class="control-group">
+            <h4>Text Filter</h4>
+            <input type="text" id="venueFilter" placeholder="Filter by venue name..." onkeyup="refreshAllViews()">
+        </div>
+
+        <!-- Sidebar Footer -->
+        <div class="sidebar-footer">
+            <div style="margin-bottom:5px;"><strong>Data Sources:</strong></div>
+            <div>
+                <a href="https://raw.githubusercontent.com/spagnuolocarmine/spagnuolocarmine.github.io/refs/heads/master/assets/files/CORE.csv" target="_blank">CORE 2023</a>
+                <a href="https://raw.githubusercontent.com/spagnuolocarmine/spagnuolocarmine.github.io/refs/heads/master/assets/files/scimagojr%202024%20%20Subject%20Area%20-%20Computer%20Science.csv" target="_blank">Scimago 2024</a>
+            </div>
+        </div>
+
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <div class="content-area">
+        
+        <!-- Chart Area (Hidden by default) -->
+        <div id="chartSection" class="chart-section">
+            <button class="close-chart" onclick="toggleChart()">×</button>
+            <canvas id="chartCanvas"></canvas>
+        </div>
+
+        <!-- Comparison Columns -->
+        <div id="comparisonContainer" class="comparison-container">
+            <div class="empty-state">
+                <div class="empty-icon">👥</div>
+                <h3>No Authors Selected</h3>
+                <p>Use the search bar above to add authors for comparison.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL FOR AUTHOR SELECTION -->
+<div class="overlay" id="modalOverlay" onclick="closeModal()">
+    <div class="modal" onclick="event.stopPropagation()">
+        <div style="display:flex; justify-content:space-between; align-items:center">
+            <h3>Select Author</h3>
+            <button onclick="closeModal()" style="background:none; border:none; color:var(--text-muted); font-size:1.5rem; cursor:pointer;">&times;</button>
+        </div>
+        <div id="candidateList" class="candidate-list"></div>
+        <div id="modalLoader" class="loader" style="margin: 20px auto;"></div>
+    </div>
+</div>
+
+<script>
+/* 
+   ==========================================================================
+   CONSTANTS & STATE
+   ========================================================================== 
+*/
+const CORE_URL = "https://raw.githubusercontent.com/spagnuolocarmine/spagnuolocarmine.github.io/refs/heads/master/assets/files/CORE.csv";
+const SCIMAGO_URL = "https://raw.githubusercontent.com/spagnuolocarmine/spagnuolocarmine.github.io/refs/heads/master/assets/files/scimagojr%202024%20%20Subject%20Area%20-%20Computer%20Science.csv";
+
+let rankingDB = [];
+let activeAuthors = []; // { id, name, url, affiliation, papers: [], color: '' }
+let activeTypeFilter = 'ALL'; 
+let sortOrder = 'desc';
+let chartInstance = null;
+let isChartOpen = false;
+
+// Slider Logic State
+let userHasModifiedSlider = false;
+let globalMinYear = 1980;
+let globalMaxYear = new Date().getFullYear();
+
+const AUTHOR_COLORS = [
+    '#cba6f7', '#88c0d0', '#ebcb8b', '#a3be8c', '#bf616a', '#d08770', '#b48ead'
+];
+
+/* 
+   ==========================================================================
+   INIT & DATA LOADING
+   ========================================================================== 
+*/
+async function initApp() {
+    const statusEl = document.getElementById('dbStatus');
+    
+    // UI: Check viewport width for sidebar
+    checkResponsiveSidebar();
+
+    try {
+        statusEl.innerHTML = "Fetching databases...";
+        
+        const [coreRes, sciRes] = await Promise.all([ fetch(CORE_URL), fetch(SCIMAGO_URL) ]);
+        if(!coreRes.ok || !sciRes.ok) throw new Error("Fetch failed");
+
+        const coreText = await coreRes.text();
+        const sciText = await sciRes.text();
+
+        rankingDB = [];
+
+        // Parse CORE
+        let coreRows = []; let curCell = ''; let inQuote = false;
+        for(let i=0; i<coreText.length; i++){
+            let c = coreText[i];
+            if(c === '"') { inQuote = !inQuote; }
+            else if(c === ',' && !inQuote) { coreRows.push(curCell.trim()); curCell=''; }
+            else if(c === '\n' && !inQuote) { 
+                coreRows.push(curCell.trim()); 
+                if(coreRows.length > 4 && coreRows[4]) {
+                    let r = coreRows[4];
+                    if(r === 'Unranked') r = 'No Matching Conf';
+                    rankingDB.push({ name: coreRows[1], acronym: coreRows[2], rank: r, type: 'CONF' });
+                }
+                coreRows = []; curCell=''; 
+            } else { curCell += c; }
+        }
+
+        // Parse Scimago
+        const lines = sciText.split('\n');
+        for(let i=1; i<lines.length; i++) {
+            const line = lines[i].trim();
+            if(!line) continue;
+            const cols = line.match(/(".*?"|[^;]+)(?=\s*;|\s*$)/g);
+            if(cols && cols.length > 10) {
+                let title = cols[2].replace(/^"|"$/g, '');
+                let quartile = cols[9].replace('"','').trim();
+                if(quartile.startsWith('Q')) {
+                    rankingDB.push({ name: title, acronym: null, rank: quartile, type: 'JOURNAL', sjr: cols[8].replace('"',''), hIndex: cols[10].replace('"','') });
+                }
+            }
+        }
+
+        rankingDB.sort((a,b) => (b.acronym?.length || b.name.length) - (a.acronym?.length || a.name.length));
+
+        statusEl.innerHTML = `<span style="color:var(--primary)">● DB Ready</span> (${rankingDB.length} venues)`;
+        document.getElementById('btnSearch').disabled = false;
+        document.getElementById('searchInput').disabled = false;
+        
+        updateSliderDOM(1980, new Date().getFullYear());
+
+    } catch (e) {
+        console.error(e);
+        statusEl.innerHTML = `<span style="color:var(--danger)">● DB Error</span>`;
+    }
+}
+
+// SIDEBAR TOGGLE LOGIC
+function toggleSidebar() {
+    document.getElementById('mainSidebar').classList.toggle('collapsed');
+}
+
+function checkResponsiveSidebar() {
+    // If width is less than 1000px (tablet/mobile), default to closed
+    if (window.innerWidth < 1000) {
+        document.getElementById('mainSidebar').classList.add('collapsed');
+    }
+}
+
+initApp();
+
+/* 
+   ==========================================================================
+   CORE LOGIC: PARSING & MATCHING
+   ========================================================================== 
+*/
+function tokenize(str) {
+    if (!str) return new Set();
+    const stopWords = new Set(["the", "of", "and", "in", "on", "at", "for", "to", "by", "proceedings", "conference", "journal", "international", "symposium", "workshop", "annual"]);
+    return new Set(str.toLowerCase().replace(/[^a-z0-9\s]/g, ' ').split(/\s+/).filter(w => w.length > 1 && !stopWords.has(w)));
+}
+
+function findRankForVenue(venueString) {
+    if(!venueString) return null;
+    const vTokens = tokenize(venueString); 
+    let bestMatch = null;
+    let maxScore = 0;
+
+    for(let item of rankingDB) {
+        let score = 0;
+        if (item.acronym && item.acronym.length > 1) {
+            const regex = new RegExp(`\\b${item.acronym.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i');
+            if (regex.test(venueString)) score += 20; 
+        }
+        if (item.name) {
+            const coreTokens = tokenize(item.name);
+            let overlap = 0;
+            coreTokens.forEach(token => { if (vTokens.has(token)) overlap++; });
+            if (coreTokens.size > 0) {
+                score += (overlap * 2);
+                if(overlap === coreTokens.size) score += 10; 
+            }
+        }
+        if (score > maxScore) { maxScore = score; bestMatch = item; }
+    }
+
+    if (bestMatch && maxScore >= 4) return bestMatch;
+    return null;
+}
+
+function parseBibTex(text) {
+    const entries = [];
+    const rawEntries = text.split(/^\s*@/m).filter(e => e.trim().length > 0);
+    rawEntries.forEach(raw => {
+        const typeMatch = raw.match(/^([^{]+)\{/);
+        if(!typeMatch) return;
+        const type = typeMatch[1].trim().toLowerCase();
+        const body = raw.substring(raw.indexOf('{') + 1);
+        
+        const getField = (f) => {
+            const m = body.match(new RegExp(`${f}\\s*=\\s*[{"'](.*?)[}"'],`, 'is'));
+            return m ? m[1].replace(/\s+/g, ' ').trim() : "";
+        };
+
+        const title = getField('title');
+        let venue = getField('booktitle') || getField('journal') || getField('series') || "Unknown";
+        venue = venue.replace(/[{}]/g, '');
+        const year = parseInt(getField('year')) || 0;
+
+        if(title) entries.push({ type, title, venue, year, raw: `@${raw}` });
+    });
+    return entries.sort((a,b) => b.year - a.year);
+}
+
+/* 
+   ==========================================================================
+   AUTHOR MANAGEMENT
+   ========================================================================== 
+*/
+async function initiateSearch() {
+    const q = document.getElementById('searchInput').value.trim();
+    if(!q) return;
+    const modal = document.getElementById('modalOverlay');
+    const list = document.getElementById('candidateList');
+    const loader = document.getElementById('modalLoader');
+    modal.style.display = 'flex'; list.innerHTML = ''; loader.style.display = 'block';
+
+    try {
+        const res = await fetch(`https://dblp.org/search/author/api?q=${encodeURIComponent(q)}&format=json`);
+        const data = await res.json();
+        const hits = data.result?.hits?.hit;
+        loader.style.display = 'none';
+        
+        if(!hits) { list.innerHTML = '<div style="padding:20px;text-align:center;color:#888">No results found.</div>'; return; }
+        
+        const authors = Array.isArray(hits) ? hits : [hits];
+        authors.forEach(h => {
+            const info = h.info;
+            let aff = "";
+            if(info.notes && info.notes.note) {
+                 const notes = Array.isArray(info.notes.note) ? info.notes.note : [info.notes.note];
+                 const affNote = notes.find(n => n['@type'] === 'affiliation');
+                 if(affNote) aff = affNote.text;
+            }
+            const div = document.createElement('div');
+            div.className = 'candidate-item';
+            div.innerHTML = `<div class="c-name">${info.author}</div>${aff ? `<div class="c-info">🏢 ${aff}</div>` : ''}<div class="c-info" style="opacity:0.5">${info.url}</div>`;
+            div.onclick = () => selectCandidate(info.author, info.url, aff);
+            list.appendChild(div);
+        });
+    } catch(e) { list.innerHTML = '<div style="color:var(--danger)">Error contacting DBLP.</div>'; loader.style.display = 'none'; }
+}
+
+function closeModal() { document.getElementById('modalOverlay').style.display = 'none'; }
+
+async function selectCandidate(name, url, affiliation) {
+    closeModal();
+    if(activeAuthors.find(a => a.url === url)) return alert("Author already added!");
+    const color = AUTHOR_COLORS[activeAuthors.length % AUTHOR_COLORS.length];
+
+    try {
+        const res = await fetch(url + ".bib");
+        if(!res.ok) throw new Error("CORS Blocked");
+        const bibText = await res.text();
+        const parsedPapers = parseBibTex(bibText);
+        
+        const processed = parsedPapers.map(p => {
+            const match = findRankForVenue(p.venue);
+            if(match) {
+                return { ...p, rank: match.rank, matchName: match.name, matchType: match.type, sjr: match.sjr, hIndex: match.hIndex };
+            } else {
+                let nmRank = 'No Matching Conf';
+                let nmType = 'CONF';
+                if(p.type === 'article') { nmRank = 'No Matching Journal'; nmType = 'JOURNAL'; }
+                return { ...p, rank: nmRank, matchType: nmType };
+            }
+        });
+
+        activeAuthors.push({ id: Date.now(), name, url, affiliation, papers: processed, color, fullBib: bibText });
+        
+        recalculateGlobalYears();
+        refreshAllViews();
+        
+        // Auto-close sidebar on mobile after selection to show content
+        if(window.innerWidth < 800) {
+            document.getElementById('mainSidebar').classList.add('collapsed');
+        }
+
+    } catch(e) { alert("Error loading author data. Ensure you have a CORS extension enabled for dblp.org."); }
+}
+
+function removeAuthor(id) {
+    activeAuthors = activeAuthors.filter(a => a.id !== id);
+    if(activeAuthors.length === 0) {
+        document.getElementById('comparisonContainer').innerHTML = `<div class="empty-state"><div class="empty-icon">👥</div><h3>No Authors Selected</h3><p>Use the search bar above to add authors for comparison.</p></div>`;
+        document.getElementById('chartSection').style.display = 'none';
+        isChartOpen = false;
+        // Reset slider to default bounds but don't change user selection flag to allow manual reset? 
+        // Actually better to reset user mod flag if list is empty
+        userHasModifiedSlider = false;
+    } else {
+        recalculateGlobalYears();
+        refreshAllViews();
+    }
+}
+
+function resetAll() {
+    activeAuthors = [];
+    removeAuthor(-1);
+}
+
+/* 
+   ==========================================================================
+   SLIDER LOGIC (Smart Update)
+   ========================================================================== 
+*/
+function userTouchSlider() { userHasModifiedSlider = true; }
+
+function recalculateGlobalYears() {
+    let allYears = [];
+    activeAuthors.forEach(a => {
+        a.papers.forEach(p => { if(p.year > 1950) allYears.push(p.year); });
+    });
+    
+    globalMinYear = allYears.length ? Math.min(...allYears) : 1980;
+    globalMaxYear = allYears.length ? Math.max(...allYears) : new Date().getFullYear();
+    
+    const rMin = document.getElementById('inputMinYear');
+    const rMax = document.getElementById('inputMaxYear');
+
+    // Update constraints
+    rMin.min = globalMinYear; rMin.max = globalMaxYear;
+    rMax.min = globalMinYear; rMax.max = globalMaxYear;
+
+    // If user hasn't touched it, or if list was just started, auto-expand
+    if (!userHasModifiedSlider || activeAuthors.length === 1) {
+        rMin.value = globalMinYear;
+        rMax.value = globalMaxYear;
+    } else {
+        // clamp values if range shrank
+        if (parseInt(rMin.value) < globalMinYear) rMin.value = globalMinYear;
+        if (parseInt(rMax.value) > globalMaxYear) rMax.value = globalMaxYear;
+    }
+    updateSliderUI();
+}
+
+function updateSliderDOM(min, max) {
+    const rMin = document.getElementById('inputMinYear');
+    const rMax = document.getElementById('inputMaxYear');
+    rMin.min = min; rMin.max = max; rMin.value = min;
+    rMax.min = min; rMax.max = max; rMax.value = max;
+    updateSliderUI();
+}
+
+function updateSlider() {
+    const rMin = document.getElementById('inputMinYear');
+    const rMax = document.getElementById('inputMaxYear');
+    const lblMin = document.getElementById('lblMinYear');
+    const lblMax = document.getElementById('lblMaxYear');
+    const hl = document.getElementById('rangeHighlight');
+
+    if(parseInt(rMin.value) > parseInt(rMax.value)) {
+        let t = rMin.value; rMin.value = rMax.value; rMax.value = t;
+    }
+
+    lblMin.innerText = rMin.value;
+    lblMax.innerText = rMax.value;
+
+    const min = parseInt(rMin.min);
+    const max = parseInt(rMax.max);
+    const left = ((rMin.value - min) / (max - min)) * 100;
+    const width = ((rMax.value - min) / (max - min)) * 100 - left;
+
+    hl.style.left = left + "%";
+    hl.style.width = width + "%";
+}
+
+function updateSliderUI() { updateSlider(); }
+
+/* 
+   ==========================================================================
+   FILTER & RENDER LOGIC
+   ========================================================================== 
+*/
+function setTypeFilter(type, btn) {
+    activeTypeFilter = type;
+    document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    
+    const g1 = document.getElementById('grpConf');
+    const g2 = document.getElementById('grpJrnl');
+    if(type === 'ALL') { g1.classList.remove('disabled-area'); g2.classList.remove('disabled-area'); }
+    else if(type === 'CONF') { g1.classList.remove('disabled-area'); g2.classList.add('disabled-area'); }
+    else { g1.classList.add('disabled-area'); g2.classList.remove('disabled-area'); }
+    refreshAllViews();
+}
+
+function toggleAll(group, allChk) {
+    const checkboxes = document.querySelectorAll(`.${group}-chk`);
+    checkboxes.forEach(chk => chk.checked = allChk.checked);
+    refreshAllViews();
+}
+
+// Listener for check inputs
+document.querySelectorAll('.filter-chk').forEach(chk => {
+    chk.addEventListener('change', (e) => {
+        // Logic to uncheck ALL if one child is unchecked
+        const group = e.target.classList.contains('conf-chk') ? 'conf' : 'jrnl';
+        const allChk = document.getElementById(group==='conf'?'chkConfAll':'chkJrnlAll');
+        const subs = document.querySelectorAll(`.${group}-chk`);
+        const allSelected = Array.from(subs).every(c => c.checked);
+        allChk.checked = allSelected;
+        refreshAllViews();
+    });
+});
+
+function toggleSort() {
+    sortOrder = sortOrder === 'desc' ? 'asc' : 'desc';
+    document.getElementById('sortBtn').innerHTML = sortOrder === 'desc' ? "↓ Newest First" : "↑ Oldest First";
+    refreshAllViews();
+}
+
+function refreshAllViews() {
+    if(activeAuthors.length === 0) return;
+    const container = document.getElementById('comparisonContainer');
+    container.innerHTML = '';
+
+    // Get Filter State
+    const minYear = parseInt(document.getElementById('inputMinYear').value);
+    const maxYear = parseInt(document.getElementById('inputMaxYear').value);
+    const venueText = document.getElementById('venueFilter').value.toUpperCase();
+    const confRanks = Array.from(document.querySelectorAll('.conf-chk:checked')).map(c => c.value);
+    const jrnlRanks = Array.from(document.querySelectorAll('.jrnl-chk:checked')).map(c => c.value);
+    const allowedRanks = new Set([...confRanks, ...jrnlRanks]);
+
+    activeAuthors.forEach(author => {
+        const visible = author.papers.filter(p => {
+            if(p.year < minYear || p.year > maxYear) return false;
+            if(venueText && !p.venue.toUpperCase().includes(venueText)) return false;
+
+            const isConf = p.matchType === 'CONF';
+            const isJrnl = p.matchType === 'JOURNAL';
+            
+            if(activeTypeFilter === 'CONF' && isJrnl) return false;
+            if(activeTypeFilter === 'JOURNAL' && isConf) return false;
+
+            return allowedRanks.has(p.rank);
+        });
+
+        // Sort
+        visible.sort((a, b) => sortOrder === 'desc' ? b.year - a.year : a.year - b.year);
+
+        // Stats
+        const total = visible.length;
+        const countA = visible.filter(p => p.rank === 'A*').length;
+        const countQ1 = visible.filter(p => p.rank === 'Q1').length;
+
+        // Build Column
+        const col = document.createElement('div');
+        col.className = 'author-column';
+        col.innerHTML = `
+            <div class="col-header" style="border-top-color: ${author.color}">
+                <button class="btn-remove-col" onclick="removeAuthor(${author.id})">&times;</button>
+                <h2 title="${author.name}">${author.name}</h2>
+                <div class="col-aff" title="${author.affiliation || ''}">${author.affiliation || 'No affiliation'}</div>
+                <div class="col-stats">
+                    <div class="stat-item"><span class="stat-val">${total}</span><span class="stat-lbl">Total</span></div>
+                    <div class="stat-item"><span class="stat-val">${countA}</span><span class="stat-lbl">A*</span></div>
+                    <div class="stat-item"><span class="stat-val">${countQ1}</span><span class="stat-lbl">Q1</span></div>
+                </div>
+                <div class="col-actions">
+                    <button class="btn-xs" onclick="downloadAuthorFull(${author.id})">Download .bib</button>
+                    <button class="btn-xs btn-dl-filter" onclick="downloadAuthorFiltered(${author.id})">Download Filtered</button>
+                </div>
+            </div>
+            <div class="col-scroll">
+                ${visible.map(p => createPaperCard(p)).join('')}
+            </div>
+        `;
+        container.appendChild(col);
+        
+        // Store visible papers in memory for filtered download
+        author.currentVisible = visible;
+    });
+
+    updateChart(minYear, maxYear, allowedRanks);
+}
+
+function createPaperCard(p) {
+    let tier = "";
+    if(p.rank === 'A*' || p.rank === 'Q1') tier = "t1";
+    else if(p.rank === 'A' || p.rank === 'Q2') tier = "t2";
+    else if(p.rank === 'B' || p.rank === 'Q3') tier = "t3";
+    else if(p.rank === 'C' || p.rank === 'Q4') tier = "t4";
+    else if(p.rank === 'No Matching Conf') tier = "tn-conf";
+    else if(p.rank === 'No Matching Journal') tier = "tn-jrnl";
+    
+    let meta = p.venue;
+    if(p.sjr && p.sjr !== '-') meta += ` | SJR: ${p.sjr}`;
+    
+    // Encode raw bib for safety in onClick
+    const safeRaw = btoa(p.raw);
+
+    return `
+        <div class="paper-card ${tier}" onclick="this.classList.toggle('expanded')">
+            <div class="p-title">${p.title}</div>
+            <div class="p-meta">
+                <span>${p.year} <span class="p-venue">${meta}</span></span>
+                <span class="p-rank">${p.rank}</span>
+            </div>
+            <div class="p-details" onclick="event.stopPropagation()">
+                ${p.matchName ? `<div style="color:var(--primary);margin-bottom:5px">Matched: ${p.matchName}</div>` : ''}
+                <div class="p-actions">
+                    <button class="btn-mini" onclick="copyText(this, '${safeRaw}')">Copy</button>
+                    <button class="btn-mini" onclick="downloadSingleItem('${safeRaw}', 'bib_item.bib')">Download</button>
+                </div>
+                <code>${p.raw}</code>
+            </div>
+        </div>
+    `;
+}
+
+function toggleChart() {
+    const sec = document.getElementById('chartSection');
+    isChartOpen = !isChartOpen;
+    sec.style.display = isChartOpen ? 'block' : 'none';
+    if(isChartOpen) refreshAllViews();
+}
+
+function updateChart(minYear, maxYear, allowedRanks) {
+    if(!isChartOpen || activeAuthors.length === 0) return;
+
+    const years = [];
+    for(let y = minYear; y <= maxYear; y++) years.push(y);
+
+    const datasets = activeAuthors.map(author => {
+        const data = new Array(years.length).fill(0);
+        author.papers.forEach(p => {
+            if(p.year < minYear || p.year > maxYear) return;
+            
+            // Apply all current filters to chart data
+            const isConf = p.matchType === 'CONF';
+            const isJrnl = p.matchType === 'JOURNAL';
+            if(activeTypeFilter === 'CONF' && isJrnl) return;
+            if(activeTypeFilter === 'JOURNAL' && isConf) return;
+            
+            const venueText = document.getElementById('venueFilter').value.toUpperCase();
+            if(venueText && !p.venue.toUpperCase().includes(venueText)) return;
+
+            if(allowedRanks.has(p.rank)) {
+                const idx = p.year - minYear;
+                if(idx >= 0) data[idx]++;
+            }
+        });
+
+        return {
+            label: author.name,
+            data: data,
+            borderColor: author.color,
+            backgroundColor: author.color,
+            borderWidth: 2,
+            tension: 0.4,
+            pointRadius: 3,
+            fill: false
+        };
+    });
+
+    const ctx = document.getElementById('chartCanvas').getContext('2d');
+    if(chartInstance) chartInstance.destroy();
+
+    chartInstance = new Chart(ctx, {
+        type: 'line',
+        data: { labels: years, datasets: datasets },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: { mode: 'index', intersect: false },
+            plugins: {
+                legend: { labels: { color: '#949bb1' } },
+                tooltip: { theme: 'dark', backgroundColor: 'rgba(36, 40, 48, 0.9)' }
+            },
+            scales: {
+                x: { grid: { color: '#353b45' }, ticks: { color: '#949bb1' } },
+                y: { grid: { color: '#353b45' }, ticks: { color: '#949bb1', stepSize: 1 }, beginAtZero: true }
+            }
+        }
+    });
+}
+
+/* 
+   ==========================================================================
+   DOWNLOADS & ACTIONS
+   ========================================================================== 
+*/
+function downloadAuthorFull(id) {
+    const author = activeAuthors.find(a => a.id === id);
+    if(!author) return;
+    triggerDownload(author.fullBib, `${author.name.replace(/ /g,'_')}_full.bib`);
+}
+
+function downloadAuthorFiltered(id) {
+    const author = activeAuthors.find(a => a.id === id);
+    if(!author || !author.currentVisible) return;
+    const bib = author.currentVisible.map(p => p.raw).join('\n\n');
+    triggerDownload(bib, `${author.name.replace(/ /g,'_')}_filtered.bib`);
+}
+
+function downloadSingleItem(b64, filename) {
+    const text = atob(b64);
+    triggerDownload(text, filename);
+}
+
+function copyText(btn, b64) {
+    const text = atob(b64);
+    navigator.clipboard.writeText(text);
+    const orig = btn.innerText;
+    btn.innerText = "Copied!";
+    setTimeout(() => btn.innerText = orig, 1500);
+}
+
+function triggerDownload(content, filename) {
+    const blob = new Blob([content], {type:'text/plain'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+}
+
+</script>
+</body>
+</html>

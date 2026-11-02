@@ -1,5 +1,5 @@
 ---
-layout: profiles
+layout: page
 permalink: /people/
 title: people
 description: Ph.D. students who have collaborated with me

@@ -24,3 +24,7 @@ profiles:
   #     <p>Building 7, 2nd floor, Department of Computer Science </p>
   #     <p>Università di Salerno, Via Giovanni Paolo II, 132, 84084 Fisciano SA</p>
 ---
+I' am member of the [doctoral committee at Department of Computer Science, University of Salerno](https://corsi.unisa.it/informatica-dottorato/collegio-dei-docenti).
+
+**Supervisors of**: [Valerio di Pasquale, PhD student @ UNISA](https://daqh.github.io/)
+**Tutor of**:  [Tiziano Citro, AWS](https://tizianocitro.github.io), [Giuseppe D'Ambrosio, Leonardo](https://it.linkedin.com/in/giuseppedambrosio), [Matteo D'Auria, Spindox Research](https://it.linkedin.com/in/matteo-dauria), [Alessia Antelimi, University of Turin](https://alessant.github.io/)

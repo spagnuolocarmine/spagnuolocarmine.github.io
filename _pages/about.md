@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-subtitle:  Assistant Professor (RTD-B) @ <a href='https://www.isislab.it'>ISISLab</a>, <a href='https://docenti.unisa.it/028012/home'>Department of Computer Science</a>. Università degli Studi di Salerno (UNISA) · 🇮🇹
+subtitle:  Associate Professor @ <a href='https://www.isislab.it'>ISISLab</a>, <a href='https://docenti.unisa.it/028012/home'>Department of Computer Science</a>. Università degli Studi di Salerno (UNISA) · 🇮🇹
 
 profile:
   align: right

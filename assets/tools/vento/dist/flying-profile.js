@@ -1,3 +1,3 @@
-import {windTrimResponse} from './trim-response.js';
-import {clamp} from './constants.js';
+import {windTrimResponse} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/trim-response.js';
+import {clamp} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/constants.js';
 export function flyingProfile(type,s,sheet=s.controls[type].sheet){const c=s.controls[type],fill=clamp(sheet/12),load=clamp(s.windSpeed/4),p=type==='gennaker'?{twist:6+(100-c.tack)*.21,camber:.40-c.tack*.0019,draft:.46-c.tack*.0009,stability:.7+c.tack*.003}:{twist:14-c.barberSheet*.09-c.barberBrace*.035,camber:.39-(c.barberSheet+c.barberBrace)*.00055-sheet*.00035,draft:.5,stability:.75+(c.barberSheet+c.barberBrace)*.00125};const demand=windTrimResponse(s.windSpeed,s.windAngle).demand,halyard=clamp((c.halyard??60)/100);p.camber+=.055*(demand-halyard);if(type==='gennaker')p.draft=clamp(p.draft+.07*(demand-halyard),.28,.65);p.twist+=4*(1-halyard);p.stability*=.65+.35*halyard;p.halyard=halyard;p.sheetValue=sheet;p.camber*=(.30+.70*load)*(.06+.94*fill);p.twist*=fill;p.stability*=fill;p.pressurized=load;p.released=1-fill;return p;}

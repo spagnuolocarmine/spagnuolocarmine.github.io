@@ -1,8 +1,8 @@
 // Geometric blanketing behind the mainsail on broad reaches / runs.
 // This is an empirical pressure deficit, not a resolved turbulent wake or slot model.
-import {V,RAD,clamp,lerp} from './constants.js';
-import {boatScale} from './boats.js';
-import {sailPoint} from './sail-geometry.js';
+import {V,RAD,clamp,lerp} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/constants.js';
+import {boatScale} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/boats.js';
+import {sailPoint} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/sail-geometry.js';
 export function mainsailWake(s,awa){
  const run=clamp((Math.abs(awa)-90)/35);if(!s.main||run===0)return null;
  const wind=[-Math.sin(awa*RAD),0,-Math.cos(awa*RAD)],across=[wind[2],0,-wind[0]],k=boatScale(s),bands=Array.from({length:17},(_,j)=>{

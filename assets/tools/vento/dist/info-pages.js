@@ -1,4 +1,4 @@
-import {getLanguage} from './i18n.js';
+import {getLanguage} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/i18n.js';
 const sources=`<div class="about-sources"><a href="https://www.kaggle.com/datasets/opendatasource/sailing-boats" target="_blank" rel="noopener">Kaggle · Sailing Boats ↗</a><a href="https://orc.org/race-managment/rms-files" target="_blank" rel="noopener">ORC · RMS files ↗</a></div>`;
 export function aboutHTML(){return getLanguage()==='en'?`
 <h2>About VENTO</h2><p>A sailing laboratory for learning and exploration.</p>

@@ -1,13 +1,13 @@
 // Deterministic multi-start coordinate search on the actual corrected pressure cells.
-import {clamp} from './constants.js';
-import {windTrimResponse,autoTensionRange} from './trim-response.js';
-import {aeroForces} from './aero.js';
-import {polarSpeed} from './polar.js';
-import {boatProfile,hasSail,GENERIC_BOAT} from './boats.js';
-import {defaultSailDesigns,sailDesign,MEASURE_FIELDS} from './sail-measures.js';
-import {selectedArea,hasHeadsailBattens,headsailInhaulAllowed} from './orc-sails.js';
-import {constrainAutoJibCar} from './jib-trim-constraints.js';
-import {controlEnabled,restoreFixedControls,hasFixedControls} from './control-state.js';
+import {clamp} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/constants.js';
+import {windTrimResponse,autoTensionRange} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/trim-response.js';
+import {aeroForces} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/aero.js';
+import {polarSpeed} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/polar.js';
+import {boatProfile,hasSail,GENERIC_BOAT} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/boats.js';
+import {defaultSailDesigns,sailDesign,MEASURE_FIELDS} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/sail-measures.js';
+import {selectedArea,hasHeadsailBattens,headsailInhaulAllowed} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/orc-sails.js';
+import {constrainAutoJibCar} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/jib-trim-constraints.js';
+import {controlEnabled,restoreFixedControls,hasFixedControls} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/control-state.js';
 export const referenceKey=s=>`v20:${boatProfile(s).id}:${Number(s.windSpeed).toFixed(2)}:${Number(s.windAngle).toFixed(2)}`;
 const cache=new Map(),clone=s=>JSON.parse(JSON.stringify(s));
 const forceRatio=(m,target)=>m.usefulDrive/Math.max(1e-12,target);

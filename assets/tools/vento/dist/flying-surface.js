@@ -1,14 +1,14 @@
-import {windTrimResponse} from './trim-response.js';
+import {windTrimResponse} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/trim-response.js';
 // Inferred S2 flying shape, constrained by ORC edge lengths and measured girths.
 // Quadratic edge arcs + tangent circular arcs conserve SLU/SLE, SFL and SHW.
 // ORC dimensions alone do not identify the sailmaker's original 3D broadseaming.
-import {V,RAD,clamp,lerp} from './constants.js';
-import {sailDimensions,spinPoleRig} from './orc-sails.js';
-import {mastPoint,rigResponse,forestayPoint} from './standing-rig.js';
-import {rawFlyingSheetTravel} from './flying-leads.js';
-import {flyingProfile} from './flying-profile.js';
-import {boatScale} from './boats.js';
-import {sailFlow} from './sail-flow.js';
+import {V,RAD,clamp,lerp} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/constants.js';
+import {sailDimensions,spinPoleRig} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/orc-sails.js';
+import {mastPoint,rigResponse,forestayPoint} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/standing-rig.js';
+import {rawFlyingSheetTravel} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/flying-leads.js';
+import {flyingProfile} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/flying-profile.js';
+import {boatScale} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/boats.js';
+import {sailFlow} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/sail-flow.js';
 const cache=new WeakMap();
 const smooth=x=>{x=clamp(x);return x*x*(3-2*x);};
 const perpendicular=(v,axis)=>V.unit(V.sub(v,V.mul(axis,V.dot(v,axis))));

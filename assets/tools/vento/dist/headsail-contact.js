@@ -1,10 +1,10 @@
 // Check the loaded curved cloth, not a flat envelope spanning the whole rig.
 // The force law supplies the same camber, draft and twist used by sailPoint.
-import {V,RAD} from './constants.js';
-import {boatProfile,boatScale,headsailScale} from './boats.js';
-import {sailDesign,measuredProfile} from './sail-measures.js';
-import {headsailLuffPoint,rigResponse,shroudPath,spreaderEndpoints,windSide} from './standing-rig.js';
-import {standingRigLayout} from './rig-layout.js';
+import {V,RAD} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/constants.js';
+import {boatProfile,boatScale,headsailScale} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/boats.js';
+import {sailDesign,measuredProfile} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/sail-measures.js';
+import {headsailLuffPoint,rigResponse,shroudPath,spreaderEndpoints,windSide} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/standing-rig.js';
+import {standingRigLayout} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/rig-layout.js';
 const cache=new Map();
 const curve=(u,d)=>u<=0||u>=1?0:Math.sin((u<d?u/d:(1-u)/(1-d))*Math.PI/2);
 const curveSlope=(u,d)=>u<=0||u>=1?0:(u<d?Math.PI/(2*d)*Math.cos(u/d*Math.PI/2):-Math.PI/(2*(1-d))*Math.cos((1-u)/(1-d)*Math.PI/2));

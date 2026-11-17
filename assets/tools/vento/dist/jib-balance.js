@@ -1,12 +1,12 @@
 // Geometric sheet travel with wind-dependent load and a damped length constraint.
 // Full haul reaches the closest point to the actual ring allowed by the curved cloth.
-import {RAD,V,clamp} from './constants.js';
-import {sailFlow} from './sail-flow.js';
-import {windTrimResponse,headsailCamber,headsailDraft} from './trim-response.js';
-import {rigResponse} from './standing-rig.js';
-import {hasHeadsailBattens} from './orc-sails.js';
-import {minimumHeadsailAngle} from './headsail-contact.js';
-import {sheetArc,sheetFraction} from './sheet-travel.js';
+import {RAD,V,clamp} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/constants.js';
+import {sailFlow} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/sail-flow.js';
+import {windTrimResponse,headsailCamber,headsailDraft} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/trim-response.js';
+import {rigResponse} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/standing-rig.js';
+import {hasHeadsailBattens} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/orc-sails.js';
+import {minimumHeadsailAngle} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/headsail-contact.js';
+import {sheetArc,sheetFraction} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/sheet-travel.js';
 const C=3.4,A=1.2;
 const bin=(x,step)=>Math.round(x/step)*step;
 export function solveJibBalance({state,tack,head,ring,width,area,scale,nominalI,nominalJ}){

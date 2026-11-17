@@ -1,4 +1,4 @@
-import {enableDialogDrag} from './dialog-drag.js';
+import {enableDialogDrag} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/dialog-drag.js';
 
 // Opening one window leaves the others available; the rail stays above all windows.
 export function createWindowWorkspace(){

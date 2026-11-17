@@ -1,4 +1,4 @@
-import {clamp} from './constants.js';
+import {clamp} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/constants.js';
 
 // An inset viewport keeps floating title bars clear of the rail and header.
 export function enableDialogDrag(dialog,handle,container=null,options={}){

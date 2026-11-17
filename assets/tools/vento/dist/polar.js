@@ -1,5 +1,5 @@
-import {BOAT,clamp,lerp,RAD} from './constants.js';
-import {boatProfile} from './boats.js';
+import {BOAT,clamp,lerp,RAD} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/constants.js';
+import {boatProfile} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/boats.js';
 const scale=BOAT.scale;
 const winds=[4,6,8,10,12,14,16,20,24];
 // ORC NEXT GEN IY 9.98 F, Asimmetrico.pdf, page 1. Angles include interpolated beat / run endpoints.

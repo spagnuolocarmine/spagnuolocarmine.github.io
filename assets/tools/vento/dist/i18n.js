@@ -1,4 +1,4 @@
-import english from './i18n-en.js';
+import english from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/i18n-en.js';
 
 const LANGUAGE_KEY='vento.language';
 let language='it';

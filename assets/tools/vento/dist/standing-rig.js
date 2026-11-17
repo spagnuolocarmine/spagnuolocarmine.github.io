@@ -1,9 +1,9 @@
-import {RAD,clamp,lerp,V} from './constants.js';
-import {rigDimensions,selectedArea} from './orc-sails.js';
-import {sailFlow} from './sail-flow.js';
-import {boatScale,boatProfile,beamRatio,headsailScale,isCertificateBoat} from './boats.js';
-import {standingRigLayout} from './rig-layout.js';
-import {sailDesign,measuredArea} from './sail-measures.js';
+import {RAD,clamp,lerp,V} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/constants.js';
+import {rigDimensions,selectedArea} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/orc-sails.js';
+import {sailFlow} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/sail-flow.js';
+import {boatScale,boatProfile,beamRatio,headsailScale,isCertificateBoat} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/boats.js';
+import {standingRigLayout} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/rig-layout.js';
+import {sailDesign,measuredArea} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/sail-measures.js';
 export const windSide=s=>-(Math.sign(Math.sin(s.windAngle*RAD))||1);
 const responseCache=new WeakMap();
 export function rigResponse(s){const r=s.controls.rig,md=sailDesign('main',s),gd=sailDesign('genoa',s),ma=isCertificateBoat(s)&&!md.exploratory?boatProfile(s).areas.main:measuredArea('main',md),ga=isCertificateBoat(s)&&!gd.exploratory?boatProfile(s).areas.genoa:measuredArea('genoa',gd),fa=s.foresail==='genoa'?ga*headsailScale(s):selectedArea(s.foresail,s),key=[r.backstay,r.forestay,r.shrouds,s.windSpeed,s.windAngle,s.boatSpeed,s.genoaSize,s.main,s.foresail,fa,boatProfile(s).id,boatScale(s),md.P,gd.HLU,ma,ga],cached=responseCache.get(s);if(cached&&key.every((x,i)=>x===cached.key[i]))return cached.value;const k=boatScale(s),rig=rigDimensions(s),L=rig.ISP*k,flow=sailFlow(s),aws=flow.aws,q=flow.q,wx=s.windSpeed*Math.sin(s.windAngle*RAD),headsailArea=fa,mainArea=s.main?ma:0;

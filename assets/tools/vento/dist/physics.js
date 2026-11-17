@@ -1,15 +1,15 @@
-import {RAD,clamp,lerp,BOAT,V} from './constants.js';
-import {samplePressure} from './pressure-solver.js';
-export {RAD,clamp,lerp,BOAT} from './constants.js';
-export {sailShape} from './sail-geometry.js';
-import {GENERIC_BOAT,boatProfile} from './boats.js';
-import {defaultSailDesigns} from './sail-measures.js';
-import {selectedArea} from './orc-sails.js';
-import {aeroForces,apparentWind,sailArea} from './aero.js';
-import {polarSpeed} from './polar.js';
-import {referenceKey,computeReference,optimizeForReference} from './trim-optimizer.js';
-export {apparentWind,sailArea} from './aero.js';
-export {polarSpeed} from './polar.js';
+import {RAD,clamp,lerp,BOAT,V} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/constants.js';
+import {samplePressure} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/pressure-solver.js';
+export {RAD,clamp,lerp,BOAT} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/constants.js';
+export {sailShape} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/sail-geometry.js';
+import {GENERIC_BOAT,boatProfile} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/boats.js';
+import {defaultSailDesigns} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/sail-measures.js';
+import {selectedArea} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/orc-sails.js';
+import {aeroForces,apparentWind,sailArea} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/aero.js';
+import {polarSpeed} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/polar.js';
+import {referenceKey,computeReference,optimizeForReference} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/trim-optimizer.js';
+export {apparentWind,sailArea} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/aero.js';
+export {polarSpeed} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/polar.js';
 export const CONTROL_DEFS={
  main:[['halyard','Drizza','Morbida','Tesa','Sposta in avanti il grasso e riduce le pieghe lungo l’inferitura.'],['cunningham','Cunningham','Lasco','Cazzato','Tende l’inferitura e sposta il massimo grasso verso l’albero.'],['outhaul','Base randa','Profonda','Piatta','Tende la base: appiattisce il terzo inferiore della randa.'],['traveler','Carrello randa','Sottovento','Sopravento','Scorre per tutta la larghezza del pozzetto, sopravento o sottovento. Le direzioni seguono le mure attuali.'],['sheet','Scotta · corsa utile','Completamente mollata','Cazzata','Percorre tutta l’apertura disponibile fra limite delle sartie e massimo avvicinamento al carrello, senza corsa iniziale inattiva.'],['battens','Tensione stecche','Morbide','Tese','Sostiene la balumina, modifica il profilo e smorza il fileggiamento.'],['vang','Vang','Lasco','Cazzato','Controlla l’apertura della balumina e lo svergolamento della parte alta.']],
  genoa:[['car','Carrello genoa','Poppa','A prua delle sartie','Scorre su 4,90 m di binario, dal pozzetto a poppa fino a 1,25 m a prua delle sartie; comprende il rinvio arretrato per i genoa grandi.'],['barber','Barber','Verso l’albero','Verso l’esterno','Al centro il rinvio coincide col carrello. Spostalo verso l’albero o verso l’esterno per regolare il tiro laterale; la scotta contrasta l’apertura prodotta dal vento apparente.'],['sheet','Scotta · corsa utile','Completamente mollata','Cazzata','Lascando il vento apre la vela verso l’esterno; cazzando la bugna si avvicina al rinvio. Lo slider percorre proporzionalmente tutto l’arco utile: 0% in bandiera, 100% nel punto più vicino al rinvio. Il tiro dipende dal vento, non dalla percentuale del comando.'],['halyard','Tensione drizza','Morbida','Tesa','Controlla la posizione del grasso e la tensione dell’inferitura.'],['battens','Tensione stecche','Morbide','Tese','Disponibile sul fiocco 105% steccato; stabilizza il profilo della balumina.']],

@@ -1,15 +1,15 @@
 // The renderer and pressure solver use this exact same steady, loaded sail geometry.
-import {RAD,clamp,lerp,V} from './constants.js';
-import {mainBoomAngle,genoaLeadGeometry} from './deck-layout.js';
-import {mainWidth,genoaWidth,rigDimensions,flatSailPoint,hasHeadsailBattens} from './orc-sails.js';
-import {mastPoint,forestayPoint,windSide,rigResponse,shroudAtHeight,headsailLuffPoint} from './standing-rig.js';
-import {boatScale,boatProfile} from './boats.js';
-import {windTrimResponse,smoothBound,headsailCamber,headsailDraft} from './trim-response.js';
-import {sailDesign} from './sail-measures.js';
-import {sheetArc,flyingSheetTravel} from './sheet-travel.js';
-import {flyingSurface} from './flying-surface.js';
-import {flyingProfile} from './flying-profile.js';
-export {mastPoint,forestayPoint,windSide} from './standing-rig.js';
+import {RAD,clamp,lerp,V} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/constants.js';
+import {mainBoomAngle,genoaLeadGeometry} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/deck-layout.js';
+import {mainWidth,genoaWidth,rigDimensions,flatSailPoint,hasHeadsailBattens} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/orc-sails.js';
+import {mastPoint,forestayPoint,windSide,rigResponse,shroudAtHeight,headsailLuffPoint} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/standing-rig.js';
+import {boatScale,boatProfile} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/boats.js';
+import {windTrimResponse,smoothBound,headsailCamber,headsailDraft} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/trim-response.js';
+import {sailDesign} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/sail-measures.js';
+import {sheetArc,flyingSheetTravel} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/sheet-travel.js';
+import {flyingSurface} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/flying-surface.js';
+import {flyingProfile} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/flying-profile.js';
+export {mastPoint,forestayPoint,windSide} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/standing-rig.js';
 export const rigLoad=s=>clamp(s.windSpeed/14,0,1.8);
 export function sailShape(type,s,h=.4){if(type==='spinnaker'||type==='gennaker'){const travel=flyingSheetTravel(type,s);return{angle:type==='spinnaker'?90-travel.angle:travel.angle,...flyingProfile(type,s)};}const c=s.controls[type],r=s.controls.rig,load=clamp(s.windSpeed/4,0,1),weather=windTrimResponse(s.windSpeed,s.windAngle);let p;
  if(type==='main')p={angle:mainSheetAngle(s),twist:2+(100-c.vang)*.20+(100-c.sheet)*.06+6*Math.max(0,weather.battens-c.battens)/100*h,camber:smoothBound(.21-c.outhaul*.00105*(1-h)**.8-rigResponse(s).prebend*.25-c.cunningham*.00037*(1-h*.65)+(c.battens-weather.battens)*.00032*h,.035,.22),draft:smoothBound(weather.draft+.14*weather.demand-c.halyard*.0014-c.cunningham*.0004*(1-h)**3,.24,.61,.008),battened:true,stability:clamp(.4+c.battens*.006,0,1),roach:.22+c.battens*.005};

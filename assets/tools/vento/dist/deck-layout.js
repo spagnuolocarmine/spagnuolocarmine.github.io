@@ -1,10 +1,10 @@
 // Shared normalized 10 m boat coordinates; displayed metres include the selected hull scale.
-import {clamp,lerp,RAD} from './constants.js';
-import {mastPoint,rigResponse,headsailLuffPoint} from './standing-rig.js';
-import {boatScale,beamRatio,headsailScale,isCertificateBoat,boatProfile} from './boats.js';
-import {rigDimensions,headsailInhaulAllowed} from './orc-sails.js';
-import {sailDesign,measuredArea} from './sail-measures.js';
-import {solveJibBalance} from './jib-balance.js';
+import {clamp,lerp,RAD} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/constants.js';
+import {mastPoint,rigResponse,headsailLuffPoint} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/standing-rig.js';
+import {boatScale,beamRatio,headsailScale,isCertificateBoat,boatProfile} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/boats.js';
+import {rigDimensions,headsailInhaulAllowed} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/orc-sails.js';
+import {sailDesign,measuredArea} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/sail-measures.js';
+import {solveJibBalance} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/jib-balance.js';
 const jibCache=new WeakMap();
 export const DECK=Object.freeze({cockpitHalfWidth:1.35,coachroofAft:-1.65,shroudZ:.10,mainTrackZ:-2.75,mainTrackY:1.02,genoaTrackX:1.30,genoaTrackY:1.00,genoaTrackAft:-3.55,genoaTrackForward:1.35,mainSheetAttachment:.68});
 export function deckLayout(s){const b=beamRatio(s);const rig=rigDimensions(s);return{...DECK,cockpitHalfWidth:DECK.cockpitHalfWidth*b,genoaTrackX:DECK.genoaTrackX*b,shroudZ:isCertificateBoat(s)?rig.mastZ-.6:DECK.shroudZ,genoaTrackForward:isCertificateBoat(s)?rig.mastZ+.65:DECK.genoaTrackForward};}

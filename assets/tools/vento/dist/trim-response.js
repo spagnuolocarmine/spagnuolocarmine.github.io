@@ -1,6 +1,6 @@
 // Assumed cloth and load-support response, calibrated for this educational model.
 // TWS drives a monotone C1 curve: useful at 8 kn, near maximum at 20, maximum at 30.
-import {clamp} from './constants.js';
+import {clamp} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/constants.js';
 const softplus=x=>Math.max(0,x)+Math.log1p(Math.exp(-Math.abs(x)));
 export const smoothBound=(x,lo,hi,k=.006)=>lo+k*(softplus((x-lo)/k)-softplus((x-hi)/k));
 const knots=[[4,0],[8,.25],[12,.50],[16,.75],[20,.93],[24,.98],[30,1]];

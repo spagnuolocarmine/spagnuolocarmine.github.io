@@ -1,8 +1,8 @@
 // Surface-following telltales driven by local apparent flow and panel separation.
-import {V,clamp,lerp} from './constants.js';
-import {sailPoint} from './sail-geometry.js';
-import {samplePressure} from './pressure-solver.js';
-import {sailFlow} from './sail-flow.js';
+import {V,clamp,lerp} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/constants.js';
+import {sailPoint} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/sail-geometry.js';
+import {samplePressure} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/pressure-solver.js';
+import {sailFlow} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/sail-flow.js';
 function surfaceFrame(type,h,u,s){const p=sailPoint(type,h,u,s),du=V.mul(V.sub(sailPoint(type,h,Math.min(.9999,u+.001),s),sailPoint(type,h,Math.max(.0001,u-.001),s)),1/.002),dv=V.mul(V.sub(sailPoint(type,Math.min(.9999,h+.001),u,s),sailPoint(type,Math.max(.0001,h-.001),u,s)),1/.002),n=V.unit(V.cross(du,dv));return{p,du,dv,n};}
 function uvVelocity(direction,{du,dv}){const a=V.dot(du,du),b=V.dot(du,dv),c=V.dot(dv,dv),x=V.dot(direction,du),y=V.dot(direction,dv),det=Math.max(1e-9,a*c-b*b);return[(x*c-y*b)/det,(y*a-x*b)/det];}
 export const TELLTALE_HEIGHTS=Object.freeze([.25,.47,.69,.85]);

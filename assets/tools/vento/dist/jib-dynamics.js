@@ -1,6 +1,6 @@
 // Damped angular response of the live jib. Offline trim search uses the steady balance.
-import {RAD,clamp} from './constants.js';
-import {genoaLeadGeometry} from './deck-layout.js';
+import {RAD,clamp} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/constants.js';
+import {genoaLeadGeometry} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/deck-layout.js';
 export function advanceJibDynamics(state,dt){
  if(state.foresail!=='genoa'){delete state.jibAngleRad;delete state.jibAngularVelocity;delete state.jibSide;return;}
  const side=-(Math.sign(Math.sin(state.windAngle*RAD))||1);

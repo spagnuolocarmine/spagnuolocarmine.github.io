@@ -1,8 +1,8 @@
-import {getLocale} from './i18n.js';
-import {deckLayout} from './deck-layout.js';
-import {boatScale} from './boats.js';
-import {clamp} from './constants.js';
-import {spinPoleRig,headsailInhaulAllowed} from './orc-sails.js';
+import {getLocale} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/i18n.js';
+import {deckLayout} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/deck-layout.js';
+import {boatScale} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/boats.js';
+import {clamp} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/constants.js';
+import {spinPoleRig,headsailInhaulAllowed} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/orc-sails.js';
 // Distinct, restrained rope colours. A control keeps its colour in 3D and in the editor.
 export const CONTROL_COLORS=Object.freeze({
  'main.halyard':'#d07b91','main.cunningham':'#c98fb6','main.outhaul':'#91b995','main.traveler':'#ddc16e','main.sheet':'#de906f','main.battens':'#b8c797','main.vang':'#bfa780',

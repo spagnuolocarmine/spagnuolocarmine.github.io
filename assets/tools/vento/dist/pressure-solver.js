@@ -1,11 +1,11 @@
 // Discrete-vortex boundary-element solution on horizontal sail sections.
 // No-penetration is solved numerically; pressure, forces and coefficients share the same cells.
 // This is potential flow with empirical separation / finite-span corrections, not RANS/LES CFD.
-import {V,RAD,clamp,lerp} from './constants.js';
-import {boatScale} from './boats.js';
-import {profileQuality,rigPressureSupport,battenPressureSupport} from './trim-response.js';
-import {sailPoint,sailShape} from './sail-geometry.js';
-import {flyingPressureSupport} from './flying-surface.js';
+import {V,RAD,clamp,lerp} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/constants.js';
+import {boatScale} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/boats.js';
+import {profileQuality,rigPressureSupport,battenPressureSupport} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/trim-response.js';
+import {sailPoint,sailShape} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/sail-geometry.js';
+import {flyingPressureSupport} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/flying-surface.js';
 const RHO=1.225;
 export function solveLinear(A,b){const n=b.length,a=A.map((row,i)=>Float64Array.from([...row,b[i]]));for(let k=0;k<n;k++){let p=k;for(let j=k+1;j<n;j++)if(Math.abs(a[j][k])>Math.abs(a[p][k]))p=j;if(Math.abs(a[p][k])<1e-10)throw new Error('Singular panel system');[a[k],a[p]]=[a[p],a[k]];for(let j=k+1;j<n;j++){const f=a[j][k]/a[k][k];for(let i=k;i<=n;i++)a[j][i]-=f*a[k][i];}}const x=new Float64Array(n);for(let k=n-1;k>=0;k--){let s=a[k][n];for(let j=k+1;j<n;j++)s-=a[k][j]*x[j];x[k]=s/a[k][k];}return x;}
 export function solveSection(points,flow){const n=points.length-1,cp=[],vortices=[],collocation=[],normals=[],ds=[];

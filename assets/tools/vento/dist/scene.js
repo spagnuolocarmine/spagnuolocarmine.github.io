@@ -1,18 +1,18 @@
-import {windLayout} from './wind-settings.js';
+import {windLayout} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/wind-settings.js';
 import * as THREE from 'three';
-import {OrbitControls} from './vendor/OrbitControls.js';
-import {DECK,deckLayout,mainTravelerPosition,genoaCarPosition,genoaLeadGeometry} from './deck-layout.js';
-import {CONTROL_COLORS} from './control-spec.js';
-import {boatScale,beamRatio,boatProfile} from './boats.js';
-import {smoothProfile} from './sail-measures.js';
-import {spinPoleRig,rigDimensions,hasHeadsailBattens} from './orc-sails.js';
-import {rigPlan} from './rig-plan.js';
-import {samplePressure,BOAT,RAD,clamp,lerp} from './physics.js';
+import {OrbitControls} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/vendor/OrbitControls.js';
+import {DECK,deckLayout,mainTravelerPosition,genoaCarPosition,genoaLeadGeometry} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/deck-layout.js';
+import {CONTROL_COLORS} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/control-spec.js';
+import {boatScale,beamRatio,boatProfile} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/boats.js';
+import {smoothProfile} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/sail-measures.js';
+import {spinPoleRig,rigDimensions,hasHeadsailBattens} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/orc-sails.js';
+import {rigPlan} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/rig-plan.js';
+import {samplePressure,BOAT,RAD,clamp,lerp} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/physics.js';
 
-import {telltaleRibbon,TELLTALE_HEIGHTS} from './telltales.js';
-import {standingRigLayout} from './rig-layout.js';
-import {spreaderEndpoints} from './standing-rig.js';
-import {sailPoint as pointOnSail,mastPoint as pointOnMast,forestayPoint,windSide,mainBoomPoint} from './sail-geometry.js';
+import {telltaleRibbon,TELLTALE_HEIGHTS} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/telltales.js';
+import {standingRigLayout} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/rig-layout.js';
+import {spreaderEndpoints} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/standing-rig.js';
+import {sailPoint as pointOnSail,mastPoint as pointOnMast,forestayPoint,windSide,mainBoomPoint} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/sail-geometry.js';
 
 export class SailingScene {
  constructor(canvas,getState,getMetrics,onControlSelect=()=>{},onControlHover=()=>{}){

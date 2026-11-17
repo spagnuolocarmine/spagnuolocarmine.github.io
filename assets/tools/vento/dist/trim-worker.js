@@ -1,4 +1,4 @@
-import {computeReference,optimizeForReference,optimalControlSettings} from './trim-optimizer.js';
+import {computeReference,optimizeForReference,optimalControlSettings} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/trim-optimizer.js';
 self.onmessage=e=>{const {id,state,applyAuto,controlId}=e.data;try{
  const progress=p=>self.postMessage({id,type:'progress',...p}),reference=e.data.reference||computeReference(state,progress);
  if(controlId){const target=optimalControlSettings(state,reference,progress);self.postMessage({id,type:'result',reference,controlId,target});return;}

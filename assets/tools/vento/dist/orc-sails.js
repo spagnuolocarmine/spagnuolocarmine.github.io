@@ -1,7 +1,7 @@
-import {BOAT,clamp} from './constants.js';
-import {boatProfile,boatScale,areaLimits,headsailScale,isCertificateBoat} from './boats.js';
-import {sailDesign,defaultSailDesigns,measuredArea,measuredProfile,flyingCut,flyingMeasureReference} from './sail-measures.js';
-import {mastPoint} from './standing-rig.js';
+import {BOAT,clamp} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/constants.js';
+import {boatProfile,boatScale,areaLimits,headsailScale,isCertificateBoat} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/boats.js';
+import {sailDesign,defaultSailDesigns,measuredArea,measuredProfile,flyingCut,flyingMeasureReference} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/sail-measures.js';
+import {mastPoint} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/standing-rig.js';
 export const ORC_SOURCES={sails:'https://orc.org/measurements/sails',rig:'https://orc.org/measurements/rig',rules:'https://orc.org/uploads/files/Rules-Regulations/2026/ORC-Rating-Systems-2026.pdf'};
 export const RIG={ISP:13.35,J:4.32,P:12.55,TPS:5.4,SPL:4.32};
 export function rigDimensions(s){const k=boatScale(s),source=boatProfile(s).rig,P=sailDesign('main',s).P/k,I=source?source.I/k:13.55,J=source?source.J/k:4.32,maxP=source?source.P/k:sailDesign('main',{boat:boatProfile(s)}).P/k,Isp=source?.ISP?source.ISP/k:Math.max(I,maxP+.95),ISP=Isp-.2,mastZ=source?5.02-J:.7,foreFraction=(I-.2)/ISP;return{P,maxP,E:source?source.E/k:sailDesign('main',{boat:boatProfile(s)}).E/k,I,J,Isp,ISP,mastZ,foreFraction,SPL:source?.SPL?source.SPL/k:J,TPS:source?.TPS?source.TPS/k:6.1-mastZ};}

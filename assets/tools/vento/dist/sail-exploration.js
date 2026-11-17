@@ -1,6 +1,6 @@
 // Guidance is diagnostic: positive finite measurements remain independently editable.
-import {MEASURE_FIELDS,defaultSailDesigns,sailDesign,strictMeasuredProfile,strictFlyingCut} from './sail-measures.js';
-import {headsailScale,boatProfile} from './boats.js';
+import {MEASURE_FIELDS,defaultSailDesigns,sailDesign,strictMeasuredProfile,strictFlyingCut} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/sail-measures.js';
+import {headsailScale,boatProfile} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/boats.js';
 export function editableDesign(type,s){const m={...sailDesign(type,s)};if(type==='genoa'&&!m.exploratory){const scale=headsailScale(s);for(const [key] of MEASURE_FIELDS.genoa)if(key!=='HLU')m[key]*=scale;}return m;}
 export function positiveMeasurements(type,m){for(const [key] of MEASURE_FIELDS[type])if(!Number.isFinite(m[key])||m[key]<=0)throw Error(`${key}: inserisci una misura positiva in metri.`);return true;}
 export function designWarnings(type,m,s){

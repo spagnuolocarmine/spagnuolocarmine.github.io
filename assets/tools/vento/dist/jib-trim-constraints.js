@@ -1,8 +1,8 @@
 // AUTO must lead the headsail sheet down/aft, never forward of the clew's plumb line.
 // Manual car travel remains available over the complete physical rail.
-import {clamp} from './constants.js';
-import {genoaLeadGeometry,deckLayout} from './deck-layout.js';
-import {controlEnabled} from './control-state.js';
+import {clamp} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/constants.js';
+import {genoaLeadGeometry,deckLayout} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/deck-layout.js';
+import {controlEnabled} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/control-state.js';
 const clearance=.001;
 export function autoJibCarClearance(s){const g=genoaLeadGeometry(s);return g.clew[2]-g.car[2];}
 export function constrainAutoJibCar(s,requested=s.controls.genoa.car){

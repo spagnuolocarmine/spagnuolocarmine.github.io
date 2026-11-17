@@ -1,9 +1,9 @@
-import {lerp} from './constants.js';
-import {sailPoint,mastPoint,forestayPoint,windSide,mainBoomPoint} from './sail-geometry.js';
-import {flyingSheetLead} from './sheet-travel.js';
-import {shroudPath} from './standing-rig.js';
-import {DECK,deckLayout,mainTravelerPosition,mainSheetLead,genoaLeadGeometry} from './deck-layout.js';
-import {spinPoleRig} from './orc-sails.js';
+import {lerp} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/constants.js';
+import {sailPoint,mastPoint,forestayPoint,windSide,mainBoomPoint} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/sail-geometry.js';
+import {flyingSheetLead} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/sheet-travel.js';
+import {shroudPath} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/standing-rig.js';
+import {DECK,deckLayout,mainTravelerPosition,mainSheetLead,genoaLeadGeometry} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/deck-layout.js';
+import {spinPoleRig} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/orc-sails.js';
 // Physical polylines in boat coordinates; each visible adjustable line identifies one control.
 export function rigPlan(s){const out=[],d=deckLayout(s),side=windSide(s),top=mastPoint(1,s),main=s.main,genoa=s.foresail==='genoa',spin=s.foresail==='spinnaker',genn=s.foresail==='gennaker';
  const boomPoint=t=>mainBoomPoint(t,s);

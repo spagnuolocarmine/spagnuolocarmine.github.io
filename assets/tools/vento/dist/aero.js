@@ -1,0 +1,18 @@
+import {BOAT,V,clamp,RAD} from './constants.js';
+import {boatProfile,hasSail,headsailScale,isCertificateBoat} from './boats.js';
+import {sailDesign,measuredArea} from './sail-measures.js';
+import {selectedArea} from './orc-sails.js';
+import {rigResponse} from './standing-rig.js';
+import {solveSail} from './pressure-solver.js';
+import {measureTelltaleFlow} from './telltales.js';
+import {mainsailWake} from './sail-wake.js';
+export function sailArea(type,s){if(isCertificateBoat(s)&&!sailDesign(type,s)?.exploratory)return boatProfile(s).areas[type]||0;return type==='main'?measuredArea(type,sailDesign(type,s)):type==='genoa'?measuredArea(type,sailDesign(type,s))*headsailScale(s):selectedArea(type,s);}
+export function apparentWind(tws,twa,speed){const a=twa*RAD,x=tws*Math.sin(a),z=tws*Math.cos(a)+speed;return{speed:Math.hypot(x,z),angle:Math.atan2(x,z)/RAD};}
+export function aeroForces(input,speed=0,quality='normal'){const s={...input,boatSpeed:speed};
+ const aw=apparentWind(s.windSpeed,s.windAngle,speed),active=[...(s.main?['main']:[]),s.foresail].filter(type=>hasSail(type,s)),q=.5*1.225*(aw.speed*.514444)**2,options=quality==='coarse'?{chordPanels:6,spanPanels:8}:quality==='fine'?{chordPanels:16,spanPanels:24}:{};
+ const wake=['spinnaker','gennaker'].includes(s.foresail)?mainsailWake(s,aw.angle):null;
+ const sails=active.map(type=>solveSail(type,s,aw.angle,aw.speed,sailArea(type,s),{...options,wake:type==='spinnaker'||type==='gennaker'?wake:null})),area=sails.reduce((v,x)=>v+x.area,0),force=sails.reduce((v,x)=>V.add(v,x.force),[0,0,0]),drive=Math.max(0,force[2]),side=Math.abs(force[0]),lift=sails.reduce((v,x)=>v+x.lift,0),drag=sails.reduce((v,x)=>v+x.drag,0),heel=42*Math.tanh(side*.0043*(sailDesign('main',s).P/12.55)*(BOAT.displacement*BOAT.beam)/(boatProfile(s).displacement*boatProfile(s).beam)/42),attachment=sails.reduce((v,x)=>v+x.attachment*x.area,0)/Math.max(.001,area);
+ let attachedStall=0,roughness=0,cp=[];for(const sail of sails){for(let j=0;j<sail.spanPanels;j++)for(let i=0;i<sail.chordPanels;i++){const c=sail.cells[j*sail.chordPanels+i];cp.push(Math.abs(c.cp));if(i>1){const p=sail.cells[j*sail.chordPanels+i-1];roughness+=Math.abs(c.cp-p.cp)*c.area;}if((sail.type==='main'||sail.type==='genoa')&&Math.abs(aw.angle)<80)attachedStall+=c.separation*c.area;}}
+ roughness/=Math.max(1,area);attachedStall/=Math.max(1,area);cp.sort((a,b)=>a-b);const cp95=cp[Math.floor(cp.length*.95)]||0,heelFactor=1/(1+(Math.max(0,heel-24)/18)**2),flowFactor=1-.15*attachedStall,rigStability=1/(1+(rigResponse(s).tipDeflection/.40)**2),usefulDrive=drive*heelFactor*flowFactor*rigStability/(1+.012*roughness);
+ return{telltales:measureTelltaleFlow(s,sails),exposedFlyingArea:sails.filter(f=>['spinnaker','gennaker'].includes(f.type)).reduce((n,f)=>n+f.projectedArea,0),speed,aws:aw.speed,awa:aw.angle,area,cl:q*area>1e-8?lift/(q*area):0,cd:q*area>1e-8?drag/(q*area):0,lift,drag,drive,side,force,heel,attachment,attachedStall,roughness,cp95,rigStability,usefulDrive,maxPressure:Math.max(0,...sails.map(x=>x.maxPressure)),residual:Math.max(0,...sails.map(x=>x.residual)),panelCount:sails.reduce((v,x)=>v+x.panelCount,0),sails};
+}

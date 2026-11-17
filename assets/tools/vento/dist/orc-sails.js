@@ -1,0 +1,24 @@
+import {BOAT,clamp} from './constants.js';
+import {boatProfile,boatScale,areaLimits,headsailScale,isCertificateBoat} from './boats.js';
+import {sailDesign,defaultSailDesigns,measuredArea,measuredProfile,flyingCut,flyingMeasureReference} from './sail-measures.js';
+import {mastPoint} from './standing-rig.js';
+export const ORC_SOURCES={sails:'https://orc.org/measurements/sails',rig:'https://orc.org/measurements/rig',rules:'https://orc.org/uploads/files/Rules-Regulations/2026/ORC-Rating-Systems-2026.pdf'};
+export const RIG={ISP:13.35,J:4.32,P:12.55,TPS:5.4,SPL:4.32};
+export function rigDimensions(s){const k=boatScale(s),source=boatProfile(s).rig,P=sailDesign('main',s).P/k,I=source?source.I/k:13.55,J=source?source.J/k:4.32,maxP=source?source.P/k:sailDesign('main',{boat:boatProfile(s)}).P/k,Isp=source?.ISP?source.ISP/k:Math.max(I,maxP+.95),ISP=Isp-.2,mastZ=source?5.02-J:.7,foreFraction=(I-.2)/ISP;return{P,maxP,E:source?source.E/k:sailDesign('main',{boat:boatProfile(s)}).E/k,I,J,Isp,ISP,mastZ,foreFraction,SPL:source?.SPL?source.SPL/k:J,TPS:source?.TPS?source.TPS/k:6.1-mastZ};}
+export function headsailInfo(s){const scale=headsailScale(s),design=sailDesign('genoa',s),J=(boatProfile(s).rig?.J||4.32*boatScale(s)),percent=design.HLP*scale/J*100,isJib=isCertificateBoat(s)||design.exploratory?percent<=110:Math.abs((s.genoaSize||105)-105)<.01;return{name:isJib?'Fiocco':'Genoa',isJib,battened:isJib,percent,overlap:Math.max(0,percent-100),area:measuredArea('genoa',design)*scale};}
+export const hasHeadsailBattens=s=>headsailInfo(s).battened;
+// LP/J is evaluated from the actual sail, including exploratory measurements.
+export const headsailInhaulAllowed=s=>headsailInfo(s).percent<=105.000001;
+export const SAIL_AREA_LIMITS={spinnaker:{min:45,max:135,step:.01,reference:BOAT.spinnakerArea},gennaker:{min:55,max:155,step:.01,reference:BOAT.gennakerArea}};
+export function selectedArea(type,s){if(!['spinnaker','gennaker'].includes(type))return 0;if(s?.sailDesigns?.[type]?.exploratory)return measuredArea(type,sailDesign(type,s));if(isCertificateBoat(s))return boatProfile(s).areas[type]||0;const lim=areaLimits(type,s);const value=Number(s?.sailAreas?.[type]??measuredArea(type,sailDesign(type,s)));return Number.isFinite(value)&&value>0?value:lim.reference;}
+export const MAIN_GIRTHS=Object.freeze({...sailDesign('main')});
+export const mainWidth=(v,s)=>measuredProfile('main',sailDesign('main',s)).widthAtHeight(v)/boatScale(s);
+export const genoaWidth=(v,s)=>measuredProfile('genoa',sailDesign('genoa',s)).widthAtHeight(v)/boatScale(s)*headsailScale(s);
+const cache=new Map();
+export function sailDimensions(type,s){let m={...sailDesign(type,s)};const area=selectedArea(type,s),ratio=area>0?area/measuredArea(type,m):1;m.SFL*=ratio;m.SHW*=ratio;const key=type+':'+boatScale(s)+':'+area+':'+Object.values(m).join(',');if(cache.has(key))return cache.get(key);const cut=flyingCut(type,m),k=boatScale(s),result={...m,ASL:(m.SLU+m.SLE)/2,area,ratio:m.SHW/m.SFL,width:m.SFL/k,height:cut.height/k,headX:cut.headX/k,requestedArea:area,approximate:!!cut.approximate,point:(v,u)=>cut.point(v,u).map(x=>x/k)};cache.set(key,result);if(cache.size>120)cache.delete(cache.keys().next().value);return result;}
+// Compatibility helpers for tools/tests using a generic flat cut.
+export function flatSailPoint(type,v,u,width){const m={...sailDesign(type)},ratio=m.SHW/m.SFL;m.SFL=width;m.SHW=width*ratio;return flyingCut(type,m).point(v,u);}
+export function measureFlat(type,width){const m={...sailDesign(type)},r=m.SHW/m.SFL;m.SFL=width;m.SHW=width*r;return{...m,ASL:(m.SLU+m.SLE)/2,area:measuredArea(type,m),ratio:r};}
+export function spinPoleRig(s){const side=-(Math.sign(s.windAngle)||1),rig=rigDimensions(s),heelY=1.2+.09*rig.I,root=mastPoint((heelY-1.2)/rig.ISP,s),low=heelY-Math.min(.65,rig.SPL*.28),high=heelY+Math.min(1.85,rig.SPL*.55),height=low+(high-low)*clamp((s.controls.spinnaker.poleLift??50)/100),rise=height-heelY,horizontal=Math.sqrt(Math.max(.01,rig.SPL**2-rise**2)),azimuth=(8+80*s.controls.spinnaker.brace/100)*Math.PI/180,tip=[root[0]-side*horizontal*Math.sin(azimuth),height,root[2]+horizontal*Math.cos(azimuth)];return{root,tip,low,high,length:rig.SPL,azimuth,elevation:Math.asin(rise/rig.SPL)};}
+export const spinPolePoint=s=>spinPoleRig(s).tip;
+export function flyingSizing(type,s){const target=flyingMeasureReference(type,boatProfile(s)),d=sailDimensions(type,s),diagonal=Math.hypot(target.Isp,target.TPS),lo=type==='spinnaker'?target.SLU*.98:1.03*diagonal,hi=type==='spinnaker'?target.SLU*1.02:1.08*diagonal;return{target,outsideLuffGuide:d.SLU<lo-1e-6||d.SLU>hi+1e-6,family:type==='spinnaker'?'S2':'A2',baseCompensation:d.SFL/target.SFL};}

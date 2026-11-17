@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import * as THREE from '../dist/vendor/three.module.min.js';
+import {newState} from '../dist/physics.js';
+import {sailPoint} from '../dist/sail-geometry.js';
+import {standingRigLayout} from '../dist/rig-layout.js';
+import {shroudPath,spreaderEndpoints,headsailLuffPoint} from '../dist/standing-rig.js';
+let checks=0,violations=[];const boats=JSON.parse(fs.readFileSync(new URL('../dist/data/ita-orc.json',import.meta.url))).boats;const samples=[...[105,115,135,160].map(size=>({size,boat:undefined})),...[boats.find(b=>b.name==='NEXT GEN'),boats.find(b=>String(b.model||'').includes('Swan 42')),boats.reduce((a,b)=>a.length>b.length?a:b),boats.reduce((a,b)=>a.length<b.length?a:b)].map(boat=>({size:105,boat}))];
+for(const{size,boat}of samples)for(const angle of [-52,52,120])for(const car of [0,55,100])for(const sheet of [0,25,50,75,100]){const s=newState(boat);s.genoaSize=size;s.windAngle=angle;s.boatSpeed=5;s.controls.genoa.sheet=sheet;s.controls.genoa.car=car;const pos=[],idx=[],nu=30,nv=44;for(let j=0;j<=nv;j++)for(let i=0;i<=nu;i++)pos.push(...sailPoint('genoa',j/nv,i/nu,s));for(let j=0;j<nv;j++)for(let i=0;i<nu;i++){const a=j*(nu+1)+i,b=a+nu+1;idx.push(a,b,a+1,a+1,b,b+1);}const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));g.setIndex(idx);const mesh=new THREE.Mesh(g,new THREE.MeshBasicMaterial({side:THREE.DoubleSide}));mesh.updateMatrixWorld(true);const ray=new THREE.Raycaster(),head=headsailLuffPoint(1,s);
+ const segments=[];for(const side of[-1,1]){for(const h of[.42,.71])segments.push({kind:'spreader',p:spreaderEndpoints(s,side,h)});const wire=shroudPath(s,side,32);for(let i=1;i<wire.length;i++)if(wire[i][1]<head[1]-.2)segments.push({kind:'shroud',p:[wire[i-1],wire[i]]});}
+ for(const segment of segments){const a=new THREE.Vector3(...segment.p[0]),b=new THREE.Vector3(...segment.p[1]),length=a.distanceTo(b);ray.set(a,b.clone().sub(a).normalize());ray.near=.002;ray.far=length-.002;const hits=ray.intersectObject(mesh);if(hits.length)violations.push({boat:s.boat.name,size,angle,car,sheet,kind:segment.kind,point:hits[0].point.toArray()});checks++;}g.dispose();mesh.material.dispose();}
+assert.equal(violations.length,0,JSON.stringify(violations.slice(0,8)));
+const a=newState();a.genoaSize=105;const b=newState();b.genoaSize=115;assert.equal(standingRigLayout(a).inboard,false);assert.equal(standingRigLayout(b).inboard,true);assert.ok(standingRigLayout(b).chainplateX<standingRigLayout(a).chainplateX*.7);assert.ok(standingRigLayout(b).lowerSpreader<standingRigLayout(a).lowerSpreader);
+console.log(`PASS: ${checks} actual triangle/rig segment checks on both sides, 105–160% headsails and whole sheet travel; overlap selects inboard chainplates and matching spreaders.`);

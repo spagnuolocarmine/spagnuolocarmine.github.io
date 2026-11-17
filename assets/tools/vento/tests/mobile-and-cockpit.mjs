@@ -1,0 +1,17 @@
+import assert from 'node:assert/strict';
+import * as THREE from '../dist/vendor/three.module.min.js';
+import {SailingScene} from '../dist/scene.js';
+import {newState} from '../dist/physics.js';
+const s=newState(),r=Object.create(SailingScene.prototype);r.visualState=s;r.getState=()=>s;r.boat=new THREE.Group();r.scene=new THREE.Scene();r.scene.add(r.boat);r.materials={};for(const key of ['hull','deck','teak','metal','carbon','glass'])r.materials[key]=new THREE.MeshStandardMaterial();for(const key of ['rope','rail'])r.materials[key]=new THREE.LineBasicMaterial();r.createBoat();r.scene.updateMatrixWorld(true);
+const ray=new THREE.Raycaster(),down=new THREE.Vector3(0,-1,0);let covered=0;
+for(let i=0;i<=20;i++)for(let j=0;j<=40;j++){const x=-1.01+i*2.02/20,z=-4.93+j*3.03/40;ray.set(new THREE.Vector3(x,2,z),down);const hit=ray.intersectObject(r.hullGroup,true)[0];assert.ok(hit&&hit.point.y>=.58,`no opening through cockpit floor at ${x},${z}`);covered++;}
+for(const side of [-1,1])for(const z of [-4.9,-4.78,-3.3,-1.92]){ray.set(new THREE.Vector3(0,.619,z),new THREE.Vector3(side,0,0));const hit=ray.intersectObject(r.cockpitLiner)[0];assert.ok(hit&&Math.abs(hit.point.x)<1.04,'side gap below coaming is closed');}
+ray.set(new THREE.Vector3(0,.72,-2.1),new THREE.Vector3(0,0,1));assert.ok(ray.intersectObject(r.cockpitLiner)[0].point.z< -1.85,'front gap is closed');ray.set(new THREE.Vector3(0,.75,-4.5),new THREE.Vector3(0,0,-1));assert.equal(ray.intersectObject(r.cockpitLiner).length,0,'open stern access stays clear above the sill');
+const events={};r.canvas={style:{},addEventListener:(name,fn)=>events[name]=fn,getBoundingClientRect:()=>({left:0,top:0,width:360,height:640})};r.camera=new THREE.PerspectiveCamera(44,360/640,.1,100);r.camera.position.set(0,8,25);r.controls={target:new THREE.Vector3(),update:()=>{},listenToKeyEvents:()=>{}};r.configureNavigation();assert.equal(r.controls.touches.ONE,THREE.TOUCH.ROTATE);assert.equal(r.controls.touches.TWO,THREE.TOUCH.DOLLY_PAN);r.pickables=[];r.onControlHover=()=>{};let selected=[];r.onControlSelect=hit=>selected.push(hit);r.initPicking();r.pickControlAt(100,100);const mouseRadius=r.raycaster.params.Line.threshold;r.pickControlAt(100,100,true);assert.ok(r.raycaster.params.Line.threshold>mouseRadius*2,'touch has a larger invisible picking target');
+let touchArgument;r.pickControlAt=(x,y,touch)=>{touchArgument=touch;return{id:'main.sheet'};};
+const p=(id,x,y)=>({pointerId:id,pointerType:'touch',button:0,clientX:x,clientY:y});
+events.pointerdown(p(1,100,100));events.pointermove(p(1,108,100));events.pointerup(p(1,108,100));assert.equal(selected.length,1);assert.equal(touchArgument,true);
+selected=[];events.pointerdown(p(2,100,100));events.pointermove(p(2,140,110));events.pointerup(p(2,140,110));assert.equal(selected.length,0,'rotation drag must not select rigging');
+events.pointerdown(p(3,100,100));events.pointerdown(p(4,120,110));events.pointerup(p(3,100,100));events.pointerup(p(4,120,110));assert.equal(selected.length,0,'two-finger zoom/pan must not select');
+events.pointerdown(p(5,100,100));events.pointercancel(p(5,100,100));events.pointerup(p(5,100,100));assert.equal(selected.length,0);assert.equal(r.pointerStarts.size,0);
+console.log(`PASS: ${covered} cockpit floor rays plus side/front closures, open stern access, single/two-finger navigation settings, touch tap tolerance, larger picking target, drag/pinch distinction and cancellation.`);

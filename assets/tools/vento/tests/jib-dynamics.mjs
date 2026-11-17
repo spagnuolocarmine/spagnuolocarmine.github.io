@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import {newState,evaluate} from '../dist/physics.js';
+import {advanceJibDynamics} from '../dist/jib-dynamics.js';
+import {genoaLeadGeometry} from '../dist/deck-layout.js';
+import {sailPoint} from '../dist/sail-geometry.js';
+import {RAD,V} from '../dist/constants.js';
+let cases=0;
+function response({angle=52,from=0,to=80,dt=1/60,duration=12}={}){const s=newState();s.windAngle=angle;s.boatSpeed=5;s.controls.genoa.sheet=from;advanceJibDynamics(s,0);const initial=s.jibAngleRad;s.controls.genoa.sheet=to;let maxStep=0,last=initial,low=initial,high=initial;for(let i=0;i<Math.round(duration/dt);i++){advanceJibDynamics(s,dt);maxStep=Math.max(maxStep,Math.abs(s.jibAngleRad-last));last=s.jibAngleRad;low=Math.min(low,last);high=Math.max(high,last);assert.ok(Number.isFinite(last)&&Number.isFinite(s.jibAngularVelocity));}return{s,initial,maxStep,low,high,load:genoaLeadGeometry(s)};}
+for(const angle of [-150,-52,52,150])for(const [from,to] of [[0,80],[100,0]]){const r=response({angle,from,to}),goal=r.load.equilibriumAngle*RAD;assert.ok(Math.abs(r.s.jibAngleRad-goal)<.001,'dynamic response settles to the mechanical equilibrium');assert.ok(r.maxStep<5*RAD,'large trim changes never teleport the clew');assert.ok(r.low>=Math.min(r.initial,goal)-.004&&r.high<=Math.max(r.initial,goal)+.004,'loaded cloth has a damped response without repeated overshoot');assert.ok(Math.abs(r.s.jibAngularVelocity)<.002);cases++;}
+const a=response({angle:150,duration:2,dt:1/30}),b=response({angle:150,duration:2,dt:1/120});assert.ok(Math.abs(a.s.jibAngleRad-b.s.jibAngleRad)<.2*RAD,'substepping converges across rendering frame rates');
+const live=response({angle:52,from:0,to:80,duration:1/60}).s,transient=genoaLeadGeometry(live);assert.ok(Math.abs(transient.angle-transient.equilibriumAngle)>5,'the first frame retains the actual intermediate pose');const instant=evaluate(live,5),steady=evaluate({...live,jibAngleRad:transient.equilibriumAngle*RAD},5);assert.ok(Math.abs(instant.lift-steady.lift)>10,'current pressures and forces follow the moving pose rather than jumping to the future equilibrium');const c=sailPoint('genoa',0,1,live);assert.ok(V.length(V.sub(c,transient.clew))<1e-9);
+const before=sailPoint('genoa',0,1,live);live.windAngle=-52;advanceJibDynamics(live,0);const after=sailPoint('genoa',0,1,live);assert.ok(V.length(V.sub(before,after))<.12,'changing tack retains the world-side clew position before motion starts');
+live.foresail='gennaker';advanceJibDynamics(live,1/60);assert.equal(live.jibAngleRad,undefined,'unhoisted jib dynamics do not change the selected flying sail');
+console.log(`PASS: ${cases} loaded/eased dynamic responses on both tacks, continuous cloth movement, damped settling, frame-rate convergence, transient pressure coupling, world-side continuity during a tack and inactive-jib reset.`);

@@ -12,6 +12,8 @@ python -m http.server 8080 --directory dist
 
 Aprire `http://localhost:8080`. L’apertura diretta con `file://` non supporta correttamente moduli, worker e JSON. Il pulsante nel Modello scarica `vento-sorgenti.zip`, con applicazione, dati, documentazione e test; non contiene credenziali o identità dell’hosting. Three.js e font sono locali. Configurazione, barca, vele/profili personalizzati, manovre fissate, preferenze, sezione del pannello e vista vengono salvate nel browser. Il tasto di reset elimina lo stato solo dopo una conferma; l’annullamento conserva la sessione. L’audio salvato riprende dopo un gesto dell’utente, secondo le regole del browser.
 
+AUTO parte spento a ogni caricamento, anche se era attivo nella sessione salvata. Le altre impostazioni e le manovre vengono ripristinate. Il riferimento della polare può essere preparato in background senza attivare AUTO o modificare le regolazioni.
+
 ## Funzioni
 
 - Scelta fra 1.401 record ORC, certificato completo, inventario e polare; armo ricostruito mediante P/E/I/J e dati di modelli corrispondenti o simili, segnalando le stime.
@@ -26,6 +28,38 @@ Aprire `http://localhost:8080`. L’apertura diretta con `file://` non supporta 
 - Flussi raggruppati di particelle guidati attorno alle sezioni delle vele caricate, con fasci sulle due facce, uscita e dispersione legata alla separazione locale; scie qualitative, colori/dimensioni/densità configurabili, suoni sintetizzati, mare costante, CSV e archivio dei sorgenti.
 
 Le schede dei singoli comandi mostrano solo 1–2 grandezze pertinenti e una descrizione breve. Dopo una modifica un worker confronta due velocità a regime con vento e altri comandi uguali; il display principale mostra centesimi di nodo, la differenza millesimi. I dettagli tecnici restano espandibili. Un fine corsa, una cima scarica o una vela assente possono rendere l’effetto minimo o nullo: non vengono assegnati bonus artificiali.
+
+## Grafica e prestazioni
+
+In **Visuale → Grafica e prestazioni** scegli Essenziale, Bilanciato (predefinito) o Dettagliato. Puoi regolare le ombre e attivare il monitor opzionale FPS / CPU scena / draw calls / triangoli. Il rendering segue la frequenza dello schermo; le vecchie preferenze di risoluzione e limite FPS vengono ignorate. Le scelte sono salvate nel browser.
+
+| Budget grafico | Essenziale | Bilanciato | Dettagliato |
+| --- | ---: | ---: | ---: |
+| Celle visualizzate per vela | 16×22 | 22×30 | 28×38 |
+| Griglia del mare | 32×32 | 64×64 | 140×140 |
+| Limite densità pixel | 1× | 1,5× | 2× |
+| Mappa ombre | 512² | 1024² | 2048² |
+| Aggiornamento massimo geometria | 20 Hz | 30 Hz | 60 Hz |
+| Aggiornamento massimo nastri | 24 Hz | 30 Hz | 60 Hz |
+
+I profili riducono anche i punti delle annotazioni e, in Essenziale, nascondono le cuciture decorative e parte delle scie. Tutte le stazioni dei filetti, le linee di forma principali, le cime selezionabili e le interazioni delle particelle con le vele sono conservate. La quantità/dimensione/colore delle particelle continua a essere controllata in Vento. Questi budget modificano la discretizzazione visuale, non la superficie usata dalla fisica, le celle di pressione, i coefficienti o AUTO.
+
+Ottimizzazioni applicate: frequenze separate per geometria e animazioni; buffer delle cime riutilizzati finché i punti non cambiano; colori uniformi non ricalcolati a ogni aggiornamento fisico; palette colore riutilizzata; geometrie dismesse liberate quando cambia qualità; ombre con caster selezionati e aggiornamento programmato; nessun lavoro sulle scie nascoste; sospensione del rendering a pagina nascosta. Il cambio di qualità conserva camera, zoom, manovre e contesto grafico.
+
+Per un dispositivo lento, scegli Essenziale o disattiva le ombre. Anche pressione colorata, gruppi aggiuntivi di forze e molti flussi incidono. Il calcolo delle pressioni in tempo reale resta sul thread principale alla cadenza originale; AUTO e il confronto di una manovra usano worker. Spostare anche la fisica continua in un worker e accelerare ulteriormente la ricerca dei contatti del vento sono possibili interventi successivi, da verificare rispetto alla latenza delle regolazioni. Il selettore dei dettagli non riduce la precisione fisica per mascherare questo costo.
+
+Il monitor misura gli FPS consegnati e il tempo CPU della scena, non il tempo GPU; i calcoli fisici sono esclusi dal tempo “CPU scena”. Il benchmark ripetibile `scripts/profile-render.mjs` usa geometrie e ciclo di rendering reali con il solo backend GPU sostituito: confronta il costo CPU, gli oggetti e i triangoli, non dimostra gli FPS o la resa visiva di un dispositivo reale.
+
+Confronto CPU storico della v24 sulla stessa macchina, con 120 frame misurati dopo 30 di riscaldamento per caso:
+
+| Caso | v23 | Bilanciato | Essenziale |
+| --- | ---: | ---: | ---: |
+| Bolina | 47,7 ms | 18,0 ms | 9,7 ms |
+| Mappa pressioni | 46,1 ms | 16,7 ms | 8,6 ms |
+| Spinnaker | 57,5 ms | 22,5 ms | 12,1 ms |
+| Flussi nascosti | 42,8 ms | 15,4 ms | 7,4 ms |
+
+In questo carico la riduzione CPU è 61–64% in Bilanciato e 79–83% in Essenziale. I triangoli della scena di bolina passano da 68.354 a 35.658 in Bilanciato; i caster di ombre selezionati passano da 131 a 9. Sono conteggi e tempi CPU, non una misura GPU o FPS del browser. Metodo, percentili e risultati completi: `dist/performance/benchmark.json`; rapporto bilingue in `dist/performance/`.
 
 ## Riferimenti
 
@@ -61,7 +95,7 @@ Non vengono risolti elasticità completa della membrana, transizione viscosa, og
 
 ## Moduli principali
 
-`aero.js`, `pressure-solver.js`, `aero-inflow.js`, `sail-flow.js`: campi e forze. `standing-rig.js`, `main-balance.js`, `jib-balance.js`, `fixed-sheets.js`: armo e manovre. `sail-geometry.js`, `flying-surface.js`, `sail-measures.js`: superfici. `sail-profiles.js` e `sail-design-editor.js`: profili e anteprima SVG senza secondo contesto WebGL. `force-data.js`, `force-view.js`, `force-controls.js`: vettori e centri. `trim-optimizer.js` / `trim-worker.js`: AUTO. `scene.js`: scena 3D. `info-pages.js`: riferimenti e ipotesi. `session-store.js`: persistenza validata e cancellazione. `ui-windows.js` / `workspace-layout.js`: pannello unico e layout responsivo. `speed-response.js`: risposta temporale educativa alle variazioni di vento.
+`aero.js`, `pressure-solver.js`, `aero-inflow.js`, `sail-flow.js`: campi e forze. `standing-rig.js`, `main-balance.js`, `jib-balance.js`, `fixed-sheets.js`: armo e manovre. `sail-geometry.js`, `flying-surface.js`, `sail-measures.js`: superfici. `sail-profiles.js` e `sail-design-editor.js`: profili e anteprima SVG senza secondo contesto WebGL. `force-data.js`, `force-view.js`, `force-controls.js`: vettori e centri. `trim-optimizer.js` / `trim-worker.js`: AUTO. `scene.js`: scena 3D. `info-pages.js`: riferimenti e ipotesi. `session-store.js`: persistenza validata e cancellazione. `ui-windows.js` / `workspace-layout.js`: pannello unico e layout responsivo. `speed-response.js`: risposta temporale educativa alle variazioni di vento. `graphics-settings.js` / `graphics-controls.js`: budget visuali, cadenza e monitor.
 
 ## Verifiche
 
@@ -81,6 +115,7 @@ node tests/speed-response.mjs
 node tests/main-leech.mjs
 node tests/wind-profile.mjs
 node tests/main-gradient-auto.mjs
+node --no-warnings --experimental-loader ./tests/render-loader.mjs tests/graphics.mjs
 node --no-warnings --experimental-loader ./tests/render-loader.mjs tests/scene-frame.mjs
 node tests/flying-surface.mjs
 node tests/jib-sheet-balance.mjs

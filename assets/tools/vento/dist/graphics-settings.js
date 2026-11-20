@@ -1,0 +1,7 @@
+// Visual budgets only. Aerodynamic panel grids and numerical solvers never read these.
+export const GRAPHICS_PROFILES=Object.freeze({
+ economy:{stripePoints:16,seamPoints:14,battenPoints:13,edgePoints:61,telltalePoints:8,sailU:16,sailV:22,sea:32,maxDpr:1,geometryHz:20,telltaleHz:24,turbulenceHz:15,turbulenceRows:2,windInterval:.6,shadowSize:512,shadowHz:10,seams:false},
+ balanced:{stripePoints:24,seamPoints:22,battenPoints:21,edgePoints:81,telltalePoints:10,sailU:22,sailV:30,sea:64,maxDpr:1.5,geometryHz:30,telltaleHz:30,turbulenceHz:24,turbulenceRows:4,windInterval:.4,shadowSize:1024,shadowHz:15,seams:true},
+ detailed:{stripePoints:40,seamPoints:35,battenPoints:31,edgePoints:121,telltalePoints:12,sailU:28,sailV:38,sea:140,maxDpr:2,geometryHz:60,telltaleHz:60,turbulenceHz:60,turbulenceRows:4,windInterval:.3,shadowSize:2048,shadowHz:30,seams:true}
+});
+export function graphicsSettings(state={}){const quality=GRAPHICS_PROFILES[state.graphicsQuality]?state.graphicsQuality:'balanced';return{...GRAPHICS_PROFILES[quality],quality,shadows:state.graphicsShadows!==false};}

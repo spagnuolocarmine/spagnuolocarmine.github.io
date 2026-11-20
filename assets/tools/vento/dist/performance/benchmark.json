@@ -1,0 +1,595 @@
+{
+  "date": "2026-11-20",
+  "baselineCommit": "2362baaf5cc08d4837e342e1ada5a20d6e7d98b2",
+  "measuredVersion": 24,
+  "measuredCommit": "15dc12508fab43f8d13659a526886590a2d54d22",
+  "rendererSourceHash": "2969df44269c26d1beeab9f315892567d49e1a2642d585c7155d9426833461a8",
+  "method": "CPU-only full scene frames with GPU endpoint stubbed; physics evaluations excluded from frame timings. 120 frames per case after 30 warmup frames; changes every 10 frames.",
+  "limits": "CPU-only geometry and scene frame comparison on a single environment, with only the GPU backend stubbed. These are not browser FPS or GPU measurements. Physics evaluations are outside frame timing; grid accuracy and solver settings are unchanged. Results vary by device and workload.",
+  "before": {
+    "method": "CPU-only full scene frames with GPU endpoint stubbed; physics evaluations excluded from frame timings. 120 frames per case after 30 warmup frames; changes every 10 frames.",
+    "quality": "original",
+    "cases": [
+      {
+        "name": "upwind",
+        "quality": "original",
+        "cpuMeanMs": 47.71496929166665,
+        "cpuMedianMs": 44.556236000000354,
+        "cpuP95Ms": 61.44588199999998,
+        "visibleObjects": 269,
+        "triangles": 68354,
+        "shadowCasters": 131,
+        "pixelRatio": 2,
+        "windParticles": 264,
+        "mainTelltales": 10,
+        "phases": {
+          "syncVisualState": {
+            "ms": 15.707923999997547,
+            "calls": 150
+          },
+          "updateRig": {
+            "ms": 886.0661600000018,
+            "calls": 147
+          },
+          "updateSails": {
+            "ms": 6166.579499,
+            "calls": 150
+          },
+          "updateWind": {
+            "ms": 392.63474799999835,
+            "calls": 150
+          },
+          "updateTurbulence": {
+            "ms": 27.645651999996403,
+            "calls": 150
+          }
+        }
+      },
+      {
+        "name": "pressure",
+        "quality": "original",
+        "cpuMeanMs": 46.128348008333205,
+        "cpuMedianMs": 44.12694999999985,
+        "cpuP95Ms": 57.86831300000085,
+        "visibleObjects": 269,
+        "triangles": 68354,
+        "shadowCasters": 131,
+        "pixelRatio": 2,
+        "windParticles": 264,
+        "mainTelltales": 10,
+        "phases": {
+          "syncVisualState": {
+            "ms": 17.839353999988816,
+            "calls": 150
+          },
+          "updateRig": {
+            "ms": 530.2824010000004,
+            "calls": 147
+          },
+          "updateSails": {
+            "ms": 6033.6849090000105,
+            "calls": 150
+          },
+          "updateWind": {
+            "ms": 350.86181299999953,
+            "calls": 150
+          },
+          "updateTurbulence": {
+            "ms": 26.209529000001567,
+            "calls": 150
+          }
+        }
+      },
+      {
+        "name": "downwind",
+        "quality": "original",
+        "cpuMeanMs": 57.4636123416667,
+        "cpuMedianMs": 54.445521999998164,
+        "cpuP95Ms": 69.82198399999834,
+        "visibleObjects": 284,
+        "triangles": 69094,
+        "shadowCasters": 136,
+        "pixelRatio": 2,
+        "windParticles": 264,
+        "mainTelltales": 10,
+        "phases": {
+          "syncVisualState": {
+            "ms": 17.062595000021247,
+            "calls": 150
+          },
+          "updateRig": {
+            "ms": 839.4058680000162,
+            "calls": 147
+          },
+          "updateSails": {
+            "ms": 7508.123498000015,
+            "calls": 150
+          },
+          "updateWind": {
+            "ms": 365.8893120000357,
+            "calls": 150
+          },
+          "updateTurbulence": {
+            "ms": 24.980748999987554,
+            "calls": 150
+          }
+        }
+      },
+      {
+        "name": "no-wind-effects",
+        "quality": "original",
+        "cpuMeanMs": 42.80441745833317,
+        "cpuMedianMs": 43.186619000000064,
+        "cpuP95Ms": 44.76293900000019,
+        "visibleObjects": 260,
+        "triangles": 67858,
+        "shadowCasters": 131,
+        "pixelRatio": 2,
+        "windParticles": 264,
+        "mainTelltales": 10,
+        "phases": {
+          "syncVisualState": {
+            "ms": 19.442350000012084,
+            "calls": 150
+          },
+          "updateRig": {
+            "ms": 590.2179519999881,
+            "calls": 147
+          },
+          "updateSails": {
+            "ms": 5826.548560999985,
+            "calls": 150
+          },
+          "updateWind": {
+            "ms": 1.1833890000052634,
+            "calls": 150
+          },
+          "updateTurbulence": {
+            "ms": 21.711258000013913,
+            "calls": 150
+          }
+        }
+      }
+    ]
+  },
+  "profiles": {
+    "balanced": {
+      "method": "CPU-only full scene frames with GPU endpoint stubbed; physics evaluations excluded from frame timings. 120 frames per case after 30 warmup frames; changes every 10 frames.",
+      "quality": "balanced",
+      "cases": [
+        {
+          "name": "upwind",
+          "quality": "balanced",
+          "cpuMeanMs": 17.996208400000018,
+          "cpuMedianMs": 15.484645,
+          "cpuP95Ms": 46.28429700000015,
+          "visibleObjects": 269,
+          "triangles": 35658,
+          "shadowCasters": 9,
+          "pixelRatio": 1.5,
+          "windParticles": 264,
+          "mainTelltales": 10,
+          "phases": {
+            "syncVisualState": {
+              "ms": 7.107238999998913,
+              "calls": 75
+            },
+            "updateRig": {
+              "ms": 322.4670769999999,
+              "calls": 70
+            },
+            "updateSails": {
+              "ms": 2180.514446999999,
+              "calls": 150
+            },
+            "updateWind": {
+              "ms": 192.13566400000116,
+              "calls": 150
+            },
+            "updateTurbulence": {
+              "ms": 14.955812000003561,
+              "calls": 150
+            }
+          }
+        },
+        {
+          "name": "pressure",
+          "quality": "balanced",
+          "cpuMeanMs": 16.70501441666666,
+          "cpuMedianMs": 16.357531999999992,
+          "cpuP95Ms": 44.833465000000615,
+          "visibleObjects": 269,
+          "triangles": 35658,
+          "shadowCasters": 9,
+          "pixelRatio": 1.5,
+          "windParticles": 264,
+          "mainTelltales": 10,
+          "phases": {
+            "syncVisualState": {
+              "ms": 7.260159000002204,
+              "calls": 75
+            },
+            "updateRig": {
+              "ms": 101.02046500000506,
+              "calls": 70
+            },
+            "updateSails": {
+              "ms": 2142.9426569999964,
+              "calls": 150
+            },
+            "updateWind": {
+              "ms": 173.97064799999544,
+              "calls": 150
+            },
+            "updateTurbulence": {
+              "ms": 11.922622999997657,
+              "calls": 150
+            }
+          }
+        },
+        {
+          "name": "downwind",
+          "quality": "balanced",
+          "cpuMeanMs": 22.500054666666642,
+          "cpuMedianMs": 23.400738000000274,
+          "cpuP95Ms": 58.01726500000041,
+          "visibleObjects": 284,
+          "triangles": 36374,
+          "shadowCasters": 10,
+          "pixelRatio": 1.5,
+          "windParticles": 264,
+          "mainTelltales": 10,
+          "phases": {
+            "syncVisualState": {
+              "ms": 7.954959000001509,
+              "calls": 75
+            },
+            "updateRig": {
+              "ms": 400.82389599998896,
+              "calls": 70
+            },
+            "updateSails": {
+              "ms": 2795.0234660000006,
+              "calls": 150
+            },
+            "updateWind": {
+              "ms": 192.85398700001497,
+              "calls": 150
+            },
+            "updateTurbulence": {
+              "ms": 12.747400999998717,
+              "calls": 150
+            }
+          }
+        },
+        {
+          "name": "no-wind-effects",
+          "quality": "balanced",
+          "cpuMeanMs": 15.43873199166666,
+          "cpuMedianMs": 16.60246299999926,
+          "cpuP95Ms": 33.88273900000058,
+          "visibleObjects": 260,
+          "triangles": 35162,
+          "shadowCasters": 9,
+          "pixelRatio": 1.5,
+          "windParticles": 264,
+          "mainTelltales": 10,
+          "phases": {
+            "syncVisualState": {
+              "ms": 7.4044340000036755,
+              "calls": 75
+            },
+            "updateRig": {
+              "ms": 101.78680100000383,
+              "calls": 70
+            },
+            "updateSails": {
+              "ms": 2124.255992000006,
+              "calls": 150
+            },
+            "updateWind": {
+              "ms": 0.6224540000075649,
+              "calls": 150
+            },
+            "updateTurbulence": {
+              "ms": 0.11991800001305819,
+              "calls": 150
+            }
+          }
+        }
+      ]
+    },
+    "economy": {
+      "method": "CPU-only full scene frames with GPU endpoint stubbed; physics evaluations excluded from frame timings. 120 frames per case after 30 warmup frames; changes every 10 frames.",
+      "quality": "economy",
+      "cases": [
+        {
+          "name": "upwind",
+          "quality": "economy",
+          "cpuMeanMs": 9.71922676666666,
+          "cpuMedianMs": 0.2565270000000055,
+          "cpuP95Ms": 34.715717999999924,
+          "visibleObjects": 223,
+          "triangles": 27962,
+          "shadowCasters": 9,
+          "pixelRatio": 1,
+          "windParticles": 264,
+          "mainTelltales": 10,
+          "phases": {
+            "syncVisualState": {
+              "ms": 4.638563000002023,
+              "calls": 50
+            },
+            "updateRig": {
+              "ms": 303.1736329999982,
+              "calls": 44
+            },
+            "updateSails": {
+              "ms": 1036.1080979999956,
+              "calls": 150
+            },
+            "updateWind": {
+              "ms": 196.00477799999874,
+              "calls": 150
+            },
+            "updateTurbulence": {
+              "ms": 7.088495999997463,
+              "calls": 150
+            }
+          }
+        },
+        {
+          "name": "pressure",
+          "quality": "economy",
+          "cpuMeanMs": 8.566017083333312,
+          "cpuMedianMs": 0.19530500000018947,
+          "cpuP95Ms": 25.027455999999802,
+          "visibleObjects": 223,
+          "triangles": 27962,
+          "shadowCasters": 9,
+          "pixelRatio": 1,
+          "windParticles": 264,
+          "mainTelltales": 10,
+          "phases": {
+            "syncVisualState": {
+              "ms": 4.368908999998439,
+              "calls": 50
+            },
+            "updateRig": {
+              "ms": 83.44415599999957,
+              "calls": 44
+            },
+            "updateSails": {
+              "ms": 975.6478939999975,
+              "calls": 150
+            },
+            "updateWind": {
+              "ms": 189.6098009999987,
+              "calls": 150
+            },
+            "updateTurbulence": {
+              "ms": 6.763982999998007,
+              "calls": 150
+            }
+          }
+        },
+        {
+          "name": "downwind",
+          "quality": "economy",
+          "cpuMeanMs": 12.09032116666671,
+          "cpuMedianMs": 0.21729800000048272,
+          "cpuP95Ms": 38.25443600000017,
+          "visibleObjects": 238,
+          "triangles": 28654,
+          "shadowCasters": 10,
+          "pixelRatio": 1,
+          "windParticles": 264,
+          "mainTelltales": 10,
+          "phases": {
+            "syncVisualState": {
+              "ms": 4.709989999996651,
+              "calls": 50
+            },
+            "updateRig": {
+              "ms": 337.32805800000096,
+              "calls": 44
+            },
+            "updateSails": {
+              "ms": 1331.4209199999987,
+              "calls": 150
+            },
+            "updateWind": {
+              "ms": 195.43914499999937,
+              "calls": 150
+            },
+            "updateTurbulence": {
+              "ms": 6.412182000002758,
+              "calls": 150
+            }
+          }
+        },
+        {
+          "name": "no-wind-effects",
+          "quality": "economy",
+          "cpuMeanMs": 7.4211953666665975,
+          "cpuMedianMs": 0.10395700000026409,
+          "cpuP95Ms": 25.562015999999858,
+          "visibleObjects": 218,
+          "triangles": 27714,
+          "shadowCasters": 9,
+          "pixelRatio": 1,
+          "windParticles": 264,
+          "mainTelltales": 10,
+          "phases": {
+            "syncVisualState": {
+              "ms": 4.606929000000491,
+              "calls": 50
+            },
+            "updateRig": {
+              "ms": 84.53471600000012,
+              "calls": 44
+            },
+            "updateSails": {
+              "ms": 985.7120819999955,
+              "calls": 150
+            },
+            "updateWind": {
+              "ms": 0.5993360000020402,
+              "calls": 150
+            },
+            "updateTurbulence": {
+              "ms": 0.086673000000701,
+              "calls": 150
+            }
+          }
+        }
+      ]
+    },
+    "detailed": {
+      "method": "CPU-only full scene frames with GPU endpoint stubbed; physics evaluations excluded from frame timings. 120 frames per case after 30 warmup frames; changes every 10 frames.",
+      "quality": "detailed",
+      "cases": [
+        {
+          "name": "upwind",
+          "quality": "detailed",
+          "cpuMeanMs": 43.581271625,
+          "cpuMedianMs": 41.052340000000186,
+          "cpuP95Ms": 62.030931999999666,
+          "visibleObjects": 269,
+          "triangles": 68354,
+          "shadowCasters": 131,
+          "pixelRatio": 2,
+          "windParticles": 264,
+          "mainTelltales": 10,
+          "phases": {
+            "syncVisualState": {
+              "ms": 13.046586999998453,
+              "calls": 150
+            },
+            "updateRig": {
+              "ms": 463.20821899999896,
+              "calls": 138
+            },
+            "updateSails": {
+              "ms": 5815.2948929999975,
+              "calls": 150
+            },
+            "updateWind": {
+              "ms": 212.5435510000019,
+              "calls": 150
+            },
+            "updateTurbulence": {
+              "ms": 27.031553999995026,
+              "calls": 150
+            }
+          }
+        },
+        {
+          "name": "pressure",
+          "quality": "detailed",
+          "cpuMeanMs": 43.862741341666634,
+          "cpuMedianMs": 42.50047599999925,
+          "cpuP95Ms": 60.138945000000604,
+          "visibleObjects": 269,
+          "triangles": 68354,
+          "shadowCasters": 131,
+          "pixelRatio": 2,
+          "windParticles": 264,
+          "mainTelltales": 10,
+          "phases": {
+            "syncVisualState": {
+              "ms": 13.975134000000253,
+              "calls": 150
+            },
+            "updateRig": {
+              "ms": 167.17103599999973,
+              "calls": 138
+            },
+            "updateSails": {
+              "ms": 5930.558382999989,
+              "calls": 150
+            },
+            "updateWind": {
+              "ms": 192.8091859999995,
+              "calls": 150
+            },
+            "updateTurbulence": {
+              "ms": 23.36973799999396,
+              "calls": 150
+            }
+          }
+        },
+        {
+          "name": "downwind",
+          "quality": "detailed",
+          "cpuMeanMs": 55.486097608333495,
+          "cpuMedianMs": 52.47012899999754,
+          "cpuP95Ms": 73.03763199999958,
+          "visibleObjects": 284,
+          "triangles": 69094,
+          "shadowCasters": 136,
+          "pixelRatio": 2,
+          "windParticles": 264,
+          "mainTelltales": 10,
+          "phases": {
+            "syncVisualState": {
+              "ms": 14.354836999988038,
+              "calls": 150
+            },
+            "updateRig": {
+              "ms": 475.07171799999196,
+              "calls": 138
+            },
+            "updateSails": {
+              "ms": 7486.239751000026,
+              "calls": 150
+            },
+            "updateWind": {
+              "ms": 195.12411399999837,
+              "calls": 150
+            },
+            "updateTurbulence": {
+              "ms": 25.405267999982243,
+              "calls": 150
+            }
+          }
+        },
+        {
+          "name": "no-wind-effects",
+          "quality": "detailed",
+          "cpuMeanMs": 41.456792641666624,
+          "cpuMedianMs": 41.49053699999786,
+          "cpuP95Ms": 46.06559600000037,
+          "visibleObjects": 260,
+          "triangles": 67858,
+          "shadowCasters": 131,
+          "pixelRatio": 2,
+          "windParticles": 264,
+          "mainTelltales": 10,
+          "phases": {
+            "syncVisualState": {
+              "ms": 13.570187000012083,
+              "calls": 150
+            },
+            "updateRig": {
+              "ms": 234.68657400000666,
+              "calls": 138
+            },
+            "updateSails": {
+              "ms": 5723.757250000024,
+              "calls": 150
+            },
+            "updateWind": {
+              "ms": 1.2311589999771968,
+              "calls": 150
+            },
+            "updateTurbulence": {
+              "ms": 0.3025619999898481,
+              "calls": 150
+            }
+          }
+        }
+      ]
+    }
+  }
+}

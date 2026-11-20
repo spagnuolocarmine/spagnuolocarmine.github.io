@@ -1,0 +1,6 @@
+// One bounded, reduced horseshoe update couples the sail fields without per-frame 3D CFD.
+import {V,clamp} from './constants.js';
+import {boatScale} from './boats.js';
+import {sailFlowAtHeight,flowFromVelocity} from './sail-flow.js';
+function segmentVelocity(p,a,b,gamma){const r1=V.sub(p,a),r2=V.sub(p,b),r0=V.sub(b,a),cross=V.cross(r1,r2),core=.20,den=V.dot(cross,cross)+core*core*V.dot(r0,r0),factor=gamma/(4*Math.PI)*V.dot(r0,V.sub(V.unit(r1),V.unit(r2)))/Math.max(1e-8,den);return V.mul(cross,factor);}
+export function coupledInflow(s,type,fields=[]){const k=boatScale(s),sources=fields.filter(f=>f.type!==type);return point=>{const physical=V.mul(point,k),base=sailFlowAtHeight(s,physical[1]),velocity=V.mul(base.direction,base.aws*.514444);let induced=[0,0,0];for(const field of sources)for(const bound of field.boundSegments){if(Math.abs(bound.gamma)<1e-5)continue;const far=V.mul(bound.wind,30*k),aFar=V.add(bound.a,far),bFar=V.add(bound.b,far);for(const [a,b]of [[bound.a,bound.b],[bound.b,bFar],[aFar,bound.a]])induced=V.add(induced,segmentVelocity(physical,a,b,bound.gamma));}const limit=base.aws*.514444*.22,magnitude=V.length(induced);if(magnitude>limit)induced=V.mul(induced,limit/Math.max(1e-8,magnitude));return flowFromVelocity(V.add(velocity,V.mul(induced,.65)),physical[1]);};}

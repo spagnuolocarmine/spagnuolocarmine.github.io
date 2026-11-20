@@ -1,28 +1,30 @@
 // The renderer and pressure solver use this exact same steady, loaded sail geometry.
-import {RAD,clamp,lerp,V} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/constants.js';
-import {mainBoomAngle,genoaLeadGeometry} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/deck-layout.js';
-import {mainWidth,genoaWidth,rigDimensions,flatSailPoint,hasHeadsailBattens} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/orc-sails.js';
-import {mastPoint,forestayPoint,windSide,rigResponse,shroudAtHeight,headsailLuffPoint} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/standing-rig.js';
-import {boatScale,boatProfile} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/boats.js';
-import {windTrimResponse,smoothBound,headsailCamber,headsailDraft} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/trim-response.js';
-import {sailDesign} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/sail-measures.js';
-import {sheetArc,flyingSheetTravel} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/sheet-travel.js';
-import {flyingSurface} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/flying-surface.js';
-import {flyingProfile} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/flying-profile.js';
-export {mastPoint,forestayPoint,windSide} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/standing-rig.js';
+import {RAD,clamp,lerp,V} from './constants.js';
+import {mainBoomAngle,genoaLeadGeometry} from './deck-layout.js';
+import {mainWidth,genoaWidth,rigDimensions,flatSailPoint,hasHeadsailBattens} from './orc-sails.js';
+import {mastPoint,forestayPoint,windSide,rigResponse,shroudAtHeight,headsailLuffPoint} from './standing-rig.js';
+import {boatScale,boatProfile} from './boats.js';
+import {windTrimResponse,smoothBound,headsailCamber,headsailDraft} from './trim-response.js';
+import {sailDesign} from './sail-measures.js';
+import {sheetArc,flyingSheetTravel} from './sheet-travel.js';
+import {flyingSurface} from './flying-surface.js';
+import {flyingProfile} from './flying-profile.js';
+import {applySailProfile,profileOrdinate} from './sail-profiles.js';
+import {mainLeechBalance} from './main-balance.js';
+export {mastPoint,forestayPoint,windSide} from './standing-rig.js';
 export const rigLoad=s=>clamp(s.windSpeed/14,0,1.8);
 export function sailShape(type,s,h=.4){if(type==='spinnaker'||type==='gennaker'){const travel=flyingSheetTravel(type,s);return{angle:type==='spinnaker'?90-travel.angle:travel.angle,...flyingProfile(type,s)};}const c=s.controls[type],r=s.controls.rig,load=clamp(s.windSpeed/4,0,1),weather=windTrimResponse(s.windSpeed,s.windAngle);let p;
- if(type==='main')p={angle:mainSheetAngle(s),twist:2+(100-c.vang)*.20+(100-c.sheet)*.06+6*Math.max(0,weather.battens-c.battens)/100*h,camber:smoothBound(.21-c.outhaul*.00105*(1-h)**.8-rigResponse(s).prebend*.25-c.cunningham*.00037*(1-h*.65)+(c.battens-weather.battens)*.00032*h,.035,.22),draft:smoothBound(weather.draft+.14*weather.demand-c.halyard*.0014-c.cunningham*.0004*(1-h)**3,.24,.61,.008),battened:true,stability:clamp(.4+c.battens*.006,0,1),roach:.22+c.battens*.005};
+ if(type==='main')p={angle:mainSheetAngle(s),twist:mainLeechBalance(s,mainSheetAngle(s)).twist+2*Math.max(0,35-c.battens)/100*h,camber:smoothBound(.21-c.outhaul*.00105*(1-h)**.8-rigResponse(s).prebend*.25-c.cunningham*.00030*(1-h*.65)-c.halyard*.00018*(.35+.65*h)+(c.battens-55)*.00014*h,.035,.22),draft:smoothBound(weather.draft+.14*weather.demand-c.halyard*.0014-c.cunningham*.0004*(1-h)**3,.24,.61,.008),battened:true,stability:clamp(.4+c.battens*.006,0,1),roach:.22+c.battens*.005};
  if(type==='genoa'){const lead=genoaLeadGeometry(s);p={angle:lead.angle,twist:lead.twist,camber:headsailCamber(c,rigResponse(s).sag,lead.footClosing,hasHeadsailBattens(s)),draft:headsailDraft(c,weather),battened:hasHeadsailBattens(s),stability:hasHeadsailBattens(s)?clamp(.4+c.battens*.006):.8,clewHeight:lead.clewHeight};}
- p.camber*=.30+.70*load;p.pressurized=load;if(type!=='main'){const sheet=type==='genoa'?genoaLeadGeometry(s).effectiveSheet:c.sheet,fill=clamp(sheet/12);p.camber*=.06+.94*fill;p.stability*=fill;p.released=1-fill;if(type!=='genoa')p.twist*=fill;}return p;
+ p.camber*=.30+.70*load;p.pressurized=load;if(type!=='main'){const sheet=type==='genoa'?genoaLeadGeometry(s).effectiveSheet:c.sheet,fill=clamp(sheet/12);p.camber*=.06+.94*fill;p.stability*=fill;p.released=1-fill;if(type!=='genoa')p.twist*=fill;}return applySailProfile(type,p,h,s);
 }
 function camberCurve(u,draft){if(u<=0||u>=1)return 0;return u<draft?Math.sin(u/draft*Math.PI/2):Math.sin((1-u)/(1-draft)*Math.PI/2);}
 function profile(points,v){for(let i=1;i<points.length;i++)if(v<=points[i][0]){const t=(v-points[i-1][0])/(points[i][0]-points[i-1][0]);return lerp(points[i-1][1],points[i][1],t);}return points.at(-1)[1];}
 export function spinnakerWidth(v){return 8.1*(flatSailPoint('spinnaker',v,1,1)[0]-flatSailPoint('spinnaker',v,0,1)[0]);}
 const mainRangeCache=new Map();
-export function mainSheetAngle(s){if(s.mainRangeProbe)return mainBoomAngle(s);const response=rigResponse(s),c=s.controls.main,key=JSON.stringify([boatProfile(s).id,s.boatSpeed,s.windSpeed,s.windAngle,s.controls.rig,s.genoaSize,s.main,Object.fromEntries(Object.entries(c).filter(([k])=>k!=='sheet')),s.sailDesigns,s.sailAreas,s.foresail]);let range=mainRangeCache.get(key);if(!range){const probe={...s,mainRangeProbe:true,controls:{...s.controls,main:{...c,sheet:0}}},open=mainContactAngle(0,probe),closed=mainBoomAngle({...probe,controls:{...probe.controls,main:{...c,sheet:100}}});range={open,closed};mainRangeCache.set(key,range);if(mainRangeCache.size>240)mainRangeCache.delete(mainRangeCache.keys().next().value);}return sheetArc(range.open,range.closed,c.sheet);}
+export function mainSheetAngle(s){if(s.mainRangeProbe)return mainBoomAngle(s);const response=rigResponse(s),c=s.controls.main,key=s.mainRangeToken||JSON.stringify([boatProfile(s).id,s.boatSpeed,s.windSpeed,s.windAngle,s.controls.rig,s.genoaSize,s.main,s.reef,s.sailProfiles,s.rigLoads,Object.fromEntries(Object.entries(c).filter(([k])=>k!=='sheet')),s.sailDesigns,s.sailAreas,s.foresail]);let range=mainRangeCache.get(key);if(!range){const probe={...s,mainRangeProbe:true,controls:{...s.controls,main:{...c,sheet:0}}},open=mainContactAngle(0,probe),closed=mainBoomAngle({...probe,controls:{...probe.controls,main:{...c,sheet:100}}});range={open,closed};mainRangeCache.set(key,range);if(mainRangeCache.size>240)mainRangeCache.delete(mainRangeCache.keys().next().value);}return sheetArc(range.open,range.closed,c.sheet);}
 const angleCache=new WeakMap();
-export function mainContactAngle(v,s,p=sailShape('main',s,v)){const desired=p.angle+p.twist*v**1.25;if(desired<30)return desired;const signature=[...Object.values(s.controls.main),...Object.values(s.controls.rig),s.windSpeed,s.windAngle,s.boatSpeed,s.foresail,s.genoaSize,s.main,boatProfile(s).id,JSON.stringify(s.sailDesigns),JSON.stringify(s.sailAreas)].join(',');let cached=angleCache.get(s);if(!cached||cached.signature!==signature){
+export function mainContactAngle(v,s,p=sailShape('main',s,v)){const desired=p.angle+p.twist*v**1.25;if(desired<30)return desired;const signature=s.geometryToken||[...Object.values(s.controls.main),...Object.values(s.controls.rig),s.windSpeed,s.windAngle,s.boatSpeed,s.foresail,s.genoaSize,s.main,s.reef,JSON.stringify(s.sailProfiles),JSON.stringify(s.rigLoads),boatProfile(s).id,JSON.stringify(s.sailDesigns),JSON.stringify(s.sailAreas)].join(',');let cached=angleCache.get(s);if(!cached||cached.signature!==signature){
  const count=32,raw=[],rig=rigDimensions(s),P=rig.P;for(let j=0;j<=count;j++){const h=j/count,shape=sailShape('main',s,h),request=shape.angle+shape.twist*h**1.25,root=mastPoint((.7+P*h)/rig.ISP,s),side=windSide(s),wire=shroudAtHeight(s,side,1.9+P*h),w=mainWidth(h,s);root[2]-=.105;const wx=side*(wire[0]-root[0]),clearance=.060;
  const blocked=angle=>{const a=angle*RAD;let previous=[0,root[2]];for(let i=1;i<=28;i++){const u=i/28,d=w*shape.camber*camberCurve(u,shape.draft)*(1-.15*h),x=Math.sin(a)*w*u+Math.cos(a)*d,z=root[2]-Math.cos(a)*w*u+Math.sin(a)*d;if(x>=wx-clearance&&previous[0]<=wx+clearance){const f=clamp((wx-previous[0])/Math.max(1e-8,x-previous[0])),crossZ=lerp(previous[1],z,f);if(crossZ>wire[2]-clearance)return true;}previous=[x,z];}return false;};
  let limit=request;if(wx>.02&&request>0&&blocked(request)){let lo=0,hi=request;for(let i=0;i<13;i++){const mid=(lo+hi)/2;if(blocked(mid))hi=mid;else lo=mid;}limit=Math.max(0,lo-1.1);}raw.push(limit);}
@@ -31,12 +33,12 @@ export function mainContactAngle(v,s,p=sailShape('main',s,v)){const desired=p.an
 }
 export function sailPoint(type,v,u,s){const p=sailShape(type,s,v),side=windSide(s),rig=rigDimensions(s),a=(type==='main'?mainContactAngle(v,s,p):p.angle+p.twist*v**1.25)*RAD;let x,y,z;
  if(type==='main'){
-  const root=mastPoint((.7+rig.P*v)/rig.ISP,s),nominalWidth=mainWidth(v,s),compression=1-1/(1+2.467*p.camber*p.camber),w=nominalWidth*(1-compression*(1-v)**2);root[2]-=.105;const d=w*p.camber*camberCurve(u,p.draft)*(1-.15*v);
-  x=root[0]+side*(Math.sin(a)*w*u+Math.cos(a)*d);y=1.9+rig.P*v+Math.sin(Math.PI*u)*.035;z=root[2]-Math.cos(a)*w*u+Math.sin(a)*d;
+  const root=mastPoint((.7+rig.P*v)/rig.ISP,s),nominalWidth=mainWidth(v,s),compression=1-1/(1+2.467*p.camber*p.camber),w=nominalWidth*(1-compression*(1-v)**2);root[2]-=.105;const d=w*profileOrdinate(p,u)*(1-.15*v);
+  const elevation=mainLeechBalance(s,p.angle).elevation*RAD*(1-v),horizontal=w*u*Math.cos(elevation);x=root[0]+side*(Math.sin(a)*horizontal+Math.cos(a)*d);y=root[1]+Math.sin(elevation)*w*u+Math.sin(Math.PI*u)*.035;z=root[2]-Math.cos(a)*horizontal+Math.sin(a)*d;
  }else if(type==='genoa'){
-  const lead=genoaLeadGeometry(s),root=headsailLuffPoint(v,s),w=genoaWidth(v,s),depth=w*p.camber*camberCurve(u,p.draft),radial=V.add(V.mul(lead.aft,Math.cos(a)),V.mul(lead.lateral,Math.sin(a))),normal=V.add(V.mul(lead.aft,-Math.sin(a)),V.mul(lead.lateral,Math.cos(a))),point=V.add(root,V.add(V.mul(lead.axis,lead.along*u*(1-v)),V.add(V.mul(radial,w*u),V.mul(normal,depth))));[x,y,z]=point;
+  const lead=genoaLeadGeometry(s),root=headsailLuffPoint(v,s),w=genoaWidth(v,s),depth=w*profileOrdinate(p,u),radial=V.add(V.mul(lead.aft,Math.cos(a)),V.mul(lead.lateral,Math.sin(a))),normal=V.add(V.mul(lead.aft,-Math.sin(a)),V.mul(lead.lateral,Math.cos(a))),point=V.add(root,V.add(V.mul(lead.axis,lead.along*u*(1-v)),V.add(V.mul(radial,w*u),V.mul(normal,depth))));[x,y,z]=point;
  }else return flyingSurface(type,s,p).point(v,u);
- return[x,y,z];
+ if(p.customProfile)y-=((type==='main'?mainWidth(v,s):genoaWidth(v,s))*(p.footRound||0)/100)*Math.sin(Math.PI*u)*(1-v)**10;return[x,y,z];
 }
-export function mainBoomPoint(t,s){const root=sailPoint('main',0,0,s),clew=sailPoint('main',0,1,s),direction=V.unit([clew[0]-root[0],0,clew[2]-root[2]]);return V.add(root,V.mul(direction,mainWidth(0,s)*t));}
+export function mainBoomPoint(t,s){const root=sailPoint('main',0,0,s),clew=sailPoint('main',0,1,s),direction=V.unit(V.sub(clew,root));return V.add(root,V.mul(direction,sailDesign('main',s).E/boatScale(s)*t));}
 export function shapeSummary(type,s){const p=sailShape(type,s),mast=mastPoint(1,s),mid=forestayPoint(.5,s),top=forestayPoint(1,s),bottom=forestayPoint(0,s),a=sailPoint(type,.4,0,s),b=sailPoint(type,.4,1,s),chord=V.sub(b,a),L=V.length(chord),sample=u=>{const q=V.sub(sailPoint(type,.4,u,s),a);return{depth:V.length(V.cross(q,chord))/Math.max(1e-9,L),draft:V.dot(q,chord)/Math.max(1e-9,L*L)};};let bestU=0,best=-1;for(let i=0;i<=24;i++){const d=sample(i/24).depth;if(d>best){best=d;bestU=i/24;}}let lo=Math.max(0,bestU-1/24),hi=Math.min(1,bestU+1/24);for(let i=0;i<20;i++){const x=lo+(hi-lo)/3,y=hi-(hi-lo)/3;if(sample(x).depth>sample(y).depth)hi=y;else lo=x;}const peak=sample((lo+hi)/2),side=windSide(s),azimuth=h=>{const c=V.sub(sailPoint(type,h,1,s),sailPoint(type,h,0,s));return Math.atan2(side*c[0],-c[2])/RAD;};let twist=azimuth(.9)-azimuth(.1);while(twist>180)twist-=360;while(twist< -180)twist+=360;return{prebend:rigResponse(s).prebend*boatScale(s),requestedAngle:p.angle,mainLimit:mainContactAngle(0,s),camber:100*peak.depth/Math.max(1e-9,L),draft:100*peak.draft,twist:Math.abs(twist),section:.4,twistFrom:.1,twistTo:.9,mastDeflection:Math.abs(mast[0])*boatScale(s),forestaySag:boatScale(s)*V.length(V.sub(mid,V.mul(V.add(top,bottom),.5)))};}

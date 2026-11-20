@@ -1,12 +1,12 @@
 // Geometric blanketing behind the mainsail on broad reaches / runs.
 // This is an empirical pressure deficit, not a resolved turbulent wake or slot model.
-import {V,RAD,clamp,lerp} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/constants.js';
-import {boatScale} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/boats.js';
-import {sailPoint} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/sail-geometry.js';
-export function mainsailWake(s,awa){
- const run=clamp((Math.abs(awa)-90)/35);if(!s.main||run===0)return null;
+import {V,RAD,clamp,lerp} from './constants.js';
+import {boatScale} from './boats.js';
+import {sailPoint} from './sail-geometry.js';
+export function sailWake(type,s,awa){
+ const run=clamp((Math.abs(awa)-90)/35);if((type==='main'&&!s.main)||run===0)return null;
  const wind=[-Math.sin(awa*RAD),0,-Math.cos(awa*RAD)],across=[wind[2],0,-wind[0]],k=boatScale(s),bands=Array.from({length:17},(_,j)=>{
-  const p=Array.from({length:13},(_,i)=>sailPoint('main',j/16,i/12,s)),x=p.map(q=>V.dot(q,across)),d=p.map(q=>V.dot(q,wind)),chord=V.sub(p.at(-1),p[0]),horizontal=V.unit([chord[0],0,chord[2]]),normal=[-horizontal[2],0,horizontal[0]];
+  const p=Array.from({length:13},(_,i)=>sailPoint(type,j/16,i/12,s)),x=p.map(q=>V.dot(q,across)),d=p.map(q=>V.dot(q,wind)),chord=V.sub(p.at(-1),p[0]),horizontal=V.unit([chord[0],0,chord[2]]),normal=[-horizontal[2],0,horizontal[0]];
   return{y:p[0][1],lo:Math.min(...x),hi:Math.max(...x),depth:d.reduce((a,b)=>a+b,0)/d.length,broadness:Math.abs(V.dot(normal,wind))};
  });
  return point=>{
@@ -18,3 +18,5 @@ export function mainsailWake(s,awa){
   return strength*coverage*Math.exp(-distance/(12*k));
  };
 }
+
+export const mainsailWake=(s,awa)=>sailWake('main',s,awa);

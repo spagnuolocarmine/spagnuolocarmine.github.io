@@ -1,4 +1,4 @@
-import english from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/i18n-en.js';
+import english from './i18n-en.js';
 
 const LANGUAGE_KEY='vento.language';
 let language='it';
@@ -6,6 +6,8 @@ try{if(globalThis.window?.localStorage?.getItem(LANGUAGE_KEY)==='en')language='e
 export const getLanguage=()=>language;
 export const getLocale=()=>language==='en'?'en-GB':'it-IT';
 const fragments={
+ 'm di cima fermata · posizione calcolata sotto carico':'m of secured rope · position calculated under load',
+ 'pressione / separazione ammessa':'pressure mode / separation allowed','scala ':'scale ',
  'modello corrispondente':'matching model','modello compatibile':'compatible model','modello simile, scalato sulla lunghezza':'similar model, scaled to length',
  'Armo parametrico del laboratorio.':'Parametric laboratory rig.','Armo stimato da una barca simile':'Rig estimated from a similar boat','Armo da modello compatibile':'Rig from a compatible model',
  '* Isp, SPL e TPS sono stime dichiarate: altezza e tipo d’armo disponibili, tangone assunto lungo J e bompresso stimato.':'* Isp, SPL and TPS are declared estimates: available rig height and type, pole assumed equal to J and estimated bowsprit.',

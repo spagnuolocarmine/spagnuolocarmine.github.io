@@ -2,6 +2,7 @@
 export class SailingAudio {
  constructor(){this.enabled=false;this.ctx=null;}
  async toggle(){if(!this.ctx)this.init();if(this.ctx.state==='suspended')await this.ctx.resume();this.enabled=!this.enabled;this.master.gain.setTargetAtTime(this.enabled?.45:0,this.ctx.currentTime,.4);return this.enabled;}
+ disable(){this.enabled=false;if(this.ctx)this.master.gain.setTargetAtTime(0,this.ctx.currentTime,.15);}
  init(){const AC=window.AudioContext||window.webkitAudioContext;if(!AC)throw new Error('Audio non supportato in questo browser');this.ctx=new AC();const c=this.ctx;this.master=c.createGain();this.master.gain.value=0;this.master.connect(c.destination);
   const buffer=c.createBuffer(2,c.sampleRate*5,c.sampleRate);for(let ch=0;ch<2;ch++){const d=buffer.getChannelData(ch);let b=0;for(let i=0;i<d.length;i++){b=(b+(Math.random()*2-1)*.025)/1.025;d[i]=b*5;}}
   this.noise=c.createBufferSource();this.noise.buffer=buffer;this.noise.loop=true;

@@ -1,0 +1,2 @@
+import {equilibrium,installReference} from './physics.js';
+export function compareControlStates(state,beforeControls,reference){if(reference)installReference(reference);const before={...structuredClone(state),controls:structuredClone(beforeControls)},after=structuredClone(state),a=equilibrium(before),b=equilibrium(after);return{beforeSpeed:a.speed,speed:b.speed,deltaKn:b.speed-a.speed,deltaPercent:a.speed>.001?100*(b.speed-a.speed)/a.speed:0,referenceReady:!!reference};}

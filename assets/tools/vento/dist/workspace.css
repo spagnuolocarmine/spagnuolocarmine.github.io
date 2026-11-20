@@ -229,7 +229,7 @@ input[type=range]::-moz-range-thumb{background:var(--accent);border:2px solid #f
 .key-turbulence{height:2px;background:linear-gradient(90deg,#f44336,#ffd43b)}
 .key-telltale{background:#bf765d}
 .view-hint{font-size:10px;color:#829bab;line-height:1.8;margin:14px 0 0}
-.floating-direct{width:322px;padding:16px 17px 14px;overflow-y:auto;border-left:3px solid var(--rope-colour)}
+.floating-direct{left:auto;right:16px;width:322px;padding:16px 17px 14px;overflow-y:auto;border-left:3px solid var(--rope-colour)}
 .direct-control-header{margin-bottom:16px;gap:6px;flex-shrink:0}
 .direct-control-header>div{flex:1}
 .direct-control-header span{font-size:8px;color:#69899f}

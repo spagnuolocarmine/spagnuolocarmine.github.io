@@ -1,9 +1,9 @@
-import {lerp} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/constants.js';
-import {sailPoint,mastPoint,forestayPoint,windSide,mainBoomPoint} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/sail-geometry.js';
-import {flyingSheetLead} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/sheet-travel.js';
-import {shroudPath} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/standing-rig.js';
-import {DECK,deckLayout,mainTravelerPosition,mainSheetLead,genoaLeadGeometry} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/deck-layout.js';
-import {spinPoleRig} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/orc-sails.js';
+import {lerp} from './constants.js';
+import {sailPoint,mastPoint,forestayPoint,windSide,mainBoomPoint} from './sail-geometry.js';
+import {flyingSheetLead} from './sheet-travel.js';
+import {shroudPath} from './standing-rig.js';
+import {DECK,deckLayout,mainTravelerPosition,mainSheetLead,genoaLeadGeometry} from './deck-layout.js';
+import {spinPoleRig,rigDimensions} from './orc-sails.js';
 // Physical polylines in boat coordinates; each visible adjustable line identifies one control.
 export function rigPlan(s){const out=[],d=deckLayout(s),side=windSide(s),top=mastPoint(1,s),main=s.main,genoa=s.foresail==='genoa',spin=s.foresail==='spinnaker',genn=s.foresail==='gennaker';
  const boomPoint=t=>mainBoomPoint(t,s);
@@ -21,7 +21,7 @@ export function rigPlan(s){const out=[],d=deckLayout(s),side=windSide(s),top=mas
  const cun=P('main',.045,0);add('main.cunningham','cunningham',[[cun[0]-.12,cun[1],cun[2]],[mastBase[0]-.17,1.26,mastBase[2]],[-.30,.97,-1.43]],main);
  const lead=genoaLeadGeometry(s),car=lead.car,ring=lead.ring,head=P('genoa',1,0);
  add('genoa.sheet','genoa-sheet',[P('genoa',0,1),...(Math.abs(lead.barber)>.0001?[ring]:[]),lead.lead,lead.winch],genoa);
- add('genoa.halyard','genoa-halyard',[[head[0]-.11,head[1],head[2]],[top[0]-.12,top[1],top[2]],...[.8,.5,.2,0].map(v=>{const p=mastPoint(v,s);return[p[0]-.13,p[1],p[2]];}),[-.39,.97,-1.43]],genoa);
+ add('genoa.halyard','genoa-halyard',[[head[0]-.11,head[1],head[2]],mastPoint(rigDimensions(s).foreFraction,s),...[.8,.5,.2,0].map(v=>{const p=mastPoint(v,s);return[p[0]-.13,p[1],p[2]];}),[-.39,.97,-1.43]],genoa);
  add('genoa.barber','genoa-barber',[[side*.35,.96,car[2]],ring,[side*1.62,.96,car[2]]],genoa);
  const sc=P('spinnaker',0,0),ss=P('spinnaker',0,1),braceDrop=.30+.60*s.controls.spinnaker.barberBrace/100,sheetDrop=.30+.60*s.controls.spinnaker.barberSheet/100,braceRing=[lerp(sc[0],-side*1.55,braceDrop),lerp(sc[1],.98,braceDrop),lerp(sc[2],-2.2,braceDrop)],sheetRing=[lerp(ss[0],side*1.60,sheetDrop),lerp(ss[1],.98,sheetDrop),lerp(ss[2],-2.15,sheetDrop)];
  add('spinnaker.brace','spinnaker-brace',[sc,braceRing,[-side*1.55,.98,-2.2]],spin);add('spinnaker.sheet','spinnaker-sheet',[ss,sheetRing,flyingSheetLead('spinnaker',s)],spin);

@@ -21,7 +21,7 @@ selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true  # includes social icons at the bottom of the page
 ---
 
-Currently, he is a Tenured Assistant Professor at [UNISA](www.unisa.it), and he is a senior member of [ISISLab](www.isislab.it) laboratory.
+Currently, he is an associate professor at [UNISA](www.unisa.it), and he is a senior member of [ISISLab](www.isislab.it) laboratory.
 
 He got his MSc and Ph.D. in Computer Science at the UNISA in 2013 and 2017, respectively, under the supervision of Prof. [Vittorio Scarano](http://intranet.di.unisa.it/~vitsca/) and Prof. [Gennaro Cordasco](https://www.psicologia.unicampania.it/dipartimento/docenti?MATRICOLA=059407). 
 

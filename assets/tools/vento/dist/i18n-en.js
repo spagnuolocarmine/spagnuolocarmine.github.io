@@ -626,5 +626,12 @@ export default {
  "Con AUTO generale attivo, il calcolo si applica a tutto l’assetto.": "With global AUTO active, the calculation applies to the whole trim."
 ,
  "Pannello strumenti": "Tool panel",
- "Superficie randa": "Mainsail area"
+ "Superficie randa": "Mainsail area",
+ "Tempo di risposta simulato": "Simulated response time",
+ "0,05×": "0.05×",
+ "Accelera o rallenta la risposta di velocità e manovre.": "Speeds up or slows down boat-speed and control response.",
+ "−10 · 0,1× (lento)": "−10 · 0.1× (slow)",
+ "0 · 1×": "0 · 1×",
+ "+10 · 10× (rapido)": "+10 · 10× (fast)",
+ "Accelera o rallenta la risposta di velocità e manovre, non la polare del certificato.": "Speeds up or slows down the response of boat speed and sail controls; the certified polar stays unchanged."
 };

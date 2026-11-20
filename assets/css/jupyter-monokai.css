@@ -276,22 +276,11 @@ body>#header .header-bar {
 }
 
 
-.btn-sm,
-.btn-xs {
+.btn-sm {
     font-size: inherit;
     font-weight: normal;
     height: inherit;
     line-height: inherit;
-}
-
-.btn-xs {
-    font-size: initial !important;
-    background-image: none;
-    font-weight: normal;
-    text-shadow: none;
-    display: inline-table;
-    padding: 2px 5px;
-    line-height: 1.45;
 }
 
 button.close {

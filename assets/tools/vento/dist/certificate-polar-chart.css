@@ -1,0 +1,14 @@
+/* Polari originali ORC, pannello Dati e dettaglio del certificato */
+.certificate-polar-card{margin:14px 0 0;padding:14px 13px;background:var(--panel,#fff);border:1px solid #d8e3ec;border-radius:12px;color:#284456;}
+.certificate-polar-card h3{font-size:13px;letter-spacing:.025em;margin:0 0 8px;font-weight:700;color:var(--text,#243e50)}
+.certificate-polar-card .cert-polar-graphic{margin:auto;max-width:480px}
+.cert-polar-graphic svg{display:block;width:100%;height:auto;overflow:visible}
+.cert-polar-legend{display:flex;flex-wrap:wrap;gap:7px 13px;justify-content:center;margin-top:5px}
+.cert-polar-legend-item{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:#617888}
+.cert-polar-legend-item.selected{font-weight:700;color:#225d90}
+.cert-polar-legend-item i{display:block;width:15px;height:3px;border-radius:3px}
+.cert-polar-note{margin:9px 0 0;font-size:11px;line-height:1.55;color:#5b7585}
+#dataPolarChart:empty{display:none}
+#dataPolarChart{margin-top:13px}
+.certificate-mode .certificate-polar-card{margin:16px 0}
+@media (max-width:500px){.certificate-polar-card{padding:10px 7px}.cert-polar-note{padding:0 8px}}

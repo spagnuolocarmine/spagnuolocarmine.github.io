@@ -24,6 +24,34 @@ function inventory(s){
  if(hasSail('spinnaker',s)&&a>=115&&w<=27)options.push({sail:'spinnaker',sizes:[105]});
  return options.flatMap(o=>o.sizes.map(size=>({sail:o.sail,size})));
 }
+// Fast, immutable original-inventory baseline while a full AUTO calibration is
+// computed asynchronously. Unlike a ratio against the currently selected sails,
+// this baseline keeps the downwind flying sail in the reference when the user
+// lowers it. No fixed speed percentages are assigned to particular plans.
+const provisionalCache=new Map();
+export function provisionalReference(input,polarTarget){
+ const key=referenceKey(input);
+ if(provisionalCache.has(key))return provisionalCache.get(key);
+ const original=clone(input),boat=boatProfile(input),a=Math.abs(input.windAngle),w=input.windSpeed;
+ original.main=true;original.reef=0;original.wingOnWing=false;
+ original.fixedControls={};original.fixedSheetLengths={};original.sailProfiles={};
+ original.sailDesigns=defaultSailDesigns(boat);
+ original.sailAreas={gennaker:boat.areas.gennaker,spinnaker:boat.areas.spinnaker};
+ const specific=referencePlan(input);
+ const plans=specific?[specific]:[
+  'genoa',...(a>=78&&a<=160&&w<=25&&hasSail('gennaker',original)?['gennaker']:[]),
+  ...(a>=115&&w<=27&&hasSail('spinnaker',original)?['spinnaker']:[])];
+ let score=0;
+ for(const plan of plans){
+  const trial=seed(original,plan,boat.id===GENERIC_BOAT.id?(input.genoaSize||105):105,0,false);
+  const field=aeroForces(trial,polarTarget,'coarse');
+  if(Number.isFinite(field.usefulDrive))score=Math.max(score,field.usefulDrive);
+ }
+ const out={key,score:Math.max(1,score*.985),provisional:true};
+ provisionalCache.set(key,out);
+ if(provisionalCache.size>24)provisionalCache.delete(provisionalCache.keys().next().value);
+ return out;
+}
 function seed(s,sail,size,variant=0,locked=false){
  const b=clone(s);delete b.jibAngleRad;delete b.jibAngularVelocity;delete b.jibSide;
  const c=b.controls,w=s.windSpeed,a=Math.abs(s.windAngle),weather=windTrimResponse(w,a);b.main=locked?s.main:true;b.foresail=sail;b.genoaSize=size;

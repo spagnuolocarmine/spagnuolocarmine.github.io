@@ -8,8 +8,10 @@ export function advanceJibDynamics(state,dt){
  const side=headsailSide(state);
  if(!Number.isFinite(state.jibAngleRad)){state.jibAngleRad=genoaLeadGeometry(loaded()).equilibriumAngle*RAD;state.jibAngularVelocity=0;}
  if(state.jibSide&&state.jibSide!==side){state.jibAngleRad=-state.jibAngleRad;state.jibAngularVelocity=-(state.jibAngularVelocity||0);}
- state.jibSide=side;let remaining=Math.max(0,Math.min(dt,.05));
- for(let i=0;remaining>1e-8&&i<120;i++){
+ state.jibSide=side; // The visual speed control can advance up to 20x of a normal frame.
+ // Preserve stable substeps at up to 20x, advancing the entire simulated interval.
+ let remaining=Math.max(0,dt);
+ for(let i=0;remaining>1e-8&&i<640;i++){
   const load=genoaLeadGeometry(loaded()),inertia=Math.max(.01,load.inertia),omega=state.jibAngularVelocity||0,drag=load.rotationalDrag||0,effectiveDamping=load.damping+2*drag*Math.abs(omega),step=Math.min(remaining,1/180,.35*inertia/Math.max(1,effectiveDamping));
   let velocity=omega+(load.balanceResidual-load.damping*omega-drag*omega*Math.abs(omega))/inertia*step,angle=state.jibAngleRad+velocity*step;
   if(Math.abs(angle)>load.upperAngle){angle=clamp(angle,-load.upperAngle,load.upperAngle);velocity=0;}

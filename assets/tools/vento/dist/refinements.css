@@ -117,3 +117,18 @@
 @media(prefers-reduced-motion:reduce){.workspace-drawer{transition:none!important}}
 
 .workspace-drawer>.drawer-section{transform:none!important;transition:none!important;animation:none!important}
+
+/* Simulated response rate: unobtrusive, readable in the floating Visuale panel */
+.simulation-response{padding:14px 12px 12px;margin:10px 0;border:1px solid var(--line,#dce5ee);border-radius:12px;background:var(--surface,#f8fafc)}
+.simulation-response-top{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px;font-weight:650;font-size:.87rem}
+.simulation-response-top output{color:var(--accent,#1675b3);font-variant-numeric:tabular-nums}
+.simulation-response input[type="range"]{display:block;width:100%;margin:13px 0 7px;accent-color:#247fbe}
+.simulation-response-scale{display:flex;justify-content:space-between;gap:4px;color:var(--muted,#53697c);font-size:.68rem}
+.simulation-response-scale span:nth-child(2){text-align:center}
+.simulation-response-scale span:last-child{text-align:right}
+.simulation-response p{font-size:.72rem;line-height:1.45;color:var(--muted,#53697c);margin:9px 0 0}
+
+/* Laboratory without an ORC certificate: no target or efficiency in the header. */
+.header-telemetry.no-certificate-polar{grid-template-columns:repeat(3,minmax(80px,1fr));max-width:625px}
+@media(min-width:761px) and (max-width:1179px){.header-telemetry.no-certificate-polar{max-width:none}}
+@media(max-width:760px){.header-telemetry.no-certificate-polar{grid-template-columns:repeat(3,minmax(0,1fr));max-width:none}}

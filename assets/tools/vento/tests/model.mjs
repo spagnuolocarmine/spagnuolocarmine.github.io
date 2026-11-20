@@ -7,7 +7,7 @@ for(const wind of [0,4,8,12,20,24,35])for(const angle of [0,25,40,52,75,90,120,1
  assert.ok(m.speed>=0&&m.speed<20);assert.ok(m.efficiency>=0&&m.efficiency<=100);assert.ok(m.cd>=0);
  if(wind===0||Math.abs(angle)<26)assert.equal(m.speed,0);checked++;
 }
-const left=newState(),right=newState();left.windAngle=-52;assert.equal(equilibrium(left).speed,equilibrium(right).speed);
+const left=newState(),right=newState();left.windAngle=-right.windAngle;assert.equal(equilibrium(left).speed,equilibrium(right).speed);
 for(const category of Object.keys(CONTROL_DEFS))for(const [key] of CONTROL_DEFS[category]){
  const s=newState();if(category!=='main'&&category!=='rig')s.foresail=category;s.genoaSize=105;
  const low=structuredClone(s),high=structuredClone(s);low.controls[category][key]=0;high.controls[category][key]=100;

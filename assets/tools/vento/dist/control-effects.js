@@ -1,0 +1,30 @@
+import {getLanguage} from './i18n.js';
+import {headsailInhaulAllowed} from './orc-sails.js';
+const effects={
+ 'main.halyard':['Sposta il grasso in avanti e distende l’inferitura.','Moves draft forward and tensions the luff.',['draft','camber']],
+ 'main.cunningham':['Tende la parte bassa dell’inferitura e porta il grasso in avanti.','Tensions the lower luff and moves draft forward.',['draft','camber']],
+ 'main.outhaul':['Appiattisce soprattutto la parte bassa della randa.','Flattens mainly the lower mainsail.',['camber']],
+ 'main.traveler':['Cambia l’angolo della randa mantenendo il tiro della scotta.','Changes mainsail angle while retaining sheet pull.',['requestedAngle','twist']],
+ 'main.sheet':['Chiude la randa e tende la balumina.','Trims the mainsail and tensions the leech.',['requestedAngle','twist']],
+ 'main.battens':['Sostiene il profilo; la risposta è più fine rispetto alla scotta.','Supports the section; its effect is finer than sheet trim.',['camber','twist']],
+ 'main.vang':['Limita il sollevamento del boma e l’apertura della parte alta.','Limits boom rise and upper-leech opening.',['twist']],
+ 'genoa.car':['Avanti chiude la balumina; indietro apre la parte alta.','Forward closes the leech; aft opens the upper sail.',['twist','camber']],
+ 'genoa.barber':['Sposta il tiro della scotta verso l’interno o l’esterno.','Moves the sheet lead inboard or outboard.',['requestedAngle','twist']],
+ 'genoa.sheet':['Avvicina la bugna al rinvio e regola l’incidenza.','Pulls the clew towards its lead and changes incidence.',['requestedAngle','twist']],
+ 'genoa.halyard':['Tende l’inferitura e porta il grasso in avanti.','Tensions the luff and moves draft forward.',['draft','camber']],
+ 'genoa.battens':['Stabilizza la balumina del fiocco steccato.','Stabilises the battened jib leech.',['camber','twist']],
+ 'spinnaker.halyard':['Alza la testa e modifica la pienezza della vela.','Raises the head and changes sail fullness.',['camber','twist']],
+ 'spinnaker.sheet':['Regola la bugna sottovento e la pienezza del piede.','Controls the leeward clew and lower-sail fullness.',['camber','requestedAngle']],
+ 'spinnaker.brace':['Quadra o avanza il tangone, orientando la vela al vento.','Squares or advances the pole, orienting the sail to the wind.',['requestedAngle']],
+ 'spinnaker.poleLift':['Alza la varea e cambia l’equilibrio fra le ralinghe.','Raises the pole tip and changes the edge balance.',['camber','twist']],
+ 'spinnaker.barberSheet':['Abbassa il rinvio e chiude il lato sottovento.','Lowers the lead and closes the leeward edge.',['twist','camber']],
+ 'spinnaker.barberBrace':['Controlla il tiro e la stabilità del lato sopravvento.','Controls pull and stability on the windward edge.',['twist','camber']],
+ 'gennaker.halyard':['Alza la testa e tende l’inferitura.','Raises the head and tensions the luff.',['camber','draft']],
+ 'gennaker.tack':['Tesa stabilizza l’inferitura; lasca dà più profondità.','A taut tack steadies the luff; easing adds depth.',['camber','draft']],
+ 'gennaker.sheet':['Regola l’apertura della vela e la spalla sopravvento.','Controls sail opening and the windward shoulder.',['requestedAngle','camber']],
+ 'rig.backstay':['Curva l’albero, appiattisce la randa e sostiene lo strallo.','Bends the mast, flattens the main and supports the forestay.',['prebend','forestaySag']],
+ 'rig.forestay':['Riduce la catenaria e controlla la pienezza del fiocco.','Reduces sag and controls jib fullness.',['forestaySag']],
+ 'rig.shrouds':['Sostiene lateralmente l’albero sotto il carico delle vele.','Supports the mast laterally under sail load.',['mastDeflection']]
+};
+export function controlEffectInfo(id,state){const english=getLanguage()==='en',e=effects[id]||['Modifica il profilo sotto carico.','Changes the loaded sail shape.',['camber','twist']];let note='';if(id==='rig.forestay'&&state.foresail!=='genoa')note=english?'Without a hanked/luffed headsail, its effect is indirect.':'Senza fiocco inferito, l’effetto è indiretto.';else if(id==='main.traveler'&&Math.abs(state.windAngle)>110)note=english?'With an eased sheet or the boom at its shroud limit, its effect is small.':'Con scotta lasca o boma alle sartie, l’effetto è ridotto.';else if(id==='genoa.barber'&&!headsailInhaulAllowed(state))note=english?'An overlapping genoa permits outboard lead only.':'Con genoa sovrapposto il rinvio può andare solo verso l’esterno.';return{description:e[english?1:0],fields:e[2],note};}
+export const EFFECT_FIELDS={camber:['Profondità','Depth','%'],draft:['Posizione grasso','Draft position','%'],twist:['Svergolamento','Twist','°'],requestedAngle:['Apertura','Opening','°'],prebend:['Curvatura albero','Mast bend','cm'],forestaySag:['Catenaria strallo','Forestay sag','cm'],mastDeflection:['Flessione laterale','Lateral deflection','cm']};

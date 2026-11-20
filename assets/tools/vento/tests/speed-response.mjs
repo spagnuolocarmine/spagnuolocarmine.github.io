@@ -1,0 +1,6 @@
+import assert from 'node:assert/strict';
+import {advanceBoatSpeed,speedResponseTime} from '../dist/speed-response.js';
+const poor={targetSpeed:3,settlingTime:20},advance=(metric,wind)=>{let speed=7;for(let i=0;i<60;i++)speed=advanceBoatSpeed(speed,metric,.05,wind?14-i*.05:0);return speed;};
+assert.ok(speedResponseTime(poor,7,14)<=5);assert.ok(advance(poor,true)<advance(poor,false)-1,'wind-induced poor trim becomes visible much sooner');assert.equal(speedResponseTime(poor,7,0),20);assert.equal(speedResponseTime({targetSpeed:9,settlingTime:20},7,14),20,'acceleration retains its inertia');
+for(const initial of [0,3,7,12])for(const target of [0,3,7,12]){let v=initial;for(let frame=0;frame<1200;frame++){const next=advanceBoatSpeed(v,{targetSpeed:target,settlingTime:12},.05,Math.max(0,14-frame*.05));assert.ok(Number.isFinite(next)&&next>=Math.min(initial,target)-1e-9&&next<=Math.max(initial,target)+1e-9,'no speed override or overshoot');v=next;}assert.ok(Math.abs(v-target)<.1);}
+assert.equal(advanceBoatSpeed(7,{targetSpeed:7,settlingTime:20},.05,14),7,'steady polar equilibrium is unchanged');console.log('PASS: faster wind-change deceleration, original acceleration, smooth expiry, finite bounded speeds and unchanged equilibrium.');

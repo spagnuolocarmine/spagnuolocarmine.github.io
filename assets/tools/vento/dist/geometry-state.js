@@ -1,0 +1,2 @@
+// Stamp once per solve/frame; point sampling must not stringify the whole design for every vertex.
+export function stampGeometryState(s){const common=[s.boat?.id,s.windSpeed,s.windAngle,s.windShear,s.boatSpeed,s.main,s.foresail,s.genoaSize,s.reef,s.wingOnWing,s.sailDesigns,s.sailAreas,s.sailProfiles,s.rigLoads],controls=s.controls;s.geometryToken=JSON.stringify([...common,controls]);s.mainRangeToken=JSON.stringify([...common,{...controls,main:Object.fromEntries(Object.entries(controls.main).filter(([key])=>key!=='sheet'))}]);return s;}

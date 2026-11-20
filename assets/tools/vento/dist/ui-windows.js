@@ -1,65 +1,33 @@
-import {enableDialogDrag} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/dialog-drag.js';
+import {enableDialogDrag} from './dialog-drag.js';
+import {headerHeight} from './workspace-layout.js';
 
-// Opening one window leaves the others available; the rail stays above all windows.
+// A single docked workspace is shared by all rail actions. Only 3D rope controls
+// retain their floating drag behaviour; opening an editor is an explicit modal.
 export function createWindowWorkspace(){
- const $=s=>document.querySelector(s),panels=new Map(),positioned=new WeakSet(),drags=new WeakMap();
- const info=$('#infoDialog'),direct=$('#directControl');
- const viewport=()=>{const mobile=window.innerWidth<=760,left=mobile?56:76,top=mobile?62:72;return{left,top,width:Math.max(0,window.innerWidth-left),height:Math.max(0,Math.min(window.innerHeight,window.visualViewport?.height||window.innerHeight)-top)};};
- let z=30,owner=null;
- const raise=el=>{
-  if(z>=900){const sorted=[...panels.values()].map(p=>p.el).concat(info,direct).sort((a,b)=>(+a.style.zIndex||0)-(+b.style.zIndex||0));sorted.forEach((node,i)=>node.style.zIndex=String(30+i));z=40;}
-  el.style.zIndex=String(++z);
- };
- const anchor=el=>{
-  const drag=drags.get(el),v=viewport();
-  if(!positioned.has(el)){
-   const count=[...panels.values()].filter(p=>!p.el.classList.contains('hidden')&&p.el!==el).length;
-   drag.place(v.left+16+Math.min(count,3)*18,v.top+20+Math.min(count,3)*18);positioned.add(el);
-  }else drag.keepVisible();
-  raise(el);
- };
- const register=(el,handle)=>{
-  drags.set(el,enableDialogDrag(el,handle,null,{viewport}));
-  el.addEventListener('pointerdown',()=>raise(el));el.addEventListener('focusin',()=>raise(el));
- };
- const setOpen=(id,open,focus=true)=>{
-  const panel=panels.get(id);if(!panel)return;
-  const {el,button,handle}=panel;
-  el.classList.toggle('hidden',!open);el.inert=!open;el.setAttribute('aria-hidden',String(!open));
-  if(id==='trimPanel')el.classList.toggle('minimized',!open);
-  button.classList.toggle('active',open);button.setAttribute('aria-expanded',String(open));
-  if(open){anchor(el);if(focus)handle.focus({preventScroll:true});}
-  else if(focus)button.focus({preventScroll:true});
- };
- for(const id of ['windPanel','trimPanel','telemetry','viewPanel']){
-  const el=$('#'+id),button=$(`[data-window="${id}"]`),handle=$('#'+id+'Move');
-  panels.set(id,{el,button,handle});register(el,handle);setOpen(id,false,false);
-  button.addEventListener('click',()=>setOpen(id,el.classList.contains('hidden')));
-  el.querySelector('[data-close-window]').addEventListener('click',()=>setOpen(id,false));
- }
- register(info,$('#dialogMove'));register(direct,$('#directControlMove'));
- const ownerButtons={boat:$('#boatPicker'),guide:$('#guideButton'),about:$('#aboutButton'),credits:$('#creditsButton')};
- const ownerButton=key=>ownerButtons[key==='certificate'?'boat':key];
- const setInfoOwner=next=>{
-  owner=next;info.dataset.panelOwner=next;
-  for(const [key,button] of Object.entries(ownerButtons)){const active=button===ownerButton(next);button.classList.toggle('active',active);button.setAttribute('aria-expanded',String(active));}
- };
- const toggleInfo=(next,open)=>{if(info.hasAttribute('open')&&ownerButton(owner)===ownerButton(next))info.close();else{setInfoOwner(next);open();}};
- info.addEventListener('close',()=>{
-  const button=ownerButton(owner);owner=null;delete info.dataset.panelOwner;
-  for(const b of Object.values(ownerButtons)){b.classList.remove('active');b.setAttribute('aria-expanded','false');}
-  button?.focus({preventScroll:true});
- });
- const closeTop=closeDirect=>{
-  const open=[...panels.values()].map(p=>p.el).filter(el=>!el.classList.contains('hidden'));
-  if(info.hasAttribute('open'))open.push(info);
-  if(!direct.classList.contains('hidden'))open.push(direct);
-  const top=open.sort((a,b)=>+b.style.zIndex-+a.style.zIndex)[0];
-  if(!top)return false;
-  if(top===info)info.close();else if(top===direct)closeDirect?.();else setOpen(top.id,false);
-  return true;
- };
- const fitViewport=()=>{const height=Math.min(window.innerHeight,window.visualViewport?.height||window.innerHeight);document.documentElement.style.setProperty('--viewport-height',height+'px');document.documentElement.classList.toggle('keyboard-open',window.innerHeight-height>120);queueMicrotask(()=>{for(const p of panels.values())drags.get(p.el).keepVisible();drags.get(info).keepVisible();drags.get(direct).keepVisible();});};
- window.addEventListener('resize',fitViewport);window.visualViewport?.addEventListener('resize',fitViewport);fitViewport();
- return{setOpen,anchor,raise,setInfoOwner,toggleInfo,closeTop};
+ const $=s=>document.querySelector(s),panels=new Map(),info=$('#infoDialog'),direct=$('#directControl');
+ const drawer=document.createElement('aside');drawer.id='workspaceDrawer';drawer.className='workspace-drawer';drawer.setAttribute('aria-label','Pannello strumenti');drawer.setAttribute('aria-hidden','true');drawer.inert=true;document.body.append(drawer);
+ const owners={boat:$('#boatPicker'),guide:$('#guideButton'),about:$('#aboutButton'),credits:$('#creditsButton')},ownerButton=key=>owners[key==='certificate'?'boat':key];
+ let active=null,owner=null,switching=false,z=600;
+ const viewport=()=>{const left=window.innerWidth<=760?56:76,top=headerHeight();return{left,top,width:window.innerWidth-left,height:Math.max(0,Math.min(window.innerHeight,window.visualViewport?.height||window.innerHeight)-top)};};
+ const directDrag=enableDialogDrag(direct,$('#directControlMove'),null,{viewport});
+ const raise=el=>{if(el===direct)el.style.zIndex=String(++z);};
+ function sync(){for(const [id,p]of panels){const selected=active===id;p.button.classList.toggle('active',selected);p.button.setAttribute('aria-expanded',String(selected));}for(const [key,button]of Object.entries(owners)){const selected=active==='infoDialog'&&button===ownerButton(owner);button.classList.toggle('active',selected);button.setAttribute('aria-expanded',String(selected));}}
+ function hideSections(except){for(const [id,p]of panels){const visible=id===except;p.el.classList.toggle('hidden',!visible);p.el.inert=!visible;p.el.setAttribute('aria-hidden',String(!visible));p.el.classList.remove('minimized');}if(except!=='infoDialog'&&info.hasAttribute('open')){switching=true;info.close();switching=false;}info.inert=except!=='infoDialog';}
+ function select(id,focus=false){const opening=active===null;active=id;hideSections(id);drawer.classList.add('is-open');drawer.setAttribute('aria-hidden','false');drawer.inert=false;drawer.dataset.activePanel=id;if(opening)drawer.dataset.openCount=String((Number(drawer.dataset.openCount)||0)+1);sync();if(focus)(id==='infoDialog'?$('#dialogMove'):panels.get(id)?.handle)?.focus({preventScroll:true});}
+ function close(focus=true){const button=active==='infoDialog'?ownerButton(owner):panels.get(active)?.button;active=null;hideSections(null);drawer.classList.remove('is-open');drawer.setAttribute('aria-hidden','true');drawer.inert=true;delete drawer.dataset.activePanel;sync();if(focus)button?.focus({preventScroll:true});}
+ const setOpen=(id,open,focus=true)=>{if(!panels.has(id))return;if(open)select(id,focus);else if(active===id)close(focus);};
+ for(const id of ['windPanel','trimPanel','telemetry','viewPanel']){const el=$('#'+id),button=$(`[data-window="${id}"]`),handle=$('#'+id+'Move');el.classList.add('drawer-section');el.classList.remove('minimized');el.setAttribute('role','region');el.removeAttribute('aria-modal');el.style.cssText='';drawer.append(el);panels.set(id,{el,button,handle});el.classList.add('hidden');el.inert=true;button.addEventListener('click',()=>active===id?close():select(id,true));el.querySelector('[data-close-window]').addEventListener('click',()=>close());}
+ info.classList.add('drawer-section');info.setAttribute('aria-modal','false');drawer.append(info);
+ const anchor=el=>{if(el===info){if(active!=='infoDialog')select('infoDialog');return;}if(el===direct){const v=viewport(),width=direct.getBoundingClientRect().width;directDrag.place(v.left+v.width-width-16,v.top+20);raise(direct);}};
+ const setInfoOwner=next=>{owner=next;info.dataset.panelOwner=next;const labels={boat:'Barca',certificate:'Certificato',guide:'Guida',about:'Modello',credits:'About'};$('#dialogMove').querySelector('span').textContent=labels[next]||'Informazioni';select('infoDialog');};
+ const toggleInfo=(next,open)=>{if(active==='infoDialog'&&ownerButton(owner)===ownerButton(next))close();else open();};
+ info.addEventListener('close',()=>{if(info.hasAttribute('open'))return;if(!switching&&active==='infoDialog'){close(false);ownerButton(owner)?.focus({preventScroll:true});}owner=null;delete info.dataset.panelOwner;sync();});
+ function selectedSaved(saved={}){if(saved._drawer)return saved._drawer.open?saved._drawer.active:null;return Object.entries(saved).filter(([id,p])=>(panels.has(id)||id==='infoDialog')&&p?.open).sort((a,b)=>(b[1].z||0)-(a[1].z||0))[0]?.[0]||null;}
+ const capture=()=>({...Object.fromEntries([...panels.keys(),'infoDialog'].map(id=>[id,{open:active===id,z:500}])),directControl:{open:!direct.classList.contains('hidden'),left:parseFloat(direct.style.left),top:parseFloat(direct.style.top),z:+direct.style.zIndex||600},_drawer:{open:active!==null,active,owner}});
+ const restore=(saved={})=>{const id=selectedSaved(saved);if(panels.has(id))select(id);else if(id==='infoDialog'){if(info.hasAttribute('open'))select(id);}else close(false);if(saved.directControl?.open&&!direct.classList.contains('hidden'))anchor(direct);};
+ const wantsInfo=saved=>selectedSaved(saved)==='infoDialog';
+ const reset=()=>{close(false);owner=null;direct.style.left='';direct.style.top='';direct.style.right='';};
+ const closeTop=closeDirect=>{if(!direct.classList.contains('hidden')){closeDirect?.();return true;}if(active){close();return true;}return false;};
+ const fit=()=>{const height=Math.min(window.innerHeight,window.visualViewport?.height||window.innerHeight);document.documentElement.style.setProperty('--viewport-height',height+'px');document.documentElement.style.setProperty('--header-height',headerHeight()+'px');document.documentElement.classList.toggle('keyboard-open',window.innerHeight-height>120);directDrag.keepVisible();};window.addEventListener('resize',fit);window.visualViewport?.addEventListener('resize',fit);fit();
+ return{setOpen,anchor,raise,setInfoOwner,toggleInfo,closeTop,capture,restore,reset,wantsInfo};
 }

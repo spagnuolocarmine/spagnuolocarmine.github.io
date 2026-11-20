@@ -1,5 +1,6 @@
-import {BOAT,clamp,lerp,RAD} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/constants.js';
-import {boatProfile} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/boats.js';
+import {BOAT,clamp,lerp,RAD} from './constants.js';
+import {boatProfile} from './boats.js';
+import {polarWindSpeed} from './wind-profile.js';
 const scale=BOAT.scale;
 const winds=[4,6,8,10,12,14,16,20,24];
 // ORC NEXT GEN IY 9.98 F, Asimmetrico.pdf, page 1. Angles include interpolated beat / run endpoints.
@@ -18,6 +19,7 @@ const nextPolars=[
 ];
 function bracket(arr,x){let i=arr.findIndex(v=>v>=x);if(i<0)return[arr.length-2,arr.length-1,1];if(i===0)return[0,1,0];return[i-1,i,(x-arr[i-1])/(arr[i]-arr[i-1])];}
 export function polarSpeed(tws,twa,state){
+ if(state&&typeof state==='object')tws=polarWindSpeed(state,tws);
  const record=typeof state==='object'?boatProfile(state):null;if(record?.polar)return catalogPolarSpeed(record.polar,tws,twa);
  const a=Math.abs(twa);if(tws<=0||a<26)return 0;
  const [wi,wj,wt]=bracket(winds,clamp(tws,4,24));const [ai,aj,at]=bracket(angles,clamp(a,40,180));

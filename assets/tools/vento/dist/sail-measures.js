@@ -1,6 +1,6 @@
 // ORC measured-area formulae and flat-cut reconstruction. These are editable inferred cuts, not certified originals.
-import {clamp,lerp} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/constants.js';
-import {boatProfile,boatScale} from 'https://spagnuolocarmine.github.io/assets/tools/vento/dist/boats.js';
+import {clamp,lerp} from './constants.js';
+import {boatProfile,boatScale} from './boats.js';
 export const MEASURE_FIELDS={
  main:[['P','Inferitura P'],['E','Base E'],['MQW','Corda ¼ MQW'],['MHW','Corda ½ MHW'],['MTW','Corda ¾ MTW'],['MUW','Corda ⅞ MUW'],['MHB','Penna MHB']],
  genoa:[['HLU','Inferitura HLU'],['HLP','Perpendicolare HLP'],['HQW','Corda ¼ HQW'],['HHW','Corda ½ HHW'],['HTW','Corda ¾ HTW'],['HUW','Corda ⅞ HUW'],['HHB','Penna HHB']],

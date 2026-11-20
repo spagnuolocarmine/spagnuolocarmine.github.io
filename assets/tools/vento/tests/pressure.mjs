@@ -15,7 +15,7 @@ for(const type of ['main','genoa','spinnaker','gennaker']){
  assert.ok(Math.abs(Math.max(0,a.pressureDrag+a.suction)+a.skinDrag+a.inducedDrag-a.drag)<1e-8,'drag components are explicit');
  const q=.5*1.225*(m.aws*.514444)**2;assert.ok(Math.abs(a.cl-a.lift/(q*a.area))<1e-10);assert.ok(Math.abs(a.cd-a.drag/(q*a.area))<1e-10);
  for(const cell of a.cells){const sample=samplePressure(a,cell.h,cell.u);assert.ok(Math.abs(sample.signedPa-cell.pa)<1e-9,'render interpolation reproduces solver pressure at cell centers');}
- assert.ok(Math.abs(V.dot(a.force,w)-a.drag)<1e-8,'reported drag equals projection of total force');assert.ok(a.residual<1e-8);assert.ok(Math.abs(a.cells.reduce((v,c)=>v+c.area,0)-a.area)<1e-8);
+ assert.ok(Math.abs(V.dot(a.force,w)-a.drag)<1e-8,'reported drag equals projection of total force');assert.ok(a.residual<1e-8);assert.ok(Math.abs(a.cells.reduce((v,c)=>v+c.area,0)-a.physicalArea)<1e-8,'cell areas integrate the physical reconstructed surface, separately from coefficient reference area');
 }
 const z=newState();z.windSpeed=0;const zero=evaluate(z,0);assert.equal(zero.lift,0);assert.equal(zero.drag,0);assert.equal(zero.maxPressure,0);
 const m=evaluate(newState(),6);assert.ok(Math.abs(m.polarEfficiency-6/m.polarTarget*100)<1e-10,'polar efficiency is actual speed divided by ORC target');

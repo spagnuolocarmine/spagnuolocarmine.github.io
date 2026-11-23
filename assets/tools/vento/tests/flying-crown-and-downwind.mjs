@@ -26,5 +26,5 @@ for(const boat of boats)for(const angle of [150,180]){
  assert.ok([spin,gen].filter(Boolean).every(m=>solo.polarTarget===m.polarTarget),'unaltered reference ORC polar');
  if(angle===180&&gen)assert.ok(gen.sails.find(x=>x.type==='gennaker').flyingSupport<.5,'A2 loses deep-downwind aerodynamic support');
 }
-const html=fs.readFileSync(new URL('../dist/index.html',import.meta.url),'utf8');assert.ok(html.includes('id="responseSpeed"')&&html.includes('min="-10" max="10"')&&html.includes('value="0"'));
+const html=fs.readFileSync(new URL('../dist/index.html',import.meta.url),'utf8');assert.ok(html.includes('id="responseSpeed"')&&html.includes('min="-20" max="20"')&&html.includes('value="0"'));
 console.log('PASS: rounded flying crowns, certified edges/girth, halyard head, original polar preserved, main-only deficit, deep-running gennaker recovery, visual response slider.');

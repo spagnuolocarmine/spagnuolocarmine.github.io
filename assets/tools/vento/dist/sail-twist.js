@@ -12,7 +12,7 @@ export function controlledTwist(type,state,natural,angle=0){
   // Compare the current leech load with the *same* geometry at factory sheet/vang.
   // Consequently the default controls really display 10 degrees at every heading.
   const baseSheet=.88*(.25+.75*Math.cos(angle*RAD)**2);
-  const defaultNatural=2+22*(1-baseSheet)*(.38);
+  const defaultNatural=2+34*(1-baseSheet)*(.38);
   trimDelta=natural-defaultNatural+.12*(64-state.controls.main.battens)+.07*(88-state.controls.main.sheet);
  }else if(type==='genoa'){
   const c=state.controls.genoa;
@@ -25,3 +25,13 @@ export function controlledTwist(type,state,natural,angle=0){
  return clamp(desired+trimDelta*Math.sin(Math.PI*desired/MAX_TWIST),0,MAX_TWIST);
 }
 export const sectionTwistAngle=(twist,height)=>twist*clamp(height);
+
+// Immutable configuration carried through AUTO plans; only the measures editor
+// may change this value. Running manoeuvres can change the *loaded* geometry.
+export function preserveStaticSailTwist(target,user){
+ for(const type of ['main','genoa']){
+  if(target?.controls?.[type]&&user?.controls?.[type])
+   target.controls[type].twist=clamp(Number(user.controls[type].twist??DEFAULT_TWIST),0,MAX_TWIST);
+ }
+ return target;
+}

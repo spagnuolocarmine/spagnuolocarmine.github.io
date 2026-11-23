@@ -7,7 +7,7 @@ const effects={
  'main.traveler':['Cambia l’angolo della randa mantenendo il tiro della scotta.','Changes mainsail angle while retaining sheet pull.',['requestedAngle','twist']],
  'main.sheet':['Chiude la randa e tende la balumina.','Trims the mainsail and tensions the leech.',['requestedAngle','twist']],
  'main.battens':['Sostiene il profilo; la risposta è più fine rispetto alla scotta.','Supports the section; its effect is finer than sheet trim.',['camber','twist']],
- 'main.vang':['Limita il sollevamento del boma e l’apertura della parte alta.','Limits boom rise and upper-leech opening.',['twist']],
+ 'main.vang':['Cazzando abbassa il boma e chiude la balumina; con scotta lascata l’effetto è più marcato.','Hauling lowers the boom and closes the leech; the effect is stronger with an eased sheet.',['twist']],
  'main.twist':['Ruota le sezioni della randa gradualmente dalla base verso la testa.','Rotates mainsail sections progressively from foot to head.',['twist']],
  'genoa.twist':['Ruota le sezioni del fiocco/genoa gradualmente dalla base verso la testa.','Rotates jib/genoa sections progressively from foot to head.',['twist']],
  'genoa.car':['Avanti chiude la balumina; indietro apre la parte alta.','Forward closes the leech; aft opens the upper sail.',['twist','camber']],

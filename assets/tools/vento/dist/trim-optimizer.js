@@ -9,6 +9,7 @@ import {defaultSailDesigns,sailDesign,MEASURE_FIELDS} from './sail-measures.js';
 import {selectedArea,hasHeadsailBattens,headsailInhaulAllowed} from './orc-sails.js';
 import {constrainAutoJibCar} from './jib-trim-constraints.js';
 import {controlEnabled,restoreFixedControls,hasFixedControls} from './control-state.js';
+import {DEFAULT_TWIST,preserveStaticSailTwist} from './sail-twist.js';
 // A suitable original sail family calibrates its educational polar reference.
 // Unsuitable plans compare against the available original inventory instead.
 export function referencePlan(s){const a=Math.abs(s.windAngle),w=s.windSpeed;if(s.foresail==='genoa'&&(a<=115||(!hasSail('spinnaker',s)&&!hasSail('gennaker',s))))return'genoa';if(s.foresail==='spinnaker'&&a>=125&&w<=27&&Number(boatProfile(s).areas.spinnaker)>0)return'spinnaker';if(s.foresail==='gennaker'&&a>=80&&a<=155&&w<=25&&Number(boatProfile(s).areas.gennaker)>0)return'gennaker';return null;}
@@ -17,7 +18,7 @@ const cache=new Map(),clone=s=>JSON.parse(JSON.stringify(s));
 const forceRatio=(m,target)=>m.usefulDrive/Math.max(1e-12,target);
 const atTarget=(m,target)=>forceRatio(m,target)>=.99999;
 function bounds(s,cat,key){if(cat==='spinnaker'&&key==='brace'){const awa=Math.abs(sailFlow(s).awa);if(awa>130){const perpendicular=awa-90;return[clamp((perpendicular-14-8)/.82,0,100),clamp((perpendicular+12-8)/.82,0,100)];}}const r=autoTensionRange(cat,key,s.windSpeed,s.windAngle);if(cat==='genoa'&&key==='barber'&&!headsailInhaulAllowed(s))r[0]=50;return r;}
-function applyBounds(s){for(const [cat,values] of Object.entries(s.controls))for(const key of Object.keys(values))if(controlEnabled(s,cat,key)){const [lo,hi]=bounds(s,cat,key);values[key]=clamp(values[key],lo,hi);}return restoreFixedControls(s);}
+function applyBounds(s){for(const [cat,values] of Object.entries(s.controls))for(const key of Object.keys(values))if(key!=='twist'&&controlEnabled(s,cat,key)){const [lo,hi]=bounds(s,cat,key);values[key]=clamp(values[key],lo,hi);}return restoreFixedControls(s);}
 function inventory(s){
  const a=Math.abs(s.windAngle),w=s.windSpeed,options=[{sail:'genoa',sizes:[boatProfile(s).id===GENERIC_BOAT.id?(s.genoaSize||105):105]}];
  if(hasSail('gennaker',s)&&a>=78&&a<=160&&w<=25)options.push({sail:'gennaker',sizes:[105]});
@@ -35,6 +36,7 @@ export function provisionalReference(input,polarTarget){
  const original=clone(input),boat=boatProfile(input),a=Math.abs(input.windAngle),w=input.windSpeed;
  original.main=true;original.reef=0;original.wingOnWing=false;
  original.fixedControls={};original.fixedSheetLengths={};original.sailProfiles={};
+ preserveStaticSailTwist(original,{controls:{main:{twist:DEFAULT_TWIST},genoa:{twist:DEFAULT_TWIST}}});
  original.sailDesigns=defaultSailDesigns(boat);
  original.sailAreas={gennaker:boat.areas.gennaker,spinnaker:boat.areas.spinnaker};
  const specific=referencePlan(input);
@@ -117,8 +119,9 @@ function optimizeInventory(input,onProgress=()=>{},locked=false){
 export function computeReference(input,onProgress=()=>{}){
  const key=referenceKey(input);if(cache.has(key))return clone(cache.get(key));
  const baseline=clone(input);delete baseline.jibAngleRad;delete baseline.jibAngularVelocity;delete baseline.jibSide;baseline.fixedControls={};baseline.fixedSheetLengths={};baseline.reef=0;baseline.main=true;baseline.sailProfiles={};
- // Original inventory calibration must not depend on user-disabled controls or their current values.
- for(const values of Object.values(baseline.controls))for(const k of Object.keys(values))values[k]=50;
+ // The ORC reference is for original sails, never for the user's static twist.
+ // Static twist is not an AUTO axis: reference sails use factory 10 degrees.
+ for(const values of Object.values(baseline.controls))for(const k of Object.keys(values))values[k]=k==='twist'?DEFAULT_TWIST:50;
  baseline.sailDesigns=defaultSailDesigns(boatProfile(input));baseline.sailAreas={gennaker:boatProfile(input).areas.gennaker,spinnaker:boatProfile(input).areas.spinnaker};if(boatProfile(input).id!==GENERIC_BOAT.id)baseline.genoaSize=105;
  const v=polarSpeed(input.windSpeed,input.windAngle,input);if(v<.01){const out={key,score:0,polarTarget:0,state:baseline,attachment:0,maxPressure:0,cp95:0,evaluations:0};cache.set(key,out);return out;}
  const plan=referencePlan(input);if(plan)baseline.foresail=plan;const run=optimizeInventory(baseline,p=>onProgress({...p,phase:'reference',progress:p.progress*.98}),!!plan),m=aeroForces(run.state,v),out={key,score:m.usefulDrive*.985,polarTarget:v,state:run.state,attachment:m.attachment,maxPressure:m.maxPressure,cp95:m.cp95,heel:m.heel,roughness:m.roughness,telltales:m.telltales,evaluations:run.evaluations,calibration:plan?'original-sail-family':'original-inventory',calibrationPlan:plan};
@@ -150,7 +153,7 @@ export function optimizeForReference(input,reference,onProgress=()=>{}){
  const defaults=defaultSailDesigns(boatProfile(input)),same=Object.entries(MEASURE_FIELDS).every(([type,fields])=>!hasSail(type,input)||fields.every(([key])=>Math.abs(sailDesign(type,input)[key]-defaults[type][key])<.00001))&&['gennaker','spinnaker'].every(type=>!hasSail(type,input)||Math.abs(selectedArea(type,input)-boatProfile(input).areas[type])<.005),samePlan=input.foresail===reference.state.foresail&&input.main===reference.state.main&&(input.foresail!=='genoa'||boatProfile(input).id!==GENERIC_BOAT.id||input.genoaSize===reference.state.genoaSize);
  const v=reference.polarTarget,target=reference.score;let run;
  if(same&&samePlan&&!Object.values(input.sailProfiles||{}).some(p=>p.enabled)&&!input.reef&&!hasFixedControls(input)){
-  const state=clone(input);state.controls=clone(reference.state.controls);delete state.jibAngleRad;delete state.jibAngularVelocity;delete state.jibSide;state.boatSpeed=v;
+  const state=clone(input);state.controls=clone(reference.state.controls);preserveStaticSailTwist(state,input);delete state.jibAngleRad;delete state.jibAngularVelocity;delete state.jibSide;state.boatSpeed=v;
   const metrics=aeroForces(state,v);run={state,metrics,score:metrics.usefulDrive,feasible:constrainAutoJibCar(state),evaluations:0};
  }else run=optimizeInventory(input,p=>onProgress({...p,progress:p.progress*.45}),true);
  onProgress({phase:'flow',progress:.45});
@@ -167,12 +170,12 @@ export function optimizeForReference(input,reference,onProgress=()=>{}){
 
 // Single-control targets ignore other enabled live controls, but honor fixed settings.
 const fixedKey=s=>Object.entries(s.fixedControls||{}).sort(([a],[b])=>a.localeCompare(b));
-export const controlTargetKey=s=>JSON.stringify([referenceKey(s),s.main,s.foresail,s.genoaSize,s.sailDesigns,s.sailAreas,s.sailProfiles,s.reef,s.wingOnWing,s.fixedSheetLengths,fixedKey(s)]);
+export const controlTargetKey=s=>JSON.stringify([referenceKey(s),s.controls.main.twist,s.controls.genoa.twist,s.main,s.foresail,s.genoaSize,s.sailDesigns,s.sailAreas,s.sailProfiles,s.reef,s.wingOnWing,s.fixedSheetLengths,fixedKey(s)]);
 const controlTargetCache=new Map();
 export function optimalControlSettings(input,reference,onProgress=()=>{}){
  const key=controlTargetKey(input);if(controlTargetCache.has(key))return clone(controlTargetCache.get(key));
- const neutral=clone(input);neutral.controls=Object.fromEntries(Object.entries(input.controls).map(([cat,controls])=>[cat,Object.fromEntries(Object.keys(controls).map(k=>[k,50]))]));restoreFixedControls(neutral);
+ const neutral=clone(input);neutral.controls=Object.fromEntries(Object.entries(input.controls).map(([cat,controls])=>[cat,Object.fromEntries(Object.entries(controls).map(([k,v])=>[k,k==='twist'?v:50]))]));restoreFixedControls(neutral);
  delete neutral.jibAngleRad;delete neutral.jibAngularVelocity;delete neutral.jibSide;
- const solution=optimizeForReference(neutral,reference,onProgress),result={key,controls:clone(solution.state.controls),achievable:solution.achievable,telltales:solution.telltales,constraintsFeasible:solution.constraintsFeasible};
+ const solution=optimizeForReference(neutral,reference,onProgress);preserveStaticSailTwist(solution.state,input);const result={key,controls:clone(solution.state.controls),achievable:solution.achievable,telltales:solution.telltales,constraintsFeasible:solution.constraintsFeasible};
  controlTargetCache.set(key,clone(result));if(controlTargetCache.size>12)controlTargetCache.delete(controlTargetCache.keys().next().value);return result;
 }

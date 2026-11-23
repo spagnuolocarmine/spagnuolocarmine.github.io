@@ -16,9 +16,9 @@ for(const [cat,values] of Object.entries(frozen.controls))for(const key of Objec
  assert.ok(controlEnabled(frozen,cat,key),'all controls enabled by default');
  setControlEnabled(frozen,cat,key,false);assert.equal(controlEnabled(frozen,cat,key),false);count++;
 }
-assert.equal(count,24);const fixed=structuredClone(frozen.controls),input=structuredClone(frozen);
+assert.equal(count,26);const fixed=structuredClone(frozen.controls),input=structuredClone(frozen);
 const solution=optimizeForReference(frozen,reference);
-assert.deepEqual(solution.state.controls,fixed,'all 24 controls remain fixed in every AUTO stage');
+assert.deepEqual(solution.state.controls,fixed,'all 26 controls remain fixed in every AUTO stage');
 assert.deepEqual(frozen,input,'AUTO leaves its input untouched');
 assert.equal(solution.targetReached,false,'poor fixed trim cannot be reported as 100%');
 assert.ok(Math.abs(solution.achievable-100*Math.cbrt(aeroForces(solution.state,reference.polarTarget).usefulDrive/reference.score))<1e-8);
@@ -47,4 +47,4 @@ for(const percent of [104.99,105,105.01,160]){
  if(!allowed){assert.equal(g.barber,0,'physical lead clamps stale inhaul settings');assert.deepEqual(g.ring,g.lead);}
 }
 const illegal=newState();illegal.controls.genoa.car=100;setControlEnabled(illegal,'genoa','car',false);const previous=illegal.controls.genoa.car;constrainAutoJibCar(illegal);assert.equal(illegal.controls.genoa.car,previous,'car constraints cannot move a fixed carriage');
-console.log('PASS: 24 default-enabled controls, fixed zero / rig / sheets / car retained through global and individual AUTO, tension bounds and wind changes; honest pressure-derived attainable speed; real LP/J 105% threshold enforced in slider mapping and physical barber lead.');
+console.log('PASS: 26 default-enabled controls, fixed zero / rig / sheets / car retained through global and individual AUTO, tension bounds and wind changes; honest pressure-derived attainable speed; real LP/J 105% threshold enforced in slider mapping and physical barber lead.');

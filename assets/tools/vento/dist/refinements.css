@@ -132,3 +132,8 @@
 .header-telemetry.no-certificate-polar{grid-template-columns:repeat(3,minmax(80px,1fr));max-width:625px}
 @media(min-width:761px) and (max-width:1179px){.header-telemetry.no-certificate-polar{max-width:none}}
 @media(max-width:760px){.header-telemetry.no-certificate-polar{grid-template-columns:repeat(3,minmax(0,1fr));max-width:none}}
+
+/* Direct twist is a persistent sail geometry parameter, ahead of its measured chords. */
+.measure-twist-row{border-bottom:1px solid #7a8a6345;padding-bottom:12px;margin-top:8px;margin-bottom:18px;}
+.measure-twist-row>label>span{font-weight:650;color:#dae8c1;}
+.measure-twist-row>small{display:block;margin-top:4px;color:#94ab91;font-size:9px;line-height:1.55;}

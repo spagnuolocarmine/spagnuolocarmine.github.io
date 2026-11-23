@@ -18,7 +18,9 @@ AUTO parte spento a ogni caricamento, anche se era attivo nella sessione salvata
 
 - Scelta fra 1.401 record ORC, certificato completo, inventario e polare; armo ricostruito mediante P/E/I/J e dati di modelli corrispondenti o simili, segnalando le stime.
 - Randa e fiocco/genoa, S2 e A2 selezionati dall’utente; sola randa, vele ammainate, due riduzioni della randa e farfalla alle andature molto poggiate. AUTO conserva la selezione.
-- Ventiquattro manovre correnti e di setup, con controllo diretto cliccando cime/carrelli. I singoli comandi si aprono a destra dello schermo e restano trascinabili e richiudibili. I comandi disabilitati sono esclusi da AUTO. Le scotte fermate conservano una lunghezza di cima; gli altri comandi un valore di setup normalizzato.
+- Ventiquattro manovre correnti e di setup, oltre a due proprietà statiche di svergolamento nel pannello Misure e corde (randa e fiocco/genoa), con controllo diretto cliccando cime/carrelli. I singoli comandi si aprono a destra dello schermo e restano trascinabili e richiudibili. I comandi disabilitati sono esclusi da AUTO. Le scotte fermate conservano una lunghezza di cima; gli altri comandi un valore di setup normalizzato.
+- Lo svergolamento diretto di randa e fiocco/genoa è la prima proprietà in **Misure e corde**, con default 10° e campo 0–50°; non è presente fra le manovre e AUTO non lo modifica. La scotta del fiocco/genoa permette una corsa aggiuntiva da 100 a 120%, con chiusura e appiattimento limitati dal contatto con l’armo.
+- I barber di scotta e braccio dello spinnaker sono indipendenti: completamente mollati non deviano alcuna cima; cazzandoli, richiamano progressivamente i rispettivi rinvii verso la coperta.
 - Editor delle misure e corde, senza vincoli arbitrari sui valori positivi. Il rosso segnala proporzioni insolite/incompatibili; le modifiche sono scenari separati dal certificato.
 - Progettazione della vela in una modale con tab Dimensioni / Forme, misure e profili direttamente modificabili senza checkbox; indicatore di vela modificata e ripristino della vela originale: fino a 65 sezioni lungo l’inferitura, selezione continua della quota in passi dello 0,1%, grasso iniziale, posizione del grasso, angoli di entrata/uscita, svergolamento di taglio, ritorno di balumina, corde locali, giro d’inferitura/base, volume equivalente da broadseaming, deformabilità, peso e pannellatura indicativa. Modale ampia con controlli a sinistra, anteprima isolata ruotabile/zoomabile a destra (sopra i controlli su mobile) e profilo della sezione sotto carico. Le quote normalizzate seguono i cambi di lunghezza della vela.
 - Pressioni, coefficienti, linee di forma e segnavento specifici per famiglia. Mappa del modulo o del segno di Δp, con scala automatica o fissa in Pa.
@@ -145,3 +147,13 @@ Le verifiche automatiche geometriche e DOM non sostituiscono un controllo visivo
 ## Licenze
 
 Three.js/OrbitControls sono MIT; DM Sans e Space Grotesk sono OFL. I relativi file di licenza sono inclusi in `dist/vendor/`. I libri e i contenuti dei siti citati non sono ripubblicati nel progetto.
+
+
+## Aggiornamento del 23 novembre 2026 — AWA, twist, tangone e barber
+
+- Vento apparente (AWA) accanto all’angolo reale (TWA) in telemetria, pannello Vento, regolazione direzione e pannello Dati; aggiornamento continuo con la velocità simulata.
+- Due comandi diretti di twist (randa e fiocco/genoa), 10° iniziali, 0–50° a passi di 1°, incremento proporzionale dalla base alla testa e impatto sulla geometria e sulle forze.
+- Quadratura spinnaker fino a 90° e misura dell’angolo nel pannello comandi.
+- Barber della scotta spinnaker a 0% senza rinvio intermedio imposto, con la scotta libera fino al rinvio di poppa.
+
+Dettagli, bibliografia, distinzioni fra dati dei libri e scelte numeriche, e test: `MODIFICHE-2026-11-23.md`.

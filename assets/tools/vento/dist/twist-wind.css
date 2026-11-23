@@ -1,0 +1,13 @@
+/* True and apparent wind angles stay together in the header and instruments. */
+.header-telemetry{grid-template-columns:repeat(5,minmax(78px,1fr)) minmax(170px,1.6fr);gap:clamp(8px,1.2vw,20px)}
+.header-telemetry.no-certificate-polar{grid-template-columns:repeat(4,minmax(75px,1fr));max-width:770px}
+.header-apparent-direction b{color:#237aa0}
+.wind-direction .wind-apparent-inline{margin-top:3px;white-space:nowrap;color:#7ba5ba}
+.wind-direction .wind-apparent-inline b{font:600 12px var(--mono);color:#3f91b2}
+.wind-angle-outputs{display:flex;align-items:baseline;gap:8px;white-space:nowrap}
+.wind-apparent-output{color:#548eab!important}
+.wind-apparent-output b{font:600 10px var(--mono)}
+.quick-wind-apparent{font:600 12px var(--mono);color:#367c9b;margin:8px 0 0}
+@media(max-width:1100px){.header-telemetry{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 12px;max-width:none}.header-telemetry.no-certificate-polar{grid-template-columns:repeat(4,minmax(0,1fr));max-width:none}}
+@media(max-width:720px){.header-telemetry,.header-telemetry.no-certificate-polar{grid-template-columns:repeat(3,minmax(0,1fr));max-width:none}.header-apparent-direction{min-width:0}.header-instrument>span{white-space:normal}.wind-angle-outputs{gap:5px}}
+@media(max-width:420px){.wind-apparent-output{font-size:9px}.header-telemetry,.header-telemetry.no-certificate-polar{grid-template-columns:repeat(2,minmax(0,1fr))}}

@@ -1,5 +1,13 @@
 // Italian source strings and their English UI equivalents. Original certificate values are never translated.
 export default {
+ "Vento apparente · AWA": "Apparent wind · AWA",
+ "Direzione reale · TWA": "True direction · TWA",
+ "Svergolamento diretto": "Manual twist",
+ "0° · senza twist": "0° · no twist",
+ "50° · apertura massima": "50° · maximum opening",
+ "0° · vela non svergolata": "0° · untwisted sail",
+ "50° · massimo twist": "50° · maximum twist",
+ "Vento apparente": "Apparent wind",
  "Il filetto alto può sventare brevemente: è vicino al distacco. Gli altri restano distesi.": "The upper telltale may flicker near separation; the others keep streaming.",
  "Vento in testa": "Wind at rig head",
  "Reale in testa": "True at rig head",

@@ -5,6 +5,7 @@ import {shroudPath} from './standing-rig.js';
 import {DECK,deckLayout,mainTravelerPosition,mainSheetLead,genoaLeadGeometry} from './deck-layout.js';
 import {spinPoleRig,rigDimensions} from './orc-sails.js';
 import {spinnakerBarberGeometry} from './spinnaker-barbers.js';
+import {headsailInhaulAllowed} from './orc-sails.js';
 // Physical polylines in boat coordinates; each visible adjustable line identifies one control.
 export function rigPlan(s){const out=[],d=deckLayout(s),side=windSide(s),top=mastPoint(1,s),main=s.main,genoa=s.foresail==='genoa',spin=s.foresail==='spinnaker',genn=s.foresail==='gennaker';
  const boomPoint=t=>mainBoomPoint(t,s);
@@ -23,7 +24,7 @@ export function rigPlan(s){const out=[],d=deckLayout(s),side=windSide(s),top=mas
  const lead=genoaLeadGeometry(s),car=lead.car,ring=lead.ring,head=P('genoa',1,0);
  add('genoa.sheet','genoa-sheet',[P('genoa',0,1),...(Math.abs(lead.barber)>.0001?[ring]:[]),lead.lead,lead.winch],genoa);
  add('genoa.halyard','genoa-halyard',[[head[0]-.11,head[1],head[2]],mastPoint(rigDimensions(s).foreFraction,s),...[.8,.5,.2,0].map(v=>{const p=mastPoint(v,s);return[p[0]-.13,p[1],p[2]];}),[-.39,.97,-1.43]],genoa);
- add('genoa.barber','genoa-barber',[[side*.35,.96,car[2]],ring,[side*1.62,.96,car[2]]],genoa);
+ add('genoa.barber','genoa-barber',[[side*.35,.96,car[2]],ring],genoa&&headsailInhaulAllowed(s)&&lead.barber>.001);
  const sc=P('spinnaker',0,0),ss=P('spinnaker',0,1);
  const barber=spinnakerBarberGeometry(s,{tack:sc,clew:ss});
  // Only a tensioned barber is a sheet/guy lead; when released, that line

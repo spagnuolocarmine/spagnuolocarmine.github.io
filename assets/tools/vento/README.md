@@ -1,3 +1,17 @@
+## Aggiornamento del 24/11/2026 — Vista da poppa, zoom vele e tuga
+
+Rimosso anche l'osteriggio centrale indipendente della tuga. Il carrello del fiocco/genoa viene riportato sul piano della coperta laterale. In **Visuale & audio** sono disponibili tre nuove viste rapide: **Da poppa**, **Zoom randa** e **Zoom prua** (queste ultime dal basso verso l'alto, sulla forma deformata della vela). Sono più visibili le linee di forma, le cuciture e le stecche. Le stecche del fiocco/genoa sono escluse ogni volta che l'overlap effettivo **LP/J supera 105%**, anche con profili personalizzati. Per i dettagli, vedere `MODIFICHE-TUGA-CARRELLO-VISTE-E-STECCHE-2026-11-24.md`.
+
+---
+
+## Aggiornamento del 24/11/2026 — binario vela di prua da guida
+
+Il carrello fiocco/genoa viene dimensionato secondo il PDF *Headsail Track Travel & Sheeting Geometry Guide* fornito dall'utente: punto neutro ricostruito dalla proiezione del 45–55% dell'inferitura, margini e ingombri di hardware, limiti di corsa per classe di vela e angolo trasversale compatibile con la coperta. **Non si applica più la corsa 2× base a poppa / 1× base a prua**: la descrizione storica in `MODIFICHE-FIOCCO-CARRELLO-BARBER-IN-2026-11-24.md` è superata per questo solo aspetto.
+
+Per i dettagli, le assunzioni dovute all'assenza di un rilievo del ponte e i test eseguiti, vedere `MODIFICHE-DIMENSIONAMENTO-CARRELLO-GUIDA-2026-11-24.md`.
+
+---
+
 # VENTO — Sailing Lab
 
 Laboratorio didattico HTML/JavaScript/Three.js per esplorare le forme delle vele, le manovre, il vento apparente e l’equilibrio di uno sloop. Interfaccia minimale chiara/blu, pannello laterale unico, controlli touch, italiano/inglese e dati originali ORC in sola lettura.
@@ -13,6 +27,10 @@ python -m http.server 8080 --directory dist
 Aprire `http://localhost:8080`. L’apertura diretta con `file://` non supporta correttamente moduli, worker e JSON. Il pannello Modello contiene un collegamento alla visualizzazione del certificato ORC; il progetto completo è distribuito nel presente archivio ZIP. Three.js e font sono locali. Configurazione, barca, vele/profili personalizzati, manovre fissate, preferenze, sezione del pannello e vista vengono salvate nel browser. Il tasto di reset elimina lo stato solo dopo una conferma; l’annullamento conserva la sessione. L’audio salvato riprende dopo un gesto dell’utente, secondo le regole del browser.
 
 AUTO parte spento a ogni caricamento, anche se era attivo nella sessione salvata. Le altre impostazioni e le manovre vengono ripristinate. Il riferimento interno del modello può essere preparato senza attivare AUTO o modificare le regolazioni. Lo sloop di laboratorio non dispone di polare ORC e non mostra target o indicatori di efficienza polare.
+
+## Correzione avvio — 24 novembre 2026
+
+È stato corretto un blocco di `restoreUI()` quando una sessione salvata cerca di riaprire un comando ora non disponibile (per esempio il barber in del genoa con overlap superiore al 105%). Il ripristino controlla l'esistenza degli elementi dinamici e un errore nelle preferenze UI non interrompe più il caricamento della barca 3D. Dettagli in `MODIFICHE-AVVIO-2026-11-24.md`.
 
 ## Funzioni
 
@@ -160,3 +178,17 @@ Three.js/OrbitControls sono MIT; DM Sans e Space Grotesk sono OFL. I relativi fi
 Dettagli, bibliografia, distinzioni fra dati dei libri e scelte numeriche, e test: `MODIFICHE-2026-11-23.md`.
 
 Aggiornamento del 23 novembre 2026: consultare `MODIFICHE-SVERGOLAMENTO-AUTO-VANG.md` per le garanzie su AUTO, la ricalibrazione del vang e i limiti delle verifiche.
+
+## Aggiornamento del 24 novembre 2026 — Carrello del fiocco/genoa
+
+Il carrello a poppa carica principalmente la base, quello a prua aumenta la componente sulla balumina; la forma tridimensionale, la tensione della scotta e il twist *effettivo* ne riflettono il movimento. Il twist *diretto* resta una misura statica controllata esclusivamente dall’utente. I fine corsa utili sono coerenti con la misura della vela, mentre i binari fisici rimangono invariati **nella versione precedente**; la nuova revisione è descritta qui sotto. La scotta può essere cazzata fino al 120%, con limiti di interferenza geometrici anche sulle sartie basse e le crocette.
+
+Il genoa sovrapposto può avvicinarsi alle sartie basse nei limiti della geometria, senza attraversarle; nel campione generico da 160% la distanza residua è circa 8 cm, e non si attribuisce artificialmente un contatto alle vele più piccole. Riferimenti, coefficienti didattici, controlli effettuati e limiti sono in `MODIFICHE-CARRELLO-FIOCCO-2026-11-24.md`.
+
+## Revisione 24 novembre 2026 — carrello della vela di prua e barber in
+
+La regolazione della scotta del fiocco/genoa ora impiega un binario virtuale in base alla bugna nominale e alla lunghezza geometrica della base: **2 basi verso poppa, 1 base verso prua**. Lo 0% di scotta applica **0 N** e non lascia che la posizione del carrello influisca sulla bugna libera. A carrello arretrato, la cazzata distende completamente la base nelle configurazioni ammissibili; la corsa supplementare fino al 120% resta disponibile.
+
+È stato **eliminato il barber out del fiocco**. Il **solo barber in** è visibile e attivo con overlap calcolato **LP/J ≤ 105%**; sopra tale soglia non ha effetto nella simulazione né in AUTO. Le vecchie sessioni sono migrate dalla scala bidirezionale. Per verifiche e limiti di validità si veda `MODIFICHE-FIOCCO-CARRELLO-BARBER-IN-2026-11-24.md`.
+
+**Attenzione:** il rapporto 2×/1× è un'estensione didattica richiesta, potenzialmente più lunga del ponte reale; non è previsto nei manuali allegati o in un certificato ORC.

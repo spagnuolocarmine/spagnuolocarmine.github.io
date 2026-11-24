@@ -17,7 +17,7 @@ export const referenceKey=s=>`v25:${boatProfile(s).id}:${Number(s.windSpeed).toF
 const cache=new Map(),clone=s=>JSON.parse(JSON.stringify(s));
 const forceRatio=(m,target)=>m.usefulDrive/Math.max(1e-12,target);
 const atTarget=(m,target)=>forceRatio(m,target)>=.99999;
-function bounds(s,cat,key){if(cat==='spinnaker'&&key==='brace'){const awa=Math.abs(sailFlow(s).awa);if(awa>130){const perpendicular=awa-90;return[clamp((perpendicular-14-8)/.82,0,100),clamp((perpendicular+12-8)/.82,0,100)];}}const r=autoTensionRange(cat,key,s.windSpeed,s.windAngle);if(cat==='genoa'&&key==='barber'&&!headsailInhaulAllowed(s))r[0]=50;return r;}
+function bounds(s,cat,key){if(cat==='spinnaker'&&key==='brace'){const awa=Math.abs(sailFlow(s).awa);if(awa>130){const perpendicular=awa-90;return[clamp((perpendicular-14-8)/.82,0,100),clamp((perpendicular+12-8)/.82,0,100)];}}const r=autoTensionRange(cat,key,s.windSpeed,s.windAngle);if(cat==='genoa'&&key==='barber'&&!headsailInhaulAllowed(s))return[0,0];return r;}
 function applyBounds(s){for(const [cat,values] of Object.entries(s.controls))for(const key of Object.keys(values))if(key!=='twist'&&controlEnabled(s,cat,key)){const [lo,hi]=bounds(s,cat,key);values[key]=clamp(values[key],lo,hi);}return restoreFixedControls(s);}
 function inventory(s){
  const a=Math.abs(s.windAngle),w=s.windSpeed,options=[{sail:'genoa',sizes:[boatProfile(s).id===GENERIC_BOAT.id?(s.genoaSize||105):105]}];
@@ -59,7 +59,7 @@ function seed(s,sail,size,variant=0,locked=false){
  const c=b.controls,w=s.windSpeed,a=Math.abs(s.windAngle),weather=windTrimResponse(w,a);b.main=locked?s.main:true;b.foresail=sail;b.genoaSize=size;
  if(variant===2)return applyBounds(b);
  c.main={halyard:weather.halyard,cunningham:clamp(3*w-8,15,90),outhaul:clamp(30+2.5*w,30,95),traveler:50,sheet:clamp((84-Math.max(5,a*.65-14))/.8,0,100),battens:weather.battens,vang:70,twist:c.main.twist??10};
- c.genoa={car:45,barber:a<65?35:a>70?75:50,sheet:clamp((90-a*.6)/.81,0,100),halyard:weather.halyard,battens:weather.battens,twist:c.genoa.twist??10};
+ c.genoa={car:45,barber:headsailInhaulAllowed(b)?(a<65?30:10):0,sheet:clamp((90-a*.6)/.81,0,100),halyard:weather.halyard,battens:weather.battens,twist:c.genoa.twist??10};
  c.gennaker={halyard:weather.halyard,tack:clamp(100-a*.4+w*.5,25,90),sheet:clamp((118-a*.72)/.9,0,100)};
  c.spinnaker={halyard:weather.halyard,sheet:55,brace:clamp((a-112)/.7,0,100),poleLift:50,barberSheet:45,barberBrace:45};
  c.rig={backstay:clamp(4*w-5,15,95),forestay:clamp(40+2*w,45,95),shrouds:75};
@@ -69,7 +69,7 @@ function seed(s,sail,size,variant=0,locked=false){
  return applyBounds(b);
 }
 function dimensions(s){
- const main=(s.main?['sheet','traveler','vang','outhaul','cunningham','halyard','battens']:[]).map(k=>['main',k]),fore=Object.keys(s.controls[s.foresail]||{}).filter(k=>k!=='twist'&&(k!=='battens'||hasHeadsailBattens(s))).map(k=>[s.foresail,k]);
+ const main=(s.main?['sheet','traveler','vang','outhaul','cunningham','halyard','battens']:[]).map(k=>['main',k]),fore=Object.keys(s.controls[s.foresail]||{}).filter(k=>k!=='twist'&&(k!=='battens'||hasHeadsailBattens(s))&&(k!=='barber'||headsailInhaulAllowed(s))).map(k=>[s.foresail,k]);
  return[main[0],fore.find(x=>x[1]==='sheet'),...main.slice(1),...fore.filter(x=>x[1]!=='sheet'),...['backstay','forestay','shrouds'].map(k=>['rig',k])].filter(x=>x&&controlEnabled(s,...x));
 }
 function driveBetter(a,b){return !b||a.usefulDrive>b.usefulDrive*(1+1e-7)||(Math.abs(a.usefulDrive-b.usefulDrive)<1e-7&&a.telltales.loss<b.telltales.loss);}

@@ -2,6 +2,7 @@
 // LA BARCA VELOCE, ch. 1, defines twist by the relative section/chord angles;
 // this is an educational trim parameter, not an ORC certificate measurement.
 import {RAD,clamp} from './constants.js';
+import {headsailInhaulAllowed} from './orc-sails.js';
 export const DEFAULT_TWIST=10;
 export const MAX_TWIST=50;
 export function controlledTwist(type,state,natural,angle=0){
@@ -18,7 +19,8 @@ export function controlledTwist(type,state,natural,angle=0){
   const c=state.controls.genoa;
   // Lead further aft and sheet eased open the head; forward lead closes it.
   // The actual sheet-load/pressure solver still supplies camber and incidence.
-  trimDelta=.15*(c.car-55)+.10*(87-Math.min(100,c.sheet))+.035*(c.barber-50);
+  const load=clamp(c.sheet/35),inhaul=headsailInhaulAllowed(state)?(c.barber??0):0;
+  trimDelta=.15*(55-c.car)*load+.10*(87-Math.min(100,c.sheet))+.035*inhaul*load+.08*(natural-15);
  }
  // Smooth end stops keep a user-requested 0° or 50° exact, while the other
  // trimming lines influence the loaded section angles away from the end stops.

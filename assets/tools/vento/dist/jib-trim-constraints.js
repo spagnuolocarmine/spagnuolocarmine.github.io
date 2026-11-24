@@ -1,7 +1,7 @@
 // AUTO must lead the headsail sheet down/aft, never forward of the clew's plumb line.
 // Manual car travel remains available over the complete physical rail.
 import {clamp} from './constants.js';
-import {genoaLeadGeometry,deckLayout} from './deck-layout.js';
+import {genoaLeadGeometry,deckLayout,genoaUsableCarForward} from './deck-layout.js';
 import {controlEnabled} from './control-state.js';
 import {resolveFixedSheets} from './fixed-sheets.js';
 const clearance=.001;
@@ -13,7 +13,7 @@ export function constrainAutoJibCar(s,requested=s.controls.genoa.car){
  if(autoJibCarClearance(s)>=clearance)return true;
  // Project straight beneath the current clew; a few short corrections account
  // for its coupled motion, avoiding a complete rail search on every frame.
- const d=deckLayout(s),travel=d.genoaTrackForward-d.genoaTrackAft;
+ const d=deckLayout(s),travel=genoaUsableCarForward(s)-d.genoaTrackAft;
  for(let j=0;j<8;j++){
   const g=genoaLeadGeometry(s),limit=100*(g.clew[2]-clearance-.0001-d.genoaTrackAft)/travel;
   c.car=clamp(Math.min(c.car-.0001,limit),0,100);

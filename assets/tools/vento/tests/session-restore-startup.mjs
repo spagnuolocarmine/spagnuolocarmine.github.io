@@ -17,7 +17,7 @@ function restoreCase(controlId,detail,available){
   controlTab:'main',designType:'main',pickerQuery:'',pickerChoice:'',selectedControlId:null,currentView:'orbit',
   getLanguage:()=> 'it',i18n:{setLanguage(){}},panelTab:()=>{},renderControls:()=>{},renderSailMeasures:()=>{},
   advancedEditor:{restoreUIState:()=>{}},setFold:()=>{},syncDisplaySelections:()=>{},syncPause:()=>{},
-  syncWindInputs:()=>{},syncAudioPreference:()=>{},windows:{restore:()=>{restored.push('windows')}},
+  syncWindInputs:()=>{},syncAudioPreference:()=>{},syncQuickViews:()=>{},windows:{restore:()=>{restored.push('windows')}},
   openDirectControl({id}){if(available){scope.selectedControlId=id;els.set('#controlShapeLegend',fakeElement());}},
   openSailDesign:()=>{},designDrag:{place:()=>{}},
   $:selector=>els.get(selector)||null,$$:()=>[],document:{getElementById:()=>null}

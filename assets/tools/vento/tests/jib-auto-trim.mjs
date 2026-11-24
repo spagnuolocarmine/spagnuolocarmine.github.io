@@ -17,7 +17,9 @@ for(const angle of[-52,52,150])for(const[from,to]of[[0,100],[100,0]]){
  const s=newState();s.genoaSize=160;s.windAngle=angle;s.boatSpeed=6;s.controls.genoa.sheet=from;advanceJibDynamics(s,0);s.controls.genoa.sheet=to;
  for(let frame=0;frame<360;frame++){advanceJibDynamics(s,1/60);assert.ok(constrainAutoJibCar(s,100));assert.ok(autoJibCarClearance(s)>=.0009,'plumb-line constraint also holds during live cloth motion');frames++;}
 }
-const hauled=newState();hauled.windAngle=52;hauled.genoaSize=160;hauled.boatSpeed=6;hauled.controls.genoa.car=45;hauled.controls.genoa.sheet=100;const lead=genoaLeadGeometry(hauled);
+// A non-overlapping jib can reach the true geometric lead. Overlapping
+// genoas are now deliberately limited by actual lowers and spreaders.
+const hauled=newState();hauled.windAngle=52;hauled.genoaSize=95;hauled.boatSpeed=6;hauled.controls.genoa.car=45;hauled.controls.genoa.sheet=100;const lead=genoaLeadGeometry(hauled);
 assert.ok(!lead.contactLimited,'a clear curved sail must reach the true nearest lead, without the old flat-envelope stop');assert.ok(Math.abs(lead.angle-lead.unconstrainedClosedAngle)<1e-9);assert.ok(Math.abs(lead.sheetLength-lead.minimumSheetLength)<1e-9);
 for(const boat of[undefined,catalog.find(b=>b.name==='NEXT GEN')]){
  const s=newState(boat);s.genoaSize=160;s.controls.genoa.car=100;s.controls.genoa.sheet=100;const reference=computeReference(s),solution=optimizeForReference(s,reference),a=solution.state;

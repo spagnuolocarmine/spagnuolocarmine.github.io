@@ -12,6 +12,7 @@ import {flyingProfile} from './flying-profile.js';
 import {applySailProfile,profileOrdinate} from './sail-profiles.js';
 import {mainLeechBalance} from './main-balance.js';
 import {controlledTwist,sectionTwistAngle} from './sail-twist.js';
+import {footHold,tensionedFoot} from './headsail-foot.js';
 export {mastPoint,forestayPoint,windSide} from './standing-rig.js';
 export const rigLoad=s=>clamp(s.windSpeed/14,0,1.8);
 export function sailShape(type,s,h=.4){if(type==='spinnaker'||type==='gennaker'){const travel=flyingSheetTravel(type,s);return{angle:type==='spinnaker'?90-travel.angle:travel.angle,...flyingProfile(type,s)};}const c=s.controls[type],r=s.controls.rig,load=clamp(s.windSpeed/4,0,1),weather=windTrimResponse(s.windSpeed,s.windAngle);let p;
@@ -19,6 +20,7 @@ export function sailShape(type,s,h=.4){if(type==='spinnaker'||type==='gennaker')
  if(type==='genoa'){const lead=genoaLeadGeometry(s);p={angle:lead.angle,twist:lead.twist,camber:headsailCamber(c,rigResponse(s).sag,lead.footClosing,hasHeadsailBattens(s)),draft:headsailDraft(c,weather),battened:hasHeadsailBattens(s),stability:hasHeadsailBattens(s)?clamp(.4+c.battens*.006):.8,clewHeight:lead.clewHeight};}
  p.twist=controlledTwist(type,s,p.twist,p.angle);p.camber*=.30+.70*load;if(type==='genoa')p.camber*=1-.34*clamp((c.sheet-100)/20);p.pressurized=load;if(type!=='main'){const sheet=type==='genoa'?genoaLeadGeometry(s).effectiveSheet:c.sheet,fill=clamp(sheet/12);p.camber*=.06+.94*fill;p.stability*=fill;p.released=1-fill;if(type!=='genoa')p.twist*=fill;}
  const shape=applySailProfile(type,p,h,s);
+ if(type==='genoa'){const lead=genoaLeadGeometry(s);tensionedFoot(shape,h,footHold(lead.footClosing,c.sheet));}
  if(type==='main'&&!s.mainRangeProbe){
   // A sheet-range probe uses the unchanged rig clearance envelope; varying
   // outhaul must not silently redefine the mainsheet's mechanical travel.
